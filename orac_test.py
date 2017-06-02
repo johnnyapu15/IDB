@@ -5,14 +5,15 @@ from PyQt5.QtSql import *
 import cx_Oracle as orc
 import datetime
 
-#
+#우리 편의점 브랜치 아이디
+BRAN_ID = 1
 
 class QCustomTableWidgetItem (QTableWidgetItem):
     #실수 표현을 위해 상속켜서 관련 코드를 추가함. 
     def __init__ (self, value):
         super(QCustomTableWidgetItem, self).__init__(('%s' % value))
     def __lt__ (self, other):
-        if (isinstance(other, QCustomTableWidgetItem)):
+        if (isinstance(other, QCustomTableWidgetItem)): 
             selfDataValue  = float(self.data(QtCore.Qt.EditRole).toString())
             otherDataValue = float(other.data(QtCore.Qt.EditRole).toString())
             return selfDataValue < otherDataValue
@@ -39,7 +40,7 @@ class QCustomTable(QTableWidget):
     #테이블 배치
     def columnLoad(self):
 
-        self.columnData =  self.cursor.description
+        self.columnData =  cursor.description
         if self.columnData is not None:
             self.setColumnCount(len(self.columnData))
             lis = []
@@ -53,20 +54,20 @@ class QCustomTable(QTableWidget):
     
             
     def rowLoad(self):
-        for item in  self.cursor:
+        for item in  cursor:
             for c in range(0,self.columnCount()):
-                self.setItem( self.cursor.rowcount - 1, c, QCustomTableWidgetItem(item[c]))
+                self.setItem( cursor.rowcount - 1, c, QCustomTableWidgetItem(item[c]))
                 #만약 셀렉트한 테이블의 튜플이 INIT_ROW 보다 많으면, 자동으로 적재할 테이블을 늘린다.
-            if ( self.cursor.rowcount >= self.rowCount()):
+            if ( cursor.rowcount >= self.rowCount()):
                 self.setRowCount(self.rowCount + self.INIT_ROW)
             #최종적으로 로드된 튜플의 개수만큼 테이블 크기를 최적화한다.
-        self.setRowCount(self.cursor.rowcount)
+        self.setRowCount(cursor.rowcount)
         self.verticalHeader().setSectionResizeMode(3)
     #기본적인 함수지원
     def select(self, _entityName):
         #엔티티 이름을 매개변수로 받아 셀렉트 문을 실행하고 표시한다.
         try:
-            self.cursor.execute("SELECT * FROM " + _entityName)
+            cursor.execute("SELECT * FROM " + _entityName)
             self.setRowCount(self.INIT_ROW)
             self.columnLoad()
             self.rowLoad()
@@ -99,7 +100,7 @@ class QCustomTable(QTableWidget):
             err = list()
             dmlRowCount = int()
             print(_query)
-            self.cursor.executemany(_query, err, dmlRowCount)
+            cursor.executemany(_query, err, dmlRowCount)
             self.setRowCount(self.INIT_ROW)
             self.columnLoad()
             self.rowLoad()
@@ -115,9 +116,9 @@ class QCustomTable(QTableWidget):
         #_query가 ; 로 끝나면 오류남. 미리 분리후 넣을 것.
         if ((_query != '') & (_query != '\n')):
             try:
-                self.cursor.execute(_query)
-                self.cursor.execute("COMMIT")
-                if self.cursor.description != None:
+                cursor.execute(_query)
+                cursor.execute("COMMIT")
+                if cursor.description != None:
                     self.setRowCount(self.INIT_ROW)
                     self.columnLoad()
                     self.rowLoad()
@@ -132,9 +133,9 @@ class QCustomTable(QTableWidget):
         #_param은 dictionary를 이용. ex) _param = {'A':'a', 'B':'b'} 
         if ((_query != '') & (_query != '\n')):
             try:
-                self.cursor.execute(_query, _param)
-                self.cursor.execute("COMMIT")
-                if self.cursor.description != None:
+                cursor.execute(_query, _param)
+                cursor.execute("COMMIT")
+                if cursor.description != None:
                     self.setRowCount(self.INIT_ROW)
                     self.columnLoad()
                     self.rowLoad()
@@ -214,6 +215,58 @@ class Entity_Manip(QDialog):
         for q in qs:
             if q != '':
                 self.table1.queryLoadWithParam(q,_param)    
+
+#테이블을 띄우는 리스트 1개
+#ADD, DEL 버튼 2개 로 이루어진 다이얼로그
+class basicDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setGeometry(100, 100, 1500, 600)
+        
+        self.l0 = QGridLayout(self)
+        self.listBox1 = QListWidget()
+        self.table1 = QCustomTable()
+        self.button1 = QPushButton()
+        self.button2 = QPushButton()
+
+        self.listBox1.setFixedSize(self.width()/4, self.height())
+        self.table1.setFixedHeight(self.height())
+        self.button1.setFixedHeight(self.height()/2)
+        self.button2.setFixedHeight(self.height()/2)
+        self.button1.setFixedSize(self.width()/4, self.height()/2)
+
+        self.l0.addWidget(self.listBox1, 0, 0, -1,1)
+        self.l0.addWidget(self.table1, 0,1, -1,1)
+        self.l0.addWidget(self.button1, 0,2)
+        self.l0.addWidget(self.button2, 1,2)
+
+    #    self.button1.clicked.connect(self.button1_push)
+    
+
+class ORD_Dialog(basicDialog):
+    def __init__(self):
+        super().__init__()
+        #버튼 텍스트 설정
+        self.button1.setText("발주 추가")
+        self.button2.setText("발주 삭제")
+        #테이블 설정, 발주이므로 ORD
+        self.table1.select("ORD")
+
+        #버튼 리스너 설정
+        self.button1.clicked.connect(self.button1_push)
+        self.button2.clicked.connect(self.button2_push)
+   
+    def button1_push(self):
+        #ORD 추가
+        cursor.execute("INSERT INTO ORD (ORD_DAT, ORD_ID, BRANCH_ID) VALUES('" 
+            + str(datetime.date.today()) + "', SEQ_ORD_ID.NEXTVAL, " + str(BRAN_ID) + ")")
+        cursor.execute('COMMIT')
+        #리프레쉬
+        self.table1.select("ORD")
+    def button2_push(self):
+        print("삭제버튼이 눌려져버렸당ㅠㅠ")
+        
+
 #query1
 class qrdialog(QDialog):
     def __init__(self):
@@ -404,8 +457,9 @@ class loginWindow(QDialog):
         self.l1.addWidget(self.CancelBt)
 
     def access(self):
-        self.dsn = orc.makedsn("DESKTOP-8KKMATD", 1521, "XE")  #호스트이름, 포트번호, SID
-        self.db = orc.connect("team", "team", self.dsn)
+        #self.dsn = orc.makedsn("52.79.194.219", 1521, "XE")  #호스트이름, 포트번호, SID
+        self.dsn = orc.makedsn("localhost", 1521, "XE")
+        self.db = orc.connect("jja", "ml", self.dsn)
         #커서 변수를 전역변수로 설정했는데, 이게 비효율적일 수 있을 것 같다.
         #나중에 다르게 바꾸던가, 메인 윈도우 하나를 선정해서 그 클래스의 변수로 활용해야 할듯.
         #그러려면 그 메인 윈도우 클래스의 변수에 접근할 수 있도록 해야한다..
@@ -414,15 +468,15 @@ class loginWindow(QDialog):
         #self.window = Entity_Manip()
         self.hide()
         #self.window.show()
-        self.q1 = qdialog()
+        self.q1 = ORD_Dialog()
         self.q1.show()
 
 
 
 
-HOST = "localhost"
-USER = "jja"
-PASSWORD = "ml"
+HOST = "52.79.194.219"
+USER = "team"
+PASSWORD = "team"
 DBNAME = "db"
 
 
