@@ -21,11 +21,13 @@ USER = 'team'
 PASSWORD = 'team'
 DBNAME = 'db'
 
-def access():
-    dsn = makedsn(HOST, 1521, 'XE')
-    db = connect(USER, PASSWORD, dsn)
+
+def access(hst, usr, pw):
+    dsn = makedsn(hst, 1521, 'XE')
+    db = connect(usr, pw, dsn)
     global cursor
     cursor = db.cursor()
+    return cursor
     
 
 class QCustomTableWidgetItem(QTableWidgetItem):

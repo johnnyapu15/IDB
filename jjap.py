@@ -1,5 +1,7 @@
 from oracle import *
 
+BRAN_ID = 1
+
 #테이블을 띄우는 리스트 1개,
 #ADD, DEL 버튼 2개 로 이루어진 다이얼로그
 class basicDialog(QDialog):
@@ -30,29 +32,58 @@ class basicDialog(QDialog):
 class ORD_Dialog(basicDialog):
     def __init__(self):
         super().__init__()
+        #관리할 테이블 이름
+        self.tn = 'ORD'
         #버튼 텍스트 설정
         self.button1.setText("발주 추가")
         self.button2.setText("발주 삭제")
         #테이블 설정, 발주이므로 ORD
-        self.table1.select("ORD")
+        self.table1.select(self.tn)
 
         #버튼 리스너 설정
         self.button1.clicked.connect(self.button1_push)
         self.button2.clicked.connect(self.button2_push)
    
     def button1_push(self):
-        #ORD 추가
-        cursor.execute("INSERT INTO ORD (ORD_DAT, ORD_ID, BRANCH_ID) VALUES('" 
-            + str(datetime.date.today()) + "', SEQ_ORD_ID.NEXTVAL, " + str(BRAN_ID) + ")")
-        cursor.execute('COMMIT')
-        #리프레쉬
-        self.table1.select("ORD")
-        
+        mb = QMessageBox(self)
+        mb.setText('추가하시겠습니까?')
+        mb.addButton("예", 5)
+        mb.addButton("아니오", 6)
+        mb.buttonClicked.connect(self.insertMethod)
+        mb.show()
     def button2_push(self):
-        print("삭제버튼이 눌려져버렸당ㅠㅠ")
-        
+        #QUERY_0401
+        mb = QMessageBox(self)
+        mb.setText("삭제하시겠습니까?")
+        mb.addButton('예', 5)
+        mb.addButton('아니오', 6)
+        mb.show()
+        mb.buttonClicked.connect(self.deleteMethod)
 
-access()
+
+    def insertMethod(self, button):
+        if button.text() == '예':
+            #ORD 추가
+            cursor.execute("INSERT INTO " + self.tn +" (ORD_DAT, ORD_ID, BRANCH_ID) VALUES('" 
+                + str(datetime.date.today()) + "', SEQ_ORD_ID.NEXTVAL, " + str(BRAN_ID) + ")")
+            cursor.execute('COMMIT')
+            #리프레쉬
+            self.table1.select(self.tn)
+    def deleteMethod(self, button):    
+        if button.text() == '예':
+            #ORD 삭제
+            r = self.table1.currentRow()
+            cursor.execute("DELETE FROM " + self.tn
+             + " WHERE (ORD_ID = " + self.table1.item(r, 1).text() + ")")
+            cursor.execute('COMMIT')
+        
+            #refresh
+            self.table1.select(self.tn)
+
+HOST = 'localhost'
+USER = 'jja'
+PASSWORD = 'ml'
+cursor = access(HOST, USER, PASSWORD)
 app = QApplication(sys.argv)
 win = ORD_Dialog()
 win.show()
