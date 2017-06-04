@@ -45,6 +45,7 @@ class ORD_Dialog(basicDialog):
         self.button2.clicked.connect(self.button2_push)
    
     def button1_push(self):
+        #추가 요청
         mb = QMessageBox(self)
         mb.setText('추가하시겠습니까?')
         mb.addButton("예", 5)
@@ -52,7 +53,7 @@ class ORD_Dialog(basicDialog):
         mb.buttonClicked.connect(self.insertMethod)
         mb.show()
     def button2_push(self):
-        #QUERY_0401
+        #삭제 요청
         mb = QMessageBox(self)
         mb.setText("삭제하시겠습니까?")
         mb.addButton('예', 5)
