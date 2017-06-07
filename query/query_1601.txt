@@ -1,3 +1,3 @@
 ﻿INSERT INTO EMP (SALARY,SALARY_CODE,BRANCH_ID,EMP_GRADE_CODE,
 CONTACT,NAME,EMP_ID)
-VALUES (:Salary,:SalaryCode, :BranchID,:TitleCode,:Contact,:Name,:EmpID);
+VALUES (:Salary,:SalaryCode, :BranchID,:TitleCode,:Contact,:Name,SEQ_EMP.NEXTVAL);
