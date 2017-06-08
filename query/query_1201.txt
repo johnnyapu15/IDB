@@ -1,0 +1,2 @@
+﻿NSERT INTO PROD 
+VALUES(:BuyPrice,:MainCat,:ProdName,SEQ_PROD.NEXTVAL,:SubCat,:CustomerCost,:Exclusive,:DistPeriod,:SellPrice);

@@ -216,7 +216,7 @@ class Entity_Manip(QDialog):
             if q != '':
                 self.table1.queryLoadWithParam(q,_param)    
 
-#테이블을 띄우는 리스트 1개
+#테이블을 띄우는 리스트 1개,
 #ADD, DEL 버튼 2개 로 이루어진 다이얼로그
 class basicDialog(QDialog):
     def __init__(self):

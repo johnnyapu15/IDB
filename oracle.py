@@ -205,11 +205,13 @@ class QCustomTable(QTableWidget):
             mb.setText("오류! : " + e.args[0].message)
             mb.show()    
     #테이블 이름으로 검색해서 컬럼값만 지정해줌
-    def columnSet(self, _entityName):
+    def columnSet(self, _entityName, _row):
         try:
             cursor.execute("SELECT * FROM " + _entityName)
             self.columnLoad()
             self.setRowCount(1)
+            if _row > 0:
+                self.setRowCount(_row)
             self.verticalHeader().setSectionResizeMode(3)
 
         except DatabaseError as e : 
