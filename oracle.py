@@ -21,6 +21,119 @@ USER = 'team'
 PASSWORD = 'team'
 DBNAME = 'db'
 
+COLUMN_DIC ={'PUB_DEP_ID':'공공요금 수납 ID',
+'BRANCH_ID':'지점 ID',
+'END_TIME':'끝시간',
+'START_DAT':'시작 날짜',
+'START_TIME':'시작 시간',
+'EMP_ID':'직원 ID',
+'TIME_DUR':'시간 간격',
+'BUY_PRICE':'구매단가',
+'MAIN_CATEGORY_CODE':'대분류 코드',
+'PROD_NAME':'물품명',
+'PROD_ID':'물품 ID',
+'SUB_CATEGORY_CODE':'소분류 코드',
+'CUSTOMER_COST':'소비자가',
+'UOS25_EXCLUSIVE':'우리편의점 전용물품',
+'DISTRIB_PERIOD':'유통기간',
+'SELL_PRICE':'판매단가',
+'PROD_ID':'물품 ID',
+'PROD_NAME':'물품명',
+'RETURN_DAT':'반품 날짜',
+'RETURN_CAUSE_CODE':'반품 사유 코드',
+'RETURN_REQUEST_QUANTITY':'반품 의뢰 수량',
+'RETURN_PROCESS_RESULT':'반품 처리 결과',
+'RETURN_ID':'반품 ID',
+'LOTT_ID':'복권 ID',
+'BRANCH_ID':'지점 ID',
+'CONTACT':'연락처',
+'ADDRESS':'주소',
+'AGE':'나이',
+'MILEAGE':'마일리지',
+'GENDER_CODE':'성별 코드',
+'CUSTOMER_ID':'소비자 ID',
+'NAME':'이름',
+'PROD_ID':'물품 ID',
+'PROD_NAME':'물품명',
+'LOSS_CAUSE_CODE':'손실 원인 코드',
+'QUANTITY':'수량',
+'INVEST_DAT':'파악 날짜',
+'INVEST_NO':'파악 회차',
+'COM_NAME':'업체명',
+'COM_ID':'업체 ID',
+'CONTACT':'연락처',
+'ADDRESS':'주소',
+'EVENT_NAME':'이벤트명',
+'EVENT_START_DAT':'이벤트시작날짜',
+'EVENT_END_DAT':'이벤트종료날짜',
+'EVENT_ID':'이벤트 ID',
+'DISCOUNT_UNIT':'할인단위',
+'DISCOUNT_RATIO':'할인율',
+'PROD_ID':'물품 ID',
+'PROD_NAME':'물품명',
+'EVENT_ID':'이벤트 ID',
+'BRANCH_ID':'지점 ID',
+'FRANCHISE_FEE':'가맹비',
+'DAT':'날짜',
+'SALE':'매출',
+'PROFIT_COST':'수익금',
+'NET_PROFIT':'순이익',
+'PRICE':'원가',
+'UPKEEP_COST':'유지비',
+'PAYROLL_COST':'인건비',
+'BRANCH_ID':'지점 ID',
+'ORD_DAT':'발주 날짜',
+'ORD_COST':'발주액',
+'ORD_ID':'주문 ID',
+'CONTACT':'연락처',
+'ADDRESS':'주소',
+'BRANCH_MANAGER':'지점장',
+'BRANCH_ID':'지점 ID',
+'SELL_MARGIN_RATIO':'판매마진지불비율',
+'SALARY':'급여',
+'SALARY_CODE':'급여 코드',
+'BRANCH_ID':'지점 ID',
+'EMP_GRADE_CODE':'직원 등급 코드',
+'CONTACT':'연락처',
+'NAME':'이름',
+'EMP_ID':'직원 ID',
+'PROD_ID':'물품 ID',
+'PROD_NAME':'물품명',
+'EXPIRATION_DAT':'유통 기한',
+'MANUFACTURE_DAT':'제조 날짜',
+'DISPLAY_QUANTITY':'진열 수량',
+'EVENT_FLAG':'행사 유무',
+'PROD_ID':'물품 ID',
+'PROD_NAME':'물품명',
+'QUANTITY':'수량',
+'EXPIRATION_DAT':'유통기한',
+'MANUFACTURE_DAT':'제조날짜',
+'BRANCH_ID':'지점 ID',
+'DELIV_ID':'택배 ID',
+'CUSTOMER_ID':'소비자 ID',
+'SELL_DAT':'판매 날짜',
+'SELL_TIME':'판매 시간',
+'SELL_ID':'판매 ID',
+'SELL_COST':'판매액',
+'PROD_ID':'물품 ID',
+'PROD_NAME':'물품명',
+'QUANTITY':'수량',
+'SELL_ID':'판매 ID',
+'SELL_COST':'판매액',
+'PROD_ID':'물품 ID',
+'PROD_NAME':'물품명',
+'QUANTITY':'수량',
+'DISPOSE_PROCESS_DAT':'폐기 처리 날짜',
+'PROD_ID':'물품 ID',
+'PROD_NAME':'물품명',
+'ORDER_REQUEST_QUANTITY':'발주 의뢰 수량',
+'ORDER_COST':'발주액',
+'DEPOSIT_RESULT_QUANTITY':'수령 결과 수량',
+'DEPOSIT_DAT':'수령 날짜',
+'ORDER_ID':'주문 ID',
+'ORDER_DAT':'주문 날짜',
+'ATM_ID':'ATM ID',
+'BRANCH_ID':'지점 ID'}
 
 def access(hst, usr, pw):
     dsn = makedsn(hst, 1521, 'XE')
@@ -63,7 +176,7 @@ class QCustomTable(QTableWidget):
             self.setColumnCount(len(self.columnData))
             lis = []
             for col in self.columnData:
-                lis.append(col[0])
+                lis.append(COLUMN_DIC[col[0]])
             self.setHorizontalHeaderLabels((lis))
         #컬럼의 사이즈를 텍스트 길이에 fit.
         self.horizontalHeader().setSectionResizeMode(3) 
@@ -71,7 +184,7 @@ class QCustomTable(QTableWidget):
         for item in  cursor:
             for c in range(0,self.columnCount()):
                 self.setItem( cursor.rowcount - 1, c, QCustomTableWidgetItem(item[c]))
-                #만약 셀렉트한 테이블의 튜플이 INIT_ROW 보다 많으면, 자동으로 적재할 테이블을 늘린다.
+            #만약 셀렉트한 테이블의 튜플이 INIT_ROW 보다 많으면, 자동으로 적재할 테이블을 늘린다.
             if ( cursor.rowcount >= self.rowCount()):
                 self.setRowCount(self.rowCount + self.INIT_ROW)
             #최종적으로 로드된 튜플의 개수만큼 테이블 크기를 최적화한다.
@@ -91,6 +204,19 @@ class QCustomTable(QTableWidget):
             #cx_Oracle에서 제공하는 익셉션인 e는 args 를 포함하며, 이 클래스는 message 라는 변수를 가진다.
             mb.setText("오류! : " + e.args[0].message)
             mb.show()    
+    #테이블 이름으로 검색해서 컬럼값만 지정해줌
+    def columnSet(self, _entityName):
+        try:
+            cursor.execute("SELECT * FROM " + _entityName)
+            self.columnLoad()
+            self.setRowCount(1)
+            self.verticalHeader().setSectionResizeMode(3)
+
+        except DatabaseError as e : 
+            mb = QMessageBox(self)
+            #cx_Oracle에서 제공하는 익셉션인 e는 args 를 포함하며, 이 클래스는 message 라는 변수를 가진다.
+            mb.setText("오류! : " + e.args[0].message)
+            mb.show() 
     #매개변수없는 쿼리 실행    
     def queryLoad(self, _query):
         #_query가 ; 로 끝나면 오류남. 미리 분리후 넣을 것.
