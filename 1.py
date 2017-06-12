@@ -68,11 +68,6 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_42.clicked.connect(self.ins_DPROD)
         #폐기 검색버튼
         self.pushButton_6.clicked.connect(self.search_DPROD)
-<<<<<<< HEAD
-=======
-        #폐기 버튼
-        # self.pushButton_44.clicked.connect(self.exe_DPROD)
->>>>>>> 59f17c5860ce71e389297322a595534dbe84cbee
         #폐기 삭제 버튼
         self.pushButton_43.clicked.connect(self.del_DPROD)
         ########################
