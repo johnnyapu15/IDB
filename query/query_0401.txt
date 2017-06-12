@@ -1,4 +1,0 @@
---QUERY_0401
-----한 주문을 취소한다. (CASCADING 규칙으로 필요물품도 삭제)
-DELETE FROM ORD
-WHERE (ORD_ID = :ORD_ID);
