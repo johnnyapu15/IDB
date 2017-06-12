@@ -8,7 +8,7 @@ form_class = uic.loadUiType("ui/1.ui")[0]
 
 class MyWindow(QMainWindow, form_class):
     def __init__(self):
-        ###
+        
         super().__init__()
         self.setupUi(self)
         self.t1 = QCustomTable()    #EMP
@@ -19,26 +19,20 @@ class MyWindow(QMainWindow, form_class):
         self.t6 = QCustomTable()    #DISPROD
         self.t7 = QCustomTable()    #EVENT
         self.t8 = QCustomTable()    #ORD
-        self.gridLayout.addWidget(self.t1)
-        self.t1.select("EMP")
         
-        # self.gridLayout_3.addWidget(self.t3)    #필요물품
-        # self.t3.select("")
-        
+     
         self.gridLayout_5.addWidget(self.t5)    #반품물품
         self.t5.select("RPROD")
 
         self.gridLayout_2.addWidget(self.t2)    
         self.t2.select("PROD")
         
-        # self.gridLayout_6.addWidget(self.t4)
-        # self.t4.select("WAREPROD")
+       
 
         self.gridLayout_8.addWidget(self.t8)
         self.t8.select("ORD")
 
-        self.gridLayout_11.addWidget(self.t7)
-        self.t7.select("EVENT")
+        
 
         ###################정주안 작업####################
 
@@ -65,10 +59,20 @@ class MyWindow(QMainWindow, form_class):
         ########################
 
         #################################################
-
-        self.pushButton_42.clicked.connect(self.call_DPROD)     #폐기물품
-        self.pushButton_35.clicked.connect(self.call_LPROD)     #재고파악
-
+        #####재웅 추가####
+        self.pushButton_32.clicked.connect(self.call_ADD_SELLPROD)   #상품.ui 판매페이지에서
+        self.pushButton_23.clicked.connect(self.call_PROD)   #상품.ui 상품목록페이지에서
+        self.pushButton_42.clicked.connect(self.call_DPROD)   #폐기물품.ui 폐기처리내역페이지에서
+        self.pushButton_35.clicked.connect(self.call_LPROD)   #재고파악.ui 재고파악내역페이지에서
+        self.pushButton.clicked.connect(self.call_ADD_EVENT)   #이벤트생성.ui 이벤트페이지에서
+        self.pushButton_4.clicked.connect(self.call_UPDATE_EVENT)   #이벤트수정.ui 이벤트페이지에서
+        #결산 페이지에서 월말결산.UI 창 언제 띄워야하지
+        self.pushButton_21.clicked.connect(self.call_ADD_EMP)   #직원고용.ui 직원페이지에서
+        self.pushButton_22.clicked.connect(self.call_UPDATE_EMP)   #직원수정.ui 직원페이지에서
+        self.pushButton_48.clicked.connect(self.call_ROSTER)   #근무표.ui 직원페이지에서
+        self.pushButton_51.clicked.connect(self.call_ADD_MEMBERSHIP)   #멤버쉽 가입.ui 멤버쉽페이지에서
+        #####재웅 끝######
+        
         self.lineEdit.editingFinished.connect(self.set0)
         self.comboBox.currentIndexChanged.connect(self.selected_widget)
         self.stackedWidget.setCurrentIndex(0) #첫화면 띄우도록
@@ -137,14 +141,39 @@ class MyWindow(QMainWindow, form_class):
         mb = QMessageBox(self, text = self.t5.item(self.t5.currentRow(),6).text() + '가(이) 반품처리되었습니다.')
         mb.show()
     #############################
-    
-    
+###재웅 추가### 
+    def call_ADD_SELLPROD(self):
+        self.w1 = ADD_SELLPROD()
+        self.w1.show()  
+    def call_PROD(self):
+        self.w1 = PROD()
+        self.w1.show()    
     def call_DPROD(self):
-        self.w1 = D_PROD()
-        self.w1.show()      
+        self.w1 = DPROD()
+        self.w1.show()    
     def call_LPROD(self):
-        self.w1 = L_PROD()
-        self.w1.show() 
+        self.w1 = LPROD()
+        self.w1.show()  
+    def call_ADD_EVENT(self):
+        self.w1 = ADD_EVENT()
+        self.w1.show()  
+    def call_UPDATE_EVENT(self):
+        self.w1 = UPDATE_EVENT()
+        self.w1.show()
+    def call_ADD_EMP(self):
+        self.w1 = ADD_EMP()
+        self.w1.show()      
+    def call_UPDATE_EMP(self):
+        self.w1 = UPDATE_EMP()
+        self.w1.show()    
+    def call_ROSTER(self):
+        self.w1 = ROSTER()
+        self.w1.show()          
+    def call_ADD_MEMBERSHIP(self):
+        self.w1 = ADD_MEMBERSHIP()
+        self.w1.show()      
+####재웅 끝####    
+   
 
     
 
@@ -293,16 +322,68 @@ class RPROD(QDialog,uic.loadUiType("ui/반품추가.ui")[0]):
                 table.fileExecute('query_0503.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,3).text(), 'QUANTITY':table.item(r,2).text()})
                 
 
-        
-class D_PROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
+#####재웅 추가#####
+class ADD_SELLPROD(QDialog,uic.loadUiType("ui/판매상품.ui")[0]):
+    def __init__(self):
+        super().__init__() 
+        self.setupUi(self)
+class PROD(QDialog,uic.loadUiType("ui/상품.ui")[0]):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.pushButton_2.clicked.connect(self.call_ADD_PROD)   #상품추가.ui
+    def call_ADD_PROD(self):
+        self.w2 = ADD_PROD()
+        self.w2.show()   
 
-class L_PROD(QDialog,uic.loadUiType("ui/재고파악.ui")[0]):
+class ADD_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
     def __init__(self):
-        super().__init__()
+        super().__init__() 
+        self.setupUi(self)        
+class DPROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
+    def __init__(self):
+        super().__init__() 
         self.setupUi(self)
+class LPROD(QDialog,uic.loadUiType("ui/재고파악.ui")[0]):
+    def __init__(self):
+        super().__init__() 
+        self.setupUi(self)
+        self.pushButton_35.clicked.connect(self.call_ADD_LPROD)   #손실내용수정.ui
+    def call_ADD_LPROD(self):
+        self.w2 = ADD_LPROD()
+        self.w2.show()    
+class ADD_LPROD(QDialog,uic.loadUiType("ui/손실내용수정.ui")[0]):
+    def __init__(self):
+        super().__init__() 
+        self.setupUi(self)
+class ADD_EVENT(QDialog,uic.loadUiType("ui/이벤트 생성.ui")[0]):
+    def __init__(self):
+        super().__init__() 
+        self.setupUi(self)
+class UPDATE_EVENT(QDialog,uic.loadUiType("ui/이벤트 수정.ui")[0]):
+    def __init__(self):
+        super().__init__() 
+        self.setupUi(self)
+class ADD_EMP(QDialog,uic.loadUiType("ui/직원고용.ui")[0]):
+    def __init__(self):
+        super().__init__() 
+        self.setupUi(self)
+class UPDATE_EMP(QDialog,uic.loadUiType("ui/직원수정.ui")[0]):
+    def __init__(self):
+        super().__init__() 
+        self.setupUi(self)        
+class ROSTER(QDialog,uic.loadUiType("ui/근무표.ui")[0]):
+    def __init__(self):
+        super().__init__() 
+        self.setupUi(self) 
+class ADD_MEMBERSHIP(QDialog,uic.loadUiType("ui/멤버쉽 가입.ui")[0]):
+    def __init__(self):
+        super().__init__() 
+        self.setupUi(self)              
+####재웅 끝#####        
+
+        
+
 
 if __name__ == "__main__":
     global cursor
