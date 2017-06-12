@@ -68,8 +68,6 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_42.clicked.connect(self.ins_DPROD)
         #폐기 검색버튼
         self.pushButton_6.clicked.connect(self.search_DPROD)
-        #폐기 버튼
-        self.pushButton_44.clicked.connect(self.exe_DPROD)
         #폐기 삭제 버튼
         self.pushButton_43.clicked.connect(self.del_DPROD)
         ########################
@@ -407,7 +405,58 @@ class DPROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
         self.t2 = QCustomTable()
         self.gridLayout_12.addWidget(self.t1)
         self.gridLayout_15.addWidget(self.t2)
+
+        self.t1.select("WAREPROD")
+        self.t2.select("DISPROD")
         
+    def addItem(self, table):
+        #table은 창고 혹은 진열
+        #테이블 선택 안했을 때 예외처리
+        if self.tabWidget.currentIndex() == 0:
+            table = self.t1
+            if table.currentItem() == None:
+                mb = QMessageBox(self, text = '물품을 선택해주세요!')
+                mb.show()
+                return 0
+            r = table.currentRow()
+            n = table.item(r,1).text()
+        elif self.tabWidget.currentIndex() == 1:
+            table = self.t2
+            if table.currentItem() == None:
+                mb = QMessageBox(self, text = '물품을 선택해주세요!')
+                mb.show()
+                return 0
+            r = table.currentRow()
+            n = table.item(r,2).text()
+        #입력 부족
+        if self.lineEdit_17.text() == '':
+            mb = QMessageBox(self, text = '폐기수량을 적어주세요!')
+            mb.show()
+            return 0
+        #너무 많은 폐기 요구
+        if int(n) < int(self.lineEdit_17.text()):
+            mb = QMessageBox(self, text = '반품량이 너무 많습니다!')
+            mb.show()
+            return 0
+        #폐기물품에 생성
+        self.parent().t6.fileExecute('query_0601.txt', {'PROD_ID':table.item(r, 0).text(),
+         'QUANTITY':self.lineEdit_17.text(), 'DISPOSE_PROCESS_DAT':str(self.dateEdit.date().toString(Qt.ISODate))})
+        self.parent().t6.refresh()
+        #창고물품 / 진열물품에서 제외
+        if self.tabWidget.currentIndex() == 0:
+            if n == self.lineEdit_17.text():
+                table.fileExecute('query_0504.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,2).text()})
+            else:
+                table.fileExecute('query_0505.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,2).text(), 'QUANTITY':int(n) - int(self.lineEdit_17.text())})
+
+        elif self.tabWidget.currentIndex() == 1:
+            if n == self.lineEdit_4.text():
+                table.fileExecute('query_0502.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,3).text()})
+            else:
+                table.fileExecute('query_0503.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,3).text(), 'QUANTITY':int(n) - int(self.lineEdit_17.text())})
+        self.hide()
+    
+
 class LPROD(QDialog,uic.loadUiType("ui/재고파악.ui")[0]):
     def __init__(self):
         super().__init__() 

@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>7</number>
+    <number>6</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="widget" native="true">
@@ -1638,13 +1638,6 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_44">
-          <property name="text">
-           <string>완료</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="horizontalLayoutWidget_15">
@@ -2124,7 +2117,7 @@
          <x>10</x>
          <y>60</y>
          <width>331</width>
-         <height>61</height>
+         <height>63</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_42">
