@@ -8,6 +8,7 @@ form_class = uic.loadUiType("ui/1.ui")[0]
 
 class MyWindow(QMainWindow, form_class):
     def __init__(self):
+        ###
         super().__init__()
         self.setupUi(self)
         self.t1 = QCustomTable()    #EMP
