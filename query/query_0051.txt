@@ -1,0 +1,5 @@
+--QUERY_0051
+----물품명을 이용해 창고물품 검색
+SELECT *
+FROM WAREPROD
+WHERE (PROD_NAME LIKE :PROD_NAME);
