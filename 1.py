@@ -53,7 +53,7 @@ class MyWindow(QMainWindow, form_class):
         #####반품 관련###########
         
         #반품 생성 버튼
-        
+        self.pushButton_24.clicked.connect(self.ins_RTN)
 
         #반품 버튼
         self.pushButton_26.clicked.connect(self.exe_RTN)
@@ -108,7 +108,6 @@ class MyWindow(QMainWindow, form_class):
         self.w1 = RPROD(self)
         self.w1.show()
 
-#
     #반품 버튼
     def exe_RTN(self):
         mb = QMessageBox(self, text = self.t5.item(self.t5.currentRow(),6).text() + '가(이) 반품처리되었습니다.')
@@ -142,7 +141,7 @@ class ORD_PROD(QDialog,uic.loadUiType("ui/필요물품.ui")[0]):
         #필요물품 삭제(테이블에서 아이템 선택하고 있어야함)
         self.pushButton_28.clicked.connect(self.del_ORDPROD)
         #완료버튼. 종료와 동일
-        self.pushButton_29.clicked.connect(self.destroy)
+        self.pushButton_29.clicked.connect(self.hide)
         #수령확인
         #각 물품들을 테이블에서 수정할만큼 한 후 버튼을 누르면 수정 쿼리 실행
         #단 수령갯수와 수령날짜로 한정짓는다.
@@ -165,9 +164,10 @@ class ORD_PROD(QDialog,uic.loadUiType("ui/필요물품.ui")[0]):
         for i in range(self.t1.rowCount()):
             if self.t1.item(i,4).text() != 'None':
                 dic = {'ORD_ID':self.t1.item(i,2).text(),'PROD_ID':self.t1.item(i,0).text(),
-                'ORD_RESULT_QUANTITY':self.t1.item(i,4).text(),'DEPOSIT_DAT':self.t1.item(i,5).text()}
+                'ORD_RESULT_QUANTITY':self.t1.item(i,4).text(), 'DEPOSIT_DAT':self.t1.item(i,5).text()}
                 if dic['DEPOSIT_DAT'] == 'None':
                     dic['DEPOSIT_DAT'] = str(datetime.date.today())
+                    print(dic['DEPOSIT_DAT'])
                 self.t1.fileExecute('query_0301.txt', dic)
         self.find_id('')
 
@@ -176,17 +176,19 @@ class ORDPROD_FIND(QDialog,uic.loadUiType("ui/필요물품검색.ui")[0]):
         super().__init__(parent)
         self.setupUi(self)
         self.t1 = QCustomTable()
-        self.gridLayout_8.addWidget(self.t1)
+        self.gridLayout_11.addWidget(self.t1)
         self.t1.select('PROD')
         self.ord_id = 0
         #검색버튼
-        self.pushButton_38.clicked.connect(self.search)
+        self.pushButton.clicked.connect(self.search)
         #테이블 아이템 더블클릭 -> 해당 아이템 정보를 전달해야함
         self.t1.doubleClicked.connect(self.addItem)
+        #완료버튼
+        self.pushButton_2.clicked.connect(self.addItem)
     def search(self):
         #필요물품 검색. 물품명 필요
         if self.lineEdit_13.text() != '':
-            jjap.execute(self.t1, 'query_0050.txt', {'PROD_NAME':'%' + self.lineEdit_13.text() + '%'})
+            self.t1.fileExecute('query_0050.txt', {'PROD_NAME':'%' + self.lineEdit_13.text() + '%'})
     def addItem(self):
         #필요물품 추가. 테이블 더블클릭시 발생.
         tmpRow = int(self.t1.currentRow())
@@ -200,22 +202,30 @@ class ORDPROD_FIND(QDialog,uic.loadUiType("ui/필요물품검색.ui")[0]):
         self.parent().find_id('')
         self.destroy()
 class RPROD(QDialog,uic.loadUiType("ui/반품추가.ui")[0]):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent):
+        super().__init__(parent)
         self.setupUi(self)
         self.t1 = QCustomTable()
         self.t2 = QCustomTable()
         self.t1.select("WAREPROD")
         self.t2.select("DISPROD")
-        self.return_add_ware.addWidget(self.t1)
-        self.return_add_dis.addWidget(self.t2)
+        self.gridLayout_12.addWidget(self.t1)
+        self.gridLayout_15.addWidget(self.t2)
+        
+        self.t1.doubleClicked.connect(lambda: self.addItem(self.t1))
+        self.t2.doubleClicked.connect(lambda: self.addItem(self.t2))
+    #반품물품에 물품 추가. 테이블에서 더블클릭한 것을 추가함
+    def addItem(self, table):
+        #table은 창고 혹은 진열
+        r = table.currentRow()
+        jjap.bt1(parent.t5, )
         
 class D_PROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
 
-class L_PROD(QDialog,uic.loadUiType("ui/재고1.ui")[0]):
+class L_PROD(QDialog,uic.loadUiType("ui/재고파악.ui")[0]):
     def __init__(self):
         super().__init__()
         self.setupUi(self)

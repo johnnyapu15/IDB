@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>902</width>
-    <height>364</height>
+    <width>873</width>
+    <height>471</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>20</y>
-     <width>880</width>
-     <height>450</height>
+     <x>30</x>
+     <y>40</y>
+     <width>800</width>
+     <height>400</height>
     </rect>
    </property>
    <property name="title">
@@ -32,8 +32,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>40</y>
-      <width>860</width>
+      <y>60</y>
+      <width>760</width>
       <height>240</height>
      </rect>
     </property>
@@ -45,7 +45,7 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>858</width>
+       <width>758</width>
        <height>238</height>
       </rect>
      </property>
@@ -54,11 +54,19 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>861</width>
-        <height>231</height>
+        <width>761</width>
+        <height>241</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="gridLayout_10"/>
+      <layout class="QGridLayout" name="gridLayout_10">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>필요물품 목록들</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>
@@ -66,10 +74,10 @@
   <widget class="QWidget" name="horizontalLayoutWidget_17">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>310</y>
-     <width>491</width>
-     <height>41</height>
+     <x>190</x>
+     <y>340</y>
+     <width>611</width>
+     <height>46</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_31">

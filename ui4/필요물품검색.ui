@@ -67,7 +67,7 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>331</width>
+      <width>431</width>
       <height>36</height>
      </rect>
     </property>
@@ -92,6 +92,19 @@
         <widget class="QLineEdit" name="lineEdit_13"/>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>검색</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -136,19 +149,6 @@
       </widget>
      </item>
     </layout>
-   </widget>
-   <widget class="QPushButton" name="pushButton_6">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>44</y>
-      <width>80</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>검색</string>
-    </property>
    </widget>
   </widget>
  </widget>

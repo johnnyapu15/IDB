@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>842</width>
-    <height>446</height>
+    <width>903</width>
+    <height>301</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>40</y>
-     <width>800</width>
-     <height>400</height>
+     <x>10</x>
+     <y>20</y>
+     <width>880</width>
+     <height>281</height>
     </rect>
    </property>
    <property name="title">
@@ -32,9 +32,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>110</y>
-      <width>760</width>
-      <height>240</height>
+      <y>80</y>
+      <width>860</width>
+      <height>140</height>
      </rect>
     </property>
     <property name="widgetResizable">
@@ -45,8 +45,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>758</width>
-       <height>238</height>
+       <width>858</width>
+       <height>138</height>
       </rect>
      </property>
      <widget class="QWidget" name="gridLayoutWidget_11">
@@ -54,8 +54,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>761</width>
-        <height>241</height>
+        <width>861</width>
+        <height>131</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_11"/>
@@ -66,8 +66,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>70</y>
-      <width>501</width>
+      <y>40</y>
+      <width>331</width>
       <height>36</height>
      </rect>
     </property>
@@ -93,26 +93,13 @@
        </item>
       </layout>
      </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_39">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>입력</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>360</y>
+      <x>640</x>
+      <y>230</y>
       <width>112</width>
       <height>34</height>
      </rect>
@@ -124,14 +111,27 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>680</x>
-      <y>360</y>
+      <x>760</x>
+      <y>230</y>
       <width>112</width>
       <height>34</height>
      </rect>
     </property>
     <property name="text">
      <string>퇴근</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_6">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>44</y>
+      <width>80</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>검색</string>
     </property>
    </widget>
   </widget>

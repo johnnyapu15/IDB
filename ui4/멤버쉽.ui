@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>906</width>
-    <height>305</height>
+    <width>902</width>
+    <height>322</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,20 +19,20 @@
      <x>10</x>
      <y>20</y>
      <width>880</width>
-     <height>311</height>
+     <height>301</height>
     </rect>
    </property>
    <property name="title">
-    <string>필요물품 검색</string>
+    <string>멤버쉽</string>
    </property>
    <property name="flat">
     <bool>true</bool>
    </property>
-   <widget class="QScrollArea" name="scrollArea_11">
+   <widget class="QScrollArea" name="scrollArea_12">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>80</y>
+      <y>110</y>
       <width>860</width>
       <height>140</height>
      </rect>
@@ -40,7 +40,7 @@
     <property name="widgetResizable">
      <bool>true</bool>
     </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents_11">
+    <widget class="QWidget" name="scrollAreaWidgetContents_12">
      <property name="geometry">
       <rect>
        <x>0</x>
@@ -49,7 +49,7 @@
        <height>138</height>
       </rect>
      </property>
-     <widget class="QWidget" name="gridLayoutWidget_11">
+     <widget class="QWidget" name="gridLayoutWidget_12">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -58,60 +58,34 @@
         <height>131</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="gridLayout_11"/>
+      <layout class="QGridLayout" name="gridLayout_12"/>
      </widget>
     </widget>
    </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget_11">
+   <widget class="QWidget" name="horizontalLayoutWidget_12">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>331</width>
-      <height>36</height>
+      <width>391</width>
+      <height>63</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_23">
+    <layout class="QHBoxLayout" name="horizontalLayout_24">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_9">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QLabel" name="label_8">
          <property name="enabled">
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>물품명</string>
+          <string>이름</string>
          </property>
         </widget>
        </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_8">
        <item>
-        <widget class="QLineEdit" name="lineEdit_13"/>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>230</y>
-      <width>351</width>
-      <height>36</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <property name="rightMargin">
-        <number>10</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="label_21">
+        <widget class="QLabel" name="label_9">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -119,35 +93,35 @@
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>수량</string>
+          <string>멤버쉽ID</string>
          </property>
         </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit_17"/>
        </item>
       </layout>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
-       <property name="text">
-        <string>완료</string>
-       </property>
-      </widget>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLineEdit" name="lineEdit_3"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_6"/>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>
    <widget class="QPushButton" name="pushButton_6">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>44</y>
-      <width>80</width>
-      <height>28</height>
+      <x>760</x>
+      <y>260</y>
+      <width>112</width>
+      <height>34</height>
      </rect>
     </property>
     <property name="text">
-     <string>검색</string>
+     <string>가입</string>
     </property>
    </widget>
   </widget>

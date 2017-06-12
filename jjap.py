@@ -35,3 +35,4 @@ def execute(sf, table, query, dic):
         sf.destroy()
     else:
         sf.destroy()
+

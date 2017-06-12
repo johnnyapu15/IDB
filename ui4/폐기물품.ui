@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>906</width>
-    <height>305</height>
+    <width>907</width>
+    <height>302</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,11 +19,11 @@
      <x>10</x>
      <y>20</y>
      <width>880</width>
-     <height>311</height>
+     <height>281</height>
     </rect>
    </property>
    <property name="title">
-    <string>필요물품 검색</string>
+    <string>폐기물품</string>
    </property>
    <property name="flat">
     <bool>true</bool>
@@ -67,88 +67,67 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>331</width>
+      <width>222</width>
       <height>36</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_23">
+     <property name="spacing">
+      <number>20</number>
+     </property>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_9">
-       <item>
-        <widget class="QLabel" name="label_8">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>물품명</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QLabel" name="label_9">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>유통기한</string>
+       </property>
+      </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_8">
+      <layout class="QVBoxLayout" name="verticalLayout_11">
        <item>
-        <widget class="QLineEdit" name="lineEdit_13"/>
+        <widget class="QDateEdit" name="dateEdit"/>
        </item>
       </layout>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget">
+   <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>520</x>
+      <x>630</x>
       <y>230</y>
-      <width>351</width>
+      <width>240</width>
       <height>36</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <property name="rightMargin">
-        <number>10</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="label_21">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>수량</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit_17"/>
-       </item>
-      </layout>
-     </item>
+     <property name="spacing">
+      <number>14</number>
+     </property>
      <item>
       <widget class="QPushButton" name="pushButton_2">
        <property name="text">
-        <string>완료</string>
+        <string>추가</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>삭제</string>
        </property>
       </widget>
      </item>
     </layout>
-   </widget>
-   <widget class="QPushButton" name="pushButton_6">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>44</y>
-      <width>80</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>검색</string>
-    </property>
    </widget>
   </widget>
  </widget>

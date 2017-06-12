@@ -181,7 +181,11 @@ class QCustomTable(QTableWidget):
     def rowLoad(self):
         for item in cursor:
             for c in range(0,self.columnCount()):
-                self.setItem( cursor.rowcount - 1, c, QCustomTableWidgetItem(item[c]))
+                text = str(item[c])
+                #만약 타입이 시간일 경우 10자리로 끊는다.
+                if str(cursor.description[c][1]) == "<class 'cx_Oracle.DATETIME'>":
+                    text = (str(text))[0:10]
+                self.setItem( cursor.rowcount - 1, c, QCustomTableWidgetItem(text))
             #만약 셀렉트한 테이블의 튜플이 INIT_ROW 보다 많으면, 자동으로 적재할 테이블을 늘린다.
             if ( cursor.rowcount >= self.rowCount()):
                 self.setRowCount(self.rowCount + self.INIT_ROW)
@@ -286,5 +290,6 @@ class QCustomTable(QTableWidget):
         fs = self.fileRead(_fileName)
         for f in fs:
             self.queryLoadWithParam(f, _param)
+
     def refresh(self):
         self.select(self.tableName)

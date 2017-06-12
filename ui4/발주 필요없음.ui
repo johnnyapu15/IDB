@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>903</width>
-    <height>298</height>
+    <width>905</width>
+    <height>269</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>판매 내역</string>
+    <string>발주 내역</string>
    </property>
    <property name="flat">
     <bool>true</bool>
@@ -32,7 +32,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>80</y>
+      <y>40</y>
       <width>860</width>
       <height>140</height>
      </rect>
@@ -62,64 +62,38 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget_11">
+   <widget class="QWidget" name="horizontalLayoutWidget_4">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>40</y>
-      <width>331</width>
-      <height>36</height>
+      <x>520</x>
+      <y>190</y>
+      <width>351</width>
+      <height>46</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_23">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_10">
-       <item>
-        <widget class="QLabel" name="label_9">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>판매ID</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="text">
+        <string>추가</string>
+       </property>
+      </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_11">
-       <item>
-        <widget class="QLineEdit" name="lineEdit_14"/>
-       </item>
-      </layout>
+      <widget class="QPushButton" name="pushButton_5">
+       <property name="text">
+        <string>삭제</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_6">
+       <property name="text">
+        <string>발주</string>
+       </property>
+      </widget>
      </item>
     </layout>
-   </widget>
-   <widget class="QPushButton" name="pushButton_5">
-    <property name="geometry">
-     <rect>
-      <x>760</x>
-      <y>230</y>
-      <width>112</width>
-      <height>34</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>환불</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_6">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>44</y>
-      <width>80</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>검색</string>
-    </property>
    </widget>
   </widget>
  </widget>

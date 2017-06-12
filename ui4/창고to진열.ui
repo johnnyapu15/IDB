@@ -33,7 +33,7 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>331</width>
+      <width>381</width>
       <height>63</height>
      </rect>
     </property>
@@ -205,19 +205,6 @@
     </property>
     <property name="text">
      <string>근데 수량 입력받는걸 그냥 여기서 하면 안되나?</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_7">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>40</y>
-      <width>80</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>검색</string>
     </property>
    </widget>
   </widget>

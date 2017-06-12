@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>7</number>
+    <number>4</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="widget" native="true">
@@ -757,8 +757,8 @@
         <rect>
          <x>10</x>
          <y>60</y>
-         <width>331</width>
-         <height>61</height>
+         <width>361</width>
+         <height>63</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_25">
@@ -834,19 +834,6 @@
          <layout class="QGridLayout" name="gridLayout_2"/>
         </widget>
        </widget>
-      </widget>
-      <widget class="QPushButton" name="pushButton_33">
-       <property name="geometry">
-        <rect>
-         <x>350</x>
-         <y>60</y>
-         <width>80</width>
-         <height>60</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>검색</string>
-       </property>
       </widget>
      </widget>
     </widget>
@@ -1024,19 +1011,6 @@
         </item>
        </layout>
       </widget>
-      <widget class="QPushButton" name="pushButton_34">
-       <property name="geometry">
-        <rect>
-         <x>350</x>
-         <y>65</y>
-         <width>80</width>
-         <height>27</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>검색</string>
-       </property>
-      </widget>
      </widget>
     </widget>
    </widget>
@@ -1179,19 +1153,6 @@
          </widget>
         </item>
        </layout>
-      </widget>
-      <widget class="QPushButton" name="pushButton_38">
-       <property name="geometry">
-        <rect>
-         <x>350</x>
-         <y>65</y>
-         <width>80</width>
-         <height>27</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>검색</string>
-       </property>
       </widget>
      </widget>
     </widget>
@@ -1336,19 +1297,6 @@
         </item>
        </layout>
       </widget>
-      <widget class="QPushButton" name="pushButton_6">
-       <property name="geometry">
-        <rect>
-         <x>350</x>
-         <y>65</y>
-         <width>80</width>
-         <height>27</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>검색</string>
-       </property>
-      </widget>
      </widget>
     </widget>
    </widget>
@@ -1492,19 +1440,6 @@
         </item>
        </layout>
       </widget>
-      <widget class="QPushButton" name="pushButton_7">
-       <property name="geometry">
-        <rect>
-         <x>350</x>
-         <y>65</y>
-         <width>80</width>
-         <height>27</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>검색</string>
-       </property>
-      </widget>
      </widget>
     </widget>
    </widget>
@@ -1598,8 +1533,8 @@
         <rect>
          <x>10</x>
          <y>60</y>
-         <width>331</width>
-         <height>61</height>
+         <width>361</width>
+         <height>71</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -1657,19 +1592,6 @@
          </layout>
         </item>
        </layout>
-      </widget>
-      <widget class="QPushButton" name="pushButton_20">
-       <property name="geometry">
-        <rect>
-         <x>350</x>
-         <y>60</y>
-         <width>80</width>
-         <height>60</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>검색</string>
-       </property>
       </widget>
      </widget>
     </widget>
@@ -1876,19 +1798,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QPushButton" name="pushButton_30">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>65</y>
-        <width>80</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>검색</string>
-      </property>
-     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="page_2">
@@ -2037,52 +1946,13 @@
         </widget>
        </widget>
       </widget>
-      <widget class="QWidget" name="horizontalLayoutWidget_22">
-       <property name="geometry">
-        <rect>
-         <x>630</x>
-         <y>440</y>
-         <width>241</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_38">
-        <item>
-         <widget class="QPushButton" name="pushButton_21">
-          <property name="text">
-           <string>고용</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_22">
-          <property name="text">
-           <string>정보 변경</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QPushButton" name="pushButton_31">
-       <property name="geometry">
-        <rect>
-         <x>350</x>
-         <y>60</y>
-         <width>80</width>
-         <height>60</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>검색</string>
-       </property>
-      </widget>
       <widget class="QWidget" name="horizontalLayoutWidget_14">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>60</y>
-         <width>331</width>
-         <height>61</height>
+         <width>461</width>
+         <height>63</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_29">
@@ -2128,6 +1998,45 @@
            <widget class="QLineEdit" name="lineEdit_21"/>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_47">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>검색</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="horizontalLayoutWidget_22">
+       <property name="geometry">
+        <rect>
+         <x>630</x>
+         <y>440</y>
+         <width>241</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_38">
+        <item>
+         <widget class="QPushButton" name="pushButton_21">
+          <property name="text">
+           <string>고용</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_22">
+          <property name="text">
+           <string>정보 변경</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
