@@ -66,6 +66,19 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_25.clicked.connect(self.del_RTN)
         ########################
 
+        #####폐기 관련###########
+        
+        #폐기 생성 버튼
+        self.pushButton_42.clicked.connect(self.ins_RTN)
+        #폐기 검색버튼
+        self.pushButton_6.clicked.connect(self.search_RTN)
+        #폐기 버튼
+        self.pushButton_44.clicked.connect(self.exe_RTN)
+        #폐기 삭제 버튼
+        self.pushButton_43.clicked.connect(self.del_RTN)
+        ########################
+
+
         #################################################
 
         self.pushButton_42.clicked.connect(self.call_DPROD)     #폐기물품
