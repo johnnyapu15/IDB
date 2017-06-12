@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>907</width>
-    <height>302</height>
+    <height>332</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <x>10</x>
      <y>20</y>
      <width>880</width>
-     <height>281</height>
+     <height>301</height>
     </rect>
    </property>
    <property name="title">
@@ -28,40 +28,6 @@
    <property name="flat">
     <bool>true</bool>
    </property>
-   <widget class="QScrollArea" name="scrollArea_11">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>80</y>
-      <width>860</width>
-      <height>140</height>
-     </rect>
-    </property>
-    <property name="widgetResizable">
-     <bool>true</bool>
-    </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents_11">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>858</width>
-       <height>138</height>
-      </rect>
-     </property>
-     <widget class="QWidget" name="gridLayoutWidget_11">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>861</width>
-        <height>131</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_11"/>
-     </widget>
-    </widget>
-   </widget>
    <widget class="QWidget" name="horizontalLayoutWidget_11">
     <property name="geometry">
      <rect>
@@ -104,7 +70,7 @@
     <property name="geometry">
      <rect>
       <x>630</x>
-      <y>230</y>
+      <y>260</y>
       <width>240</width>
       <height>36</height>
      </rect>
@@ -141,6 +107,97 @@
     <property name="text">
      <string>검색</string>
     </property>
+   </widget>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>860</width>
+      <height>170</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>창고물품</string>
+     </attribute>
+     <widget class="QScrollArea" name="scrollArea_12">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>853</width>
+        <height>138</height>
+       </rect>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents_12">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>851</width>
+         <height>136</height>
+        </rect>
+       </property>
+       <widget class="QWidget" name="gridLayoutWidget_12">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>861</width>
+          <height>131</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_12"/>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>진열물품</string>
+     </attribute>
+     <widget class="QScrollArea" name="scrollArea_13">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>853</width>
+        <height>138</height>
+       </rect>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents_15">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>851</width>
+         <height>136</height>
+        </rect>
+       </property>
+       <widget class="QWidget" name="gridLayoutWidget_15">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>861</width>
+          <height>131</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_15"/>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>
