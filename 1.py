@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
+from PyQt5 import QtGui
 from oracle import *
 import jjap
 
@@ -93,9 +94,12 @@ class MyWindow(QMainWindow, form_class):
         self.lineEdit.editingFinished.connect(self.set0)
         self.comboBox.currentIndexChanged.connect(self.selected_widget)
         self.stackedWidget.setCurrentIndex(0) #첫화면 띄우도록
+        self.pushButton_23.clicked.connect(self.call_NEW_PROD)
+        self.pushButton_29.clicked.connect(self.call_DEL_PROD)
+
     def timeout(self):
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
-
+        
     def set0(self): #위젯을 판매 페이지로
         self.stackedWidget.setCurrentIndex(0)   
         self.comboBox.setCurrentIndex(0)
@@ -210,9 +214,13 @@ class MyWindow(QMainWindow, form_class):
         self.w1 = ADD_MEMBERSHIP()
         self.w1.show()      
 ####재웅 끝####    
-   
-
-    
+    def call_NEW_PROD(self):
+        self.w1=NEW_PROD(self.t2)
+        self.w1.pushButton.clicked.connect(self.w1.close)
+        self.w1.pushButton_21.clicked.connect(self.w1.addNewProduct)
+        self.w1.show()
+    def call_DEL_PROD(self):
+        jjap.bt2(self,self.t2,'query_1301.txt',{'ProdID':self.t2.item(self.t2.currentRow(), 0).text()})
 
     #버튼이 클릭되었을 때 해당 테이블을 리프레쉬합니다.
     def msgClicked(self, table):
@@ -499,7 +507,35 @@ class ADD_MEMBERSHIP(QDialog,uic.loadUiType("ui/멤버쉽 가입.ui")[0]):
 ####재웅 끝#####        
 
         
+####수환 시작####
+class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
+      def __init__(self,table):
+        super().__init__()
+        self.setupUi(self)
+        self.lineEdit_13.setValidator(QtGui.QIntValidator())
+        self.lineEdit_9.setValidator(QtGui.QIntValidator())
+        self.lineEdit_12.setValidator(QtGui.QIntValidator())
+        self.lineEdit_12.setValidator(QtGui.QIntValidator())
+        self.table = table
+        
+      def addNewProduct(self):
+          if self.lineEdit_6.text() == "" or self.lineEdit_13.text()=="" or self.lineEdit_9.text()=="" or self.lineEdit_10.text()=="" or self.lineEdit_12.text() == "":
+              mb = QMessageBox(self, text = '모든 칸을 채워야 합니다!')
+              mb.show()
+              return 
+          dic = {'prodname':self.lineEdit_6.text(),'maincatcode':self.comboBox.currentText(),'subcatcode':self.comboBox_2.currentText(),'customercost':int(self.lineEdit_13.text()),
+          'sellprice':int(self.lineEdit_9.text()),'distribper':int(self.lineEdit_10.text()),'exclusive':1 if self.checkBox.isChecked() else 0,'buyprice':int(self.lineEdit_12.text())}
+          if dic['sellprice']<=0 or dic['customercost']<=0 or dic['buyprice']<=0:
+              mb = QMessageBox(self, text = '가격은 0이상이여야 합니다.')
+              mb.show()
+              return
+          print (dic)
+          jjap.bt1(self,self.table,'query_1201.txt',dic)
+      def msgClicked(self, table):
+         table.refresh()   
+#### 수환 끝 ####
 
+        
 
 if __name__ == "__main__":
     global cursor
