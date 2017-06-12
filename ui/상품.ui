@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>904</width>
-    <height>339</height>
+    <height>327</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -69,7 +69,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>120</y>
+      <y>110</y>
       <width>860</width>
       <height>140</height>
      </rect>
@@ -103,8 +103,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>50</y>
-      <width>471</width>
+      <y>40</y>
+      <width>331</width>
       <height>63</height>
      </rect>
     </property>
@@ -146,26 +146,13 @@
        </item>
       </layout>
      </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_39">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>검색</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
       <x>756</x>
-      <y>270</y>
+      <y>260</y>
       <width>115</width>
       <height>34</height>
      </rect>
@@ -178,13 +165,26 @@
     <property name="geometry">
      <rect>
       <x>630</x>
-      <y>270</y>
+      <y>260</y>
       <width>115</width>
       <height>34</height>
      </rect>
     </property>
     <property name="text">
      <string>추가</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_7">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>40</y>
+      <width>80</width>
+      <height>62</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>검색</string>
     </property>
    </widget>
   </widget>

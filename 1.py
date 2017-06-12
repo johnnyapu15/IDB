@@ -48,6 +48,9 @@ class MyWindow(QMainWindow, form_class):
         self.t8.doubleClicked.connect(self.call_ORDPROD)   #필요물품 추가
         self.pushButton_8.clicked.connect(self.dep_ORD)
         self.pushButton_19.clicked.connect(self.exe_ORD)    #발주하기
+        self.pushButton_34.clicked.connect(self.search_ORD) #날짜 검색
+        self.dateEdit.setDate(datetime.date.today())
+        self.dateEdit_5.setDate(datetime.date.today())
         ########################
 
         #####반품 관련###########
@@ -116,6 +119,10 @@ class MyWindow(QMainWindow, form_class):
     def exe_ORD(self):
         mb = QMessageBox(self, text = self.t8.item(self.t8.currentRow(),1).text() + '번 주문이 발주되었습니다.')
         mb.show()
+    #날짜로 검색
+    def search_ORD(self):
+        self.t8.fileExecute('query_0204.txt',{'START_DAY':self.dateEdit.text(), 'END_DAY':self.dateEdit_5.text()})
+        
     #############################
 
     #####반품관련#################
@@ -244,14 +251,47 @@ class RPROD(QDialog,uic.loadUiType("ui/반품추가.ui")[0]):
         self.t2.select("DISPROD")
         self.gridLayout_12.addWidget(self.t1)
         self.gridLayout_15.addWidget(self.t2)
+        self.dateEdit.setDate(datetime.date.today())
+        self.t1.doubleClicked.connect(self.addItem)
+        self.t2.doubleClicked.connect(self.addItem)
+        self.pushButton_2.clicked.connect(self.addItem)
         
-        self.t1.doubleClicked.connect(lambda: self.addItem(self.t1))
-        self.t2.doubleClicked.connect(lambda: self.addItem(self.t2))
     #반품물품에 물품 추가. 테이블에서 더블클릭한 것을 추가함
-    def addItem(self, table):
+    #반품물품에는 추가함과 동시에 빼내온 테이블에서는 삭제하여야함.
+    def addItem(self):
         #table은 창고 혹은 진열
-        r = table.currentRow()
-        jjap.bt1(parent.t5, 'query_0501.txt', {'PROD_ID':''})
+        if self.tabWidget.currentIndex() == 0:
+            table = self.t1
+            r = table.currentRow()
+            n = table.item(r,1).text()
+        elif self.tabWidget.currentIndex() == 1:
+            table = self.t2
+            r = table.currentRow()
+            n = table.item(r,2).text()
+        #너무 많은 반품 요구
+        if int(n) < int(self.lineEdit_4.text()):
+            mb = QMessageBox(self, text = '반품량이 너무 많습니다!')
+            print(2)
+            mb.show()
+            return 0
+        #반품물품에 생성
+        self.parent().t5.fileExecute('query_0501.txt', {'PROD_ID':table.item(r, 0).text(),
+         'RETURN_REQUEST_QUANTITY':self.lineEdit_4.text(),'RETURN_CAUSE_CODE':self.comboBox.currentText(), 
+         'RETURN_DAT':str(self.dateEdit.date())})
+        #창고물품 / 진열물품에서 제외
+        if self.tabWidget.currentIndex() == 0:
+            if n == self.lineEdit_4.text():
+                table.fileExecute('query_0504.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,2).text()})
+            else:
+                table.fileExecute('query_0505.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,2).text(), 'QUANTITY':table.item(r,1).text()})
+
+        elif self.tabWidget.currentIndex() == 1:
+            if n == self.lineEdit_4.text():
+                table.fileExecute('query_0502.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,3).text()})
+            else:
+                table.fileExecute('query_0503.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,3).text(), 'QUANTITY':table.item(r,2).text()})
+                
+
         
 class D_PROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
     def __init__(self):

@@ -1,0 +1,5 @@
+--QUERY_0204
+----날짜 두개 사이에 있는 주문 목록을 출력
+SELECT *
+FROM ORD
+WHERE ORD_DAT BETWEEN :START_DAY AND :END_DAY;
