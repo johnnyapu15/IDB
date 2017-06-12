@@ -287,9 +287,17 @@ class QCustomTable(QTableWidget):
 
     
     def fileExecute(self, _fileName, _param):
-        fs = self.fileRead(_fileName)
-        for f in fs:
-            self.queryLoadWithParam(f, _param)
+        try:
+            f = open('query/'+_fileName, 'r')
+            querys = f.read()
+            querys = querys.rstrip(';')
+            self.queryLoadWithParam(querys, _param)
+
+        except FileNotFoundError as e:
+            mb = QMessageBox(self)
+            #
+            mb.setText("오류! : " + e.strerror)
+            mb.show()
 
     def refresh(self):
         self.select(self.tableName)

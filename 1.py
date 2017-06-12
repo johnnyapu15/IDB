@@ -93,8 +93,24 @@ class MyWindow(QMainWindow, form_class):
         for i in range(w1.t1.rowCount()):
             if w1.t1.item(i,4).text() == 'None':
                 dic = {'ORD_ID':w1.t1.item(i,2).text(),'PROD_ID':w1.t1.item(i,0).text(),
-                'ORD_RESULT_QUANTITY':w1.t1.item(i,3).text(),'DEPOSIT_DAT':str(datetime.date.today())}
-                w1.t1.fileExecute('query_0301.txt', dic)
+                'ORD_RESULT_QUANTITY':w1.t1.item(i,3).text(),'DEPOSIT_DAT':str(datetime.date.today()), 'MANUFACTURE_DAT':str(datetime.date.today())}
+
+                w1.t1.fileExecute('query_0301.txt', 
+                {'ORD_ID':dic['ORD_ID'], 'PROD_ID':dic['PROD_ID'], 'ORD_RESULT_QUANTITY':dic['ORD_RESULT_QUANTITY']
+                , 'DEPOSIT_DAT':dic['DEPOSIT_DAT']})
+                tmpt = QCustomTable()
+
+                tmpt.fileExecute('query_0302.txt',{'PROD_ID':dic['PROD_ID'],'MANUFACTURE_DAT':dic['MANUFACTURE_DAT']})
+                if tmpt.rowCount() == 0:
+                    #없을 경우 새로 생성
+                    tmpt.fileExecute('query_0304.txt', 
+                    {'QUANTITY':dic['ORD_RESULT_QUANTITY'], 'MANUFACTURE_DAT':dic['MANUFACTURE_DAT'],
+                    'PROD_ID':dic['PROD_ID']})
+                else:
+                    #있을 경우 추가
+                    tmpt.fileExecute('query_0303.txt', 
+                    {'QUANTITY':dic['ORD_RESULT_QUANTITY'], 'MANUFACTURE_DAT':dic['MANUFACTURE_DAT'],
+                    'PROD_ID':dic['PROD_ID']})
         mb = QMessageBox(self,text = '정상수령 처리되었습니다.')
         mb.show()
     def exe_ORD(self):
@@ -164,11 +180,28 @@ class ORD_PROD(QDialog,uic.loadUiType("ui/필요물품.ui")[0]):
         for i in range(self.t1.rowCount()):
             if self.t1.item(i,4).text() != 'None':
                 dic = {'ORD_ID':self.t1.item(i,2).text(),'PROD_ID':self.t1.item(i,0).text(),
-                'ORD_RESULT_QUANTITY':self.t1.item(i,4).text(), 'DEPOSIT_DAT':self.t1.item(i,5).text()}
+                'ORD_RESULT_QUANTITY':self.t1.item(i,4).text(), 'DEPOSIT_DAT':self.t1.item(i,5).text(), 'MANUFACTURE_DAT':str(datetime.date.today())}
                 if dic['DEPOSIT_DAT'] == 'None':
                     dic['DEPOSIT_DAT'] = str(datetime.date.today())
-                    print(dic['DEPOSIT_DAT'])
-                self.t1.fileExecute('query_0301.txt', dic)
+                self.t1.fileExecute('query_0301.txt', 
+                {'ORD_ID':dic['ORD_ID'], 'PROD_ID':dic['PROD_ID'], 'ORD_RESULT_QUANTITY':dic['ORD_RESULT_QUANTITY']
+                , 'DEPOSIT_DAT':dic['DEPOSIT_DAT']})
+                tmpt = QCustomTable()
+
+                tmpt.fileExecute('query_0302.txt',{'PROD_ID':dic['PROD_ID'],'MANUFACTURE_DAT':dic['MANUFACTURE_DAT']})
+                if tmpt.rowCount() == 0:
+                    #없을 경우 새로 생성
+                    tmpt.fileExecute('query_0304.txt', 
+                    {'QUANTITY':dic['ORD_RESULT_QUANTITY'], 'MANUFACTURE_DAT':dic['MANUFACTURE_DAT'],
+                    'PROD_ID':dic['PROD_ID']})
+                else:
+                    #있을 경우 추가
+                    tmpt.fileExecute('query_0303.txt', 
+                    {'QUANTITY':dic['ORD_RESULT_QUANTITY'], 'MANUFACTURE_DAT':dic['MANUFACTURE_DAT'],
+                    'PROD_ID':dic['PROD_ID']})
+                mb = QMessageBox(self,text = "창고물품에 추가하였습니다.")
+                mb.show()
+                
         self.find_id('')
 
 class ORDPROD_FIND(QDialog,uic.loadUiType("ui/필요물품검색.ui")[0]):
@@ -180,7 +213,7 @@ class ORDPROD_FIND(QDialog,uic.loadUiType("ui/필요물품검색.ui")[0]):
         self.t1.select('PROD')
         self.ord_id = 0
         #검색버튼
-        self.pushButton.clicked.connect(self.search)
+        self.pushButton_6.clicked.connect(self.search)
         #테이블 아이템 더블클릭 -> 해당 아이템 정보를 전달해야함
         self.t1.doubleClicked.connect(self.addItem)
         #완료버튼
@@ -218,7 +251,7 @@ class RPROD(QDialog,uic.loadUiType("ui/반품추가.ui")[0]):
     def addItem(self, table):
         #table은 창고 혹은 진열
         r = table.currentRow()
-        jjap.bt1(parent.t5, )
+        jjap.bt1(parent.t5, 'query_0501.txt', {'PROD_ID':''})
         
 class D_PROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
     def __init__(self):
