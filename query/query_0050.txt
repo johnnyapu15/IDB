@@ -1,0 +1,5 @@
+--QUERY_0050
+----물품명을 이용해 물품 검색
+SELECT *
+FROM PROD
+WHERE (PROD_NAME LIKE :PROD_NAME);

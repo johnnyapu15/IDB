@@ -1,0 +1,4 @@
+--QUERY_0402
+----�� �ʿ买ǰ�� �����Ѵ�.
+DELETE FROM ORDPROD
+WHERE (ORD_ID = :ORD_ID) AND (PROD_ID = :PROD_ID);

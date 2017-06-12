@@ -1,0 +1,6 @@
+--QUERY_0301
+----수령 개수로 ORD COST 수정? -> 결산처리가 너무 복잡해짐.
+----이때, 적절히 환불하는 프로세스가 이루어졌다고 가정한다.
+UPDATE ORDPROD
+SET ORD_RESULT_QUANTITY = :ORD_RESULT_QUANTITY, DEPOSIT_DAT = :DEPOSIT_DAT
+WHERE (ORD_ID = :ORD_ID) AND (PROD_ID = :PROD_ID);

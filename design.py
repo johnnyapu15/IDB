@@ -11,7 +11,7 @@ class MyWindow(QMainWindow, uic.loadUiType("test1.ui")[0]):
         self.setupUi(self)
         self.t1 = QCustomTable()
         self.gridLayout.addWidget(self.t1)
-        self.t1.columnSet("ORD")
+        self.t1.columnSet("ORD",1)
         #self.form_class.tableWidget_2.clicked.coonect(self.btn_clicked)
         self.pushButton.clicked.connect(self.btn_clicked)   
         # self.lineEdit_3.textChanged.connect(self.lineEditChanged)

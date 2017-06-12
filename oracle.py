@@ -126,12 +126,10 @@ COLUMN_DIC ={'PUB_DEP_ID':'공공요금 수납 ID',
 'DISPOSE_PROCESS_DAT':'폐기 처리 날짜',
 'PROD_ID':'물품 ID',
 'PROD_NAME':'물품명',
-'ORDER_REQUEST_QUANTITY':'발주 의뢰 수량',
-'ORDER_COST':'발주액',
+'ORD_REQUEST_QUANTITY':'발주 의뢰 수량',
+'ORD_RESULT_QUANTITY':'발주 결과 수량',
 'DEPOSIT_RESULT_QUANTITY':'수령 결과 수량',
 'DEPOSIT_DAT':'수령 날짜',
-'ORDER_ID':'주문 ID',
-'ORDER_DAT':'주문 날짜',
 'ATM_ID':'ATM ID',
 'BRANCH_ID':'지점 ID'}
 
@@ -162,7 +160,7 @@ class QCustomTable(QTableWidget):
         self.INIT_ROW = 100
 
         self.columnData = list
-
+        self.tableName = ''
         self.horizontalHeader().setStyleSheet("border: 3px ; border-bottom-style : double; border-color : lightgray; background : white")
         self.setColumnCount(1)
         self.setRowCount(1)
@@ -181,7 +179,7 @@ class QCustomTable(QTableWidget):
         #컬럼의 사이즈를 텍스트 길이에 fit.
         self.horizontalHeader().setSectionResizeMode(3) 
     def rowLoad(self):
-        for item in  cursor:
+        for item in cursor:
             for c in range(0,self.columnCount()):
                 self.setItem( cursor.rowcount - 1, c, QCustomTableWidgetItem(item[c]))
             #만약 셀렉트한 테이블의 튜플이 INIT_ROW 보다 많으면, 자동으로 적재할 테이블을 늘린다.
@@ -194,6 +192,7 @@ class QCustomTable(QTableWidget):
     def select(self, _entityName):
         #엔티티 이름을 매개변수로 받아 셀렉트 문을 실행하고 표시한다.
         try:
+            self.tableName = _entityName
             cursor.execute("SELECT * FROM " + _entityName)
             self.setRowCount(self.INIT_ROW)
             self.columnLoad()
@@ -203,7 +202,21 @@ class QCustomTable(QTableWidget):
             mb = QMessageBox(self)
             #cx_Oracle에서 제공하는 익셉션인 e는 args 를 포함하며, 이 클래스는 message 라는 변수를 가진다.
             mb.setText("오류! : " + e.args[0].message)
-            mb.show()    
+            mb.show()   
+    def execute(self, _query):
+        #여기서 접근가능한 커서로 쿼리를 실행한다.
+        try:
+            cursor.execute(_query)
+            if cursor.description != None:
+                self.setRowCount(self.INIT_ROW)
+                self.columnLoad()
+                self.rowLoad()
+            cursor.execute("COMMIT")
+        except DatabaseError as e : 
+            mb = QMessageBox(self)
+            #cx_Oracle에서 제공하는 익셉션인 e는 args 를 포함하며, 이 클래스는 message 라는 변수를 가진다.
+            mb.setText("오류! : " + e.args[0].message)
+            mb.show()     
     #테이블 이름으로 검색해서 컬럼값만 지정해줌
     def columnSet(self, _entityName, _row):
         try:
@@ -225,12 +238,11 @@ class QCustomTable(QTableWidget):
         if ((_query != '') & (_query != '\n')):
             try:
                 cursor.execute(_query)
-                cursor.execute("COMMIT")
                 if cursor.description != None:
                     self.setRowCount(self.INIT_ROW)
                     self.columnLoad()
                     self.rowLoad()
-        
+                cursor.execute("COMMIT")
             except DatabaseError as e:
                 mb = QMessageBox(self)
             #cx_Oracle에서 제공하는 익셉션인 e는 args 를 포함하며, 이 클래스는 message 라는 변수를 가진다.
@@ -243,12 +255,11 @@ class QCustomTable(QTableWidget):
         if ((_query != '') & (_query != '\n')):
             try:
                 cursor.execute(_query, _param)
-                cursor.execute("COMMIT")
                 if cursor.description != None:
                     self.setRowCount(self.INIT_ROW)
                     self.columnLoad()
                     self.rowLoad()
-        
+                cursor.execute("COMMIT")
             except DatabaseError as e:
                 mb = QMessageBox(self)
             #cx_Oracle에서 제공하는 익셉션인 e는 args 를 포함하며, 이 클래스는 message 라는 변수를 가진다.
@@ -258,7 +269,7 @@ class QCustomTable(QTableWidget):
     def fileRead(self, _fileName):
         try:
             
-            f = open(_fileName, 'r')
+            f = open('query/'+_fileName, 'r')
             querys = f.read()
             querys = querys.split(';')
 
@@ -269,3 +280,11 @@ class QCustomTable(QTableWidget):
             #
             mb.setText("오류! : " + e.strerror)
             mb.show()
+
+    
+    def fileExecute(self, _fileName, _param):
+        fs = self.fileRead(_fileName)
+        for f in fs:
+            self.queryLoadWithParam(f, _param)
+    def refresh(self):
+        self.select(self.tableName)
