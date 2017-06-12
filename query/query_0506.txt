@@ -1,0 +1,5 @@
+--QUERY_0506
+----반품물품 삭제
+--물품아이디, 리턴아이디
+DELETE FROM RPROD
+WHERE (RETURN_ID = :RETURN_ID)

@@ -173,13 +173,6 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string>삭제</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
    <widget class="QPushButton" name="pushButton_6">
@@ -237,7 +230,7 @@
      <rect>
       <x>200</x>
       <y>270</y>
-      <width>181</width>
+      <width>193</width>
       <height>41</height>
      </rect>
     </property>
