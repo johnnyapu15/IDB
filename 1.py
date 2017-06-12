@@ -27,6 +27,8 @@ class MyWindow(QMainWindow, form_class):
         self.gridLayout_2.addWidget(self.t2)    
         self.t2.select("PROD")
         
+        self.gridLayout_12.addWidget(self.t6)   #폐기물품
+        self.t6.select("DPROD")
        
 
         self.gridLayout_8.addWidget(self.t8)
@@ -63,17 +65,17 @@ class MyWindow(QMainWindow, form_class):
         #####폐기 관련###########
         
         #폐기 생성 버튼
-        self.pushButton_42.clicked.connect(self.ins_RTN)
+        self.pushButton_42.clicked.connect(self.ins_DPROD)
         #폐기 검색버튼
-        self.pushButton_6.clicked.connect(self.search_RTN)
+        self.pushButton_6.clicked.connect(self.search_DPROD)
         #폐기 버튼
-        self.pushButton_44.clicked.connect(self.exe_RTN)
+        self.pushButton_44.clicked.connect(self.exe_DPROD)
         #폐기 삭제 버튼
-        self.pushButton_43.clicked.connect(self.del_RTN)
+        self.pushButton_43.clicked.connect(self.del_DPROD)
         ########################
 
 
-        #################################################
+        ########################정주안 작업끝라인####################
         #####재웅 추가####
         self.pushButton_32.clicked.connect(self.call_ADD_SELLPROD)   #상품.ui 판매페이지에서
         self.pushButton_23.clicked.connect(self.call_PROD)   #상품.ui 상품목록페이지에서
@@ -162,6 +164,19 @@ class MyWindow(QMainWindow, form_class):
         self.t5.fileExecute('query_0508.txt',{'START_DAY':self.dateEdit_2.text(), 'END_DAY':self.dateEdit_6.text()})
         
     #############################
+    #####폐기 관련################
+    def ins_DPROD(self):
+        self.w1 = DPROD()
+        self.w1.show()
+    
+    def del_DPROD(self):
+        jjap.bt2(self, self.t6,'query_0603.txt', {'PROD_ID':self.t6.item(self.t6.currentRow(), 0).text(), 'DISPOSE_PROCESS_DAT':self.t6.item(self.t6.currentRow(), 1).text()})
+
+
+    def search_DPROD(self):
+        self.t6.fileExecute('query_0602.txt',{'START_DAY':self.dateEdit_4.text(), 'END_DAY':self.dateEdit_7.text()})
+        
+    #####폐기 관련끝##############
 ###재웅 추가### 
     def call_ADD_SELLPROD(self):
         self.w1 = ADD_SELLPROD()
@@ -363,16 +378,15 @@ class RPROD(QDialog,uic.loadUiType("ui/반품추가.ui")[0]):
             self.t1.fileExecute('query_0051.txt', {'PROD_NAME':'%' + self.lineEdit_3.text() + '%'})
             self.t2.fileExecute('query_0052.txt', {'PROD_NAME':'%' + self.lineEdit_3.text() + '%'})
 
-<<<<<<< HEAD
-class D_PROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
-=======
+
+
 #####재웅 추가#####
 class ADD_SELLPROD(QDialog,uic.loadUiType("ui/판매상품.ui")[0]):
     def __init__(self):
         super().__init__() 
         self.setupUi(self)
 class PROD(QDialog,uic.loadUiType("ui/상품.ui")[0]):
->>>>>>> 52cca94d5996dcd9b2155821a46931295bcfdfdf
+
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -389,6 +403,11 @@ class DPROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
     def __init__(self):
         super().__init__() 
         self.setupUi(self)
+        self.t1 = QCustomTable()
+        self.t2 = QCustomTable()
+        self.gridLayout_12.addWidget(self.t1)
+        self.gridLayout_15.addWidget(self.t2)
+        
 class LPROD(QDialog,uic.loadUiType("ui/재고파악.ui")[0]):
     def __init__(self):
         super().__init__() 
