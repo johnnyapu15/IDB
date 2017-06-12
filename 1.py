@@ -68,6 +68,11 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_42.clicked.connect(self.ins_DPROD)
         #폐기 검색버튼
         self.pushButton_6.clicked.connect(self.search_DPROD)
+<<<<<<< HEAD
+=======
+        #폐기 버튼
+        # self.pushButton_44.clicked.connect(self.exe_DPROD)
+>>>>>>> 59f17c5860ce71e389297322a595534dbe84cbee
         #폐기 삭제 버튼
         self.pushButton_43.clicked.connect(self.del_DPROD)
         ########################
@@ -87,10 +92,13 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_48.clicked.connect(self.call_ROSTER)   #근무표.ui 직원페이지에서
         self.pushButton_51.clicked.connect(self.call_ADD_MEMBERSHIP)   #멤버쉽 가입.ui 멤버쉽페이지에서
         #####재웅 끝######
-        
+        self.timer = QTimer(self)
+        self.timer.start(1000)
+        self.timer.timeout.connect(self.timeout)
         self.lineEdit.editingFinished.connect(self.set0)
         self.comboBox.currentIndexChanged.connect(self.selected_widget)
         self.stackedWidget.setCurrentIndex(0) #첫화면 띄우도록
+    def timeout(self):
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
 
     def set0(self): #위젯을 판매 페이지로
