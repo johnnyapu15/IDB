@@ -30,7 +30,7 @@ class MyWindow(QMainWindow, form_class):
         self.gridLayout_13.addWidget(self.t10)
         self.gridLayout_14.addWidget(self.t11)
         self.gridLayout.addWidget(self.t1)
-     
+        self.t1.select("EMP")
         self.gridLayout_5.addWidget(self.t5)    #반품물품
         self.t5.select("RPROD")
 
@@ -276,22 +276,10 @@ class MyWindow(QMainWindow, form_class):
             mb.close()
     def call_lastday_settle(self,mb):
         if mb.clickedButton().text() == "예":
-            dic = {'BRANCHID':jjap.BRAN_ID,'DAT':self.dateEdit_11.text()}
-            dic2 = {'DAT':self.dateEdit_11.text()}
-            self.t9.fileExecute('query_1501.txt',dic)
-            self.t9.fileExecute('query_1502.txt',dic2)
-            self.t9.fileExecute('query_1503.txt',dic2)
-            self.t9.fileExecute('query_1504.txt',dic2)
-            self.t9.fileExecute('query_1505.txt',dic2)
-            self.t9.fileExecute('query_1506.txt',dic2)
-            self.t9.fileExecute('query_1507.txt',dic2)
-            self.t9.fileExecute('query_1508.txt',dic2)
-            self.t9.fileExecute('query_1509.txt',dic2)
-            self.t9.fileExecute('query_1510.txt',dic2)
-            self.t9.fileExecute('query_1511.txt',dic2)
-            self.t9.fileExecute('query_1512.txt',dic2)
-            self.t9.fileExecute('query_1513.txt',dic2)
-            self.t9.fileExecute('query_1514.txt',dic2)
+            self.w1 = LASTDAY_SETTLE(self.dateEdit_11.date())
+            self.w1.pushButton_20.clicked.connect(self.w1.executeSettle)
+            self.w1.pushButton_21.clicked.connect(self.w1.close)
+            self.w1.show()
         else:
             mb.close()
 
@@ -327,7 +315,7 @@ class MyWindow(QMainWindow, form_class):
             mb.buttonClicked.connect(mb.close)
             mb.show()
     def call_hire_employee(self):
-        self.w1=HIRE_EMP()
+        self.w1=HIRE_EMP(self.t1)
         self.w1.pushButton_22.clicked.connect(self.w1.close)
         self.w1.pushButton_21.clicked.connect(self.w1.hireEmployee)
         self.w1.show()
@@ -710,6 +698,33 @@ class wareToDis_Count(QDialog,uic.loadUiType("ui/창고to진열 수량 결정.ui
 
         
 ####수환 시작####
+class LASTDAY_SETTLE(QDialog,uic.loadUiType("ui/월말결산.ui")[0]):
+    def __init__(self,table,date):
+        super().__init__()
+        self.setupUi(self)
+        self.lineEdit.setValidator(QtGui.QIntValidator())
+        self.table = table
+        self.dat =date
+
+    def executeSettle(self):
+            dic = {'BRANCHID':jjap.BRAN_ID,'DAT':date}
+            dic2 = {'DAT':self.dat}
+            dic3 = {'DAT':date,'UPKEEP':self.lineEdit.text()}
+            self.table.fileExecute('query_1501.txt',dic)
+            self.table.fileExecute('query_1502.txt',dic2)
+            self.table.fileExecute('query_1503.txt',dic2)
+            self.table.fileExecute('query_1504.txt',dic2)
+            self.table.fileExecute('query_1505.txt',dic2)
+            self.table.fileExecute('query_1506.txt',dic2)
+            self.table.fileExecute('query_1507.txt',dic2)
+            self.table.fileExecute('query_1508.txt',dic2)
+            self.table.fileExecute('query_1509.txt',dic2)
+            self.table.fileExecute('query_1510.txt',dic2)
+            self.table.fileExecute('query_1511.txt',dic2)
+            self.table.fileExecute('query_1512.txt',dic2)
+            self.table.fileExecute('query_1513.txt',dic2)
+            self.table.fileExecute('query_1514.txt',dic2)
+
 class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
       def __init__(self,table):
         super().__init__()
@@ -738,15 +753,27 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
       def msgClicked(self, table):
          table.refresh()
 class HIRE_EMP(QDialog,uic.loadUiType("ui/직원고용.ui")[0]):
-    def __init__(self):
+    def __init__(self,table):
         super().__init__()
         self.setupUi(self)
         self.lineEdit_9.setValidator(QtGui.QIntValidator())
         self.lineEdit_11.setValidator(QtGui.QIntValidator())
+        self.table =table
     def hireEmployee(self):
         if self.lineEdit_7.text()=="":
             mb = QMessageBox(self, text = '이름은 필수 항목입니다!')
             mb.show()
+            return
+        else:
+            dic={'BRANCH_ID':jjap.BRAN_ID,'EMPGRADE': 0 if self.comboBox.currentText()=='점장' else 1,'EMPNAME':self.lineEdit_7.text(),'CONTACT': '0' if self.lineEdit_9.text() == "" else self.lineEdit_9.text(),
+            'SALARY_CODE':0 if self.comboBox_2.currentText()=='연봉' else 1 if self.comboBox_2.currentText()=='월급' else 2,'SALARY':0 if self.lineEdit_11.text() =="" else int(self.lineEdit_11.text())}
+            print(dic)
+            jjap.bt1(self, self.table,'query_1601.txt',dic)
+            self.close()
+    
+    def msgClicked(self, table):
+        table.refresh()
+
             
 
 #### 수환 끝 ####
