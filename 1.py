@@ -308,7 +308,9 @@ class ORDPROD_FIND(QDialog,uic.loadUiType("ui/필요물품검색.ui")[0]):
         #필요물품 추가. 테이블 더블클릭시 발생.
         tmpRow = int(self.t1.currentRow())
         if (tmpRow >= 0 and self.lineEdit_17.text() != ''):
-            jjap.bt1(self, self.t1, 'query_0102.txt', {'ORD_ID':str(self.ord_id), 'PROD_ID':self.t1.item(tmpRow, 0).text(), 'ORD_REQUEST_QUANTITY':self.lineEdit_17.text(), 'DEPOSIT_DAT':''})
+            jjap.bt1(self, self.t1, 'query_0102.txt', 
+            {'ORD_ID':str(self.ord_id), 'PROD_ID':self.t1.item(tmpRow, 0).text(), 
+            'ORD_REQUEST_QUANTITY':self.lineEdit_17.text(), 'DEPOSIT_DAT':''})
         elif self.lineEdit_17.text() == '':
             mb = QMessageBox(self)
             mb.setText("Error : 수량을 입력해주세요.")
@@ -416,11 +418,13 @@ class DPROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
         self.t2 = QCustomTable()
         self.gridLayout_12.addWidget(self.t1)
         self.gridLayout_15.addWidget(self.t2)
-
+        self.t1.doubleClicked.connect(self.addItem)
+        self.t1.doubleClicked.connect(self.addItem)
+        self.pushButton_2.clicked.connect(self.addItem)
         self.t1.select("WAREPROD")
         self.t2.select("DISPROD")
         
-    def addItem(self, table):
+    def addItem(self):
         #table은 창고 혹은 진열
         #테이블 선택 안했을 때 예외처리
         if self.tabWidget.currentIndex() == 0:
@@ -446,7 +450,7 @@ class DPROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
             return 0
         #너무 많은 폐기 요구
         if int(n) < int(self.lineEdit_17.text()):
-            mb = QMessageBox(self, text = '반품량이 너무 많습니다!')
+            mb = QMessageBox(self, text = '폐기수량이 너무 많습니다!')
             mb.show()
             return 0
         #폐기물품에 생성
@@ -461,7 +465,7 @@ class DPROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
                 table.fileExecute('query_0505.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,2).text(), 'QUANTITY':int(n) - int(self.lineEdit_17.text())})
 
         elif self.tabWidget.currentIndex() == 1:
-            if n == self.lineEdit_4.text():
+            if n == self.lineEdit_17.text():
                 table.fileExecute('query_0502.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,3).text()})
             else:
                 table.fileExecute('query_0503.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,3).text(), 'QUANTITY':int(n) - int(self.lineEdit_17.text())})

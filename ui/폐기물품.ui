@@ -60,7 +60,11 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_11">
        <item>
-        <widget class="QDateEdit" name="dateEdit"/>
+        <widget class="QDateEdit" name="dateEdit">
+         <property name="calendarPopup">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
