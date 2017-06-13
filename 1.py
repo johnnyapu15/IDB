@@ -20,12 +20,13 @@ class MyWindow(QMainWindow, form_class):
         self.t6 = QCustomTable()    #DPROD
         self.t7 = QCustomTable()    #EVENT
         self.t8 = QCustomTable()    #ORD
-        self.t9 = QCustomTable()
+        self.t9 = QCustomTable()    #BUDGET
 
 
         self.t10 = QCustomTable()   #창고물품
         self.t11 = QCustomTable()   #진열물품
         self.t12 = QCustomTable()   #판매
+        self.t13 = QCustomTable()   #CUSTOMER
         self.t10.select("WAREPROD")
         self.t11.select("DISPROD")
         self.t12.select("SELL")
@@ -44,8 +45,8 @@ class MyWindow(QMainWindow, form_class):
         self.gridLayout_12.addWidget(self.t6)   #폐기물품
         self.t6.select("DPROD")
        
-        
-
+        self.gridLayout_15.addWidget(self.t13)
+        self.t13.select("CUSTOMER")
 
         self.gridLayout_8.addWidget(self.t8)
         self.t8.select("ORD")
@@ -128,6 +129,7 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_21.clicked.connect(self.call_hire_employee)
         self.t1.doubleClicked.connect(self.changeEmpInfo)
         self.pushButton_22.clicked.connect(self.call_DEL_EMP)
+        self.pushButton_52.clicked.connect(self.searchMembership)
 
     def timeout(self):
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
@@ -341,7 +343,8 @@ class MyWindow(QMainWindow, form_class):
         self.w1.pushButton_2.clicked.connect(self.w1.endwork)
         self.w1.show()          
     def call_ADD_MEMBERSHIP(self):
-        self.w1 = ADD_MEMBERSHIP()
+        self.w1 = ADD_MEMBERSHIP(self.t13)
+        self.w1.pushButton_21.clicked.connect(self.w1.registerMembership)
         self.w1.show()      
 ####재웅 끝####
 ####수환 시작####    
@@ -428,6 +431,24 @@ class MyWindow(QMainWindow, form_class):
            self.w1.pushButton_21.clicked.connect(self.w1.changeInfo)
            self.w1.pushButton_22.clicked.connect(self.w1.close)
            self.w1.show()
+    def searchMembership(self):
+        name = self.lineEdit_9.text()
+        id = self.lineEdit_10.text()
+
+        if id !="" and name !="":
+            self.t13.fileExecute('query_0004.txt',{'customerid':id,'customername':name})
+        elif id!="":
+            self.t13.fileExecute('query_0005.txt',{'customerid':id})
+        elif name!="":
+            self.t13.fileExecute('query_0006.txt',{'customername':name})
+        else:
+            mb = QMessageBox(self)
+            mb.setText('아이디나 이름을 입력해주세요')
+            mb.addButton('확인', 1)
+            mb.buttonClicked.connect(mb.close)
+            mb.show()
+
+
 
 
             
@@ -807,9 +828,26 @@ class ROSTER(QDialog,uic.loadUiType("ui/근무표.ui")[0]):
     
     
 class ADD_MEMBERSHIP(QDialog,uic.loadUiType("ui/멤버쉽 가입.ui")[0]):
-    def __init__(self):
+    def __init__(self,table):
         super().__init__() 
-        self.setupUi(self) 
+        self.setupUi(self)
+        self.lineEdit_13.setValidator(QtGui.QIntValidator())
+        self.table =table
+    def registerMembership(self):
+        name = self.lineEdit_6.text()
+        gender = 0 if self.comboBox.currentText()=='남자' else 1
+        age = int(0 if self.lineEdit_13.text()=='' else self.lineEdit_13.text())
+        if(name=='' or age ==0):
+            mb = QMessageBox(self, text = '이름과 나이를 입력해주세요')
+            mb.show()
+            return
+        dic = {'customername':name,'gender':gender,'age':age}
+        jjap.bt1(self,self.table,'query_2101.txt',dic)
+    def msgClicked(self, table):
+         table.refresh()
+
+
+
 
 ####재웅 끝#####        
 
@@ -929,7 +967,6 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
           dic = {'PRODNAME':self.lineEdit_6.text(),'MAINCATCODE':self.comboBox.currentText(),'SUBCATCODE':self.comboBox_2.currentText(),'CUSTOMERCOST':int(self.lineEdit_13.text()),
           'SELLPRICE':int(self.lineEdit_9.text()),'DISTRIBPER':int(self.lineEdit_10.text()),'EXCLUSIVE':(1 if self.checkBox.isChecked() else 0),'BUYPRICE':int(self.lineEdit_12.text())}
           if dic['SELLPRICE']<=0 or dic['CUSTOMERCOST']<=0 or dic['BUYPRICE']<=0:
-
               mb = QMessageBox(self, text = '가격은 0이상이여야 합니다.')
               mb.show()
               return 0
