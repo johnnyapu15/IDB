@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>11</number>
+    <number>7</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="widget" native="true">
@@ -149,36 +149,18 @@
          </disabled>
         </palette>
        </property>
-       <row>
-        <property name="text">
-         <string>1</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>2</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>3</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>4</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>5</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>6</string>
-        </property>
-       </row>
+       <property name="rowCount">
+        <number>0</number>
+       </property>
+       <property name="columnCount">
+        <number>8</number>
+       </property>
+       <attribute name="horizontalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
        <column>
         <property name="text">
          <string>상품코드</string>
@@ -214,6 +196,16 @@
        <column>
         <property name="text">
          <string>합계</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>할인단위</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>할인률</string>
         </property>
        </column>
       </widget>
@@ -255,7 +247,7 @@
         <x>0</x>
         <y>350</y>
         <width>941</width>
-        <height>220</height>
+        <height>223</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -284,6 +276,12 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="maximumSize">
+              <size>
+               <width>210</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="palette">
               <palette>
                <active>
@@ -320,6 +318,12 @@
                 </colorrole>
                </disabled>
               </palette>
+             </property>
+             <property name="font">
+              <font>
+               <family>Calibri</family>
+               <pointsize>24</pointsize>
+              </font>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -348,6 +352,12 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="maximumSize">
+              <size>
+               <width>210</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="palette">
               <palette>
                <active>
@@ -384,6 +394,12 @@
                 </colorrole>
                </disabled>
               </palette>
+             </property>
+             <property name="font">
+              <font>
+               <family>Calibri</family>
+               <pointsize>24</pointsize>
+              </font>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -412,6 +428,12 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="maximumSize">
+              <size>
+               <width>210</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="palette">
               <palette>
                <active>
@@ -448,6 +470,12 @@
                 </colorrole>
                </disabled>
               </palette>
+             </property>
+             <property name="font">
+              <font>
+               <family>Calibri</family>
+               <pointsize>24</pointsize>
+              </font>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -483,6 +511,12 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="maximumSize">
+              <size>
+               <width>210</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="palette">
               <palette>
                <active>
@@ -519,6 +553,12 @@
                 </colorrole>
                </disabled>
               </palette>
+             </property>
+             <property name="font">
+              <font>
+               <family>Calibri</family>
+               <pointsize>24</pointsize>
+              </font>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -547,6 +587,12 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="maximumSize">
+              <size>
+               <width>210</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="palette">
               <palette>
                <active>
@@ -583,6 +629,12 @@
                 </colorrole>
                </disabled>
               </palette>
+             </property>
+             <property name="font">
+              <font>
+               <family>Calibri</family>
+               <pointsize>24</pointsize>
+              </font>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -906,7 +958,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>60</y>
+         <y>40</y>
          <width>331</width>
          <height>63</height>
         </rect>
@@ -955,7 +1007,7 @@
        <property name="geometry">
         <rect>
          <x>350</x>
-         <y>60</y>
+         <y>40</y>
          <width>80</width>
          <height>62</height>
         </rect>
@@ -968,9 +1020,9 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>130</y>
-         <width>424</width>
-         <height>300</height>
+         <y>120</y>
+         <width>861</width>
+         <height>160</height>
         </rect>
        </property>
        <property name="currentIndex">
@@ -985,8 +1037,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>418</width>
-           <height>269</height>
+           <width>855</width>
+           <height>129</height>
           </rect>
          </property>
          <property name="widgetResizable">
@@ -997,8 +1049,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>416</width>
-            <height>267</height>
+            <width>853</width>
+            <height>127</height>
            </rect>
           </property>
           <widget class="QWidget" name="gridLayoutWidget_13">
@@ -1006,8 +1058,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>421</width>
-             <height>271</height>
+             <width>861</width>
+             <height>131</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_13"/>
@@ -1019,10 +1071,10 @@
       <widget class="QTabWidget" name="tabWidget_2">
        <property name="geometry">
         <rect>
-         <x>450</x>
-         <y>130</y>
-         <width>424</width>
-         <height>300</height>
+         <x>10</x>
+         <y>290</y>
+         <width>861</width>
+         <height>160</height>
         </rect>
        </property>
        <property name="currentIndex">
@@ -1037,8 +1089,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>418</width>
-           <height>269</height>
+           <width>855</width>
+           <height>129</height>
           </rect>
          </property>
          <property name="widgetResizable">
@@ -1049,8 +1101,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>416</width>
-            <height>267</height>
+            <width>853</width>
+            <height>127</height>
            </rect>
           </property>
           <widget class="QWidget" name="gridLayoutWidget_14">
@@ -1058,8 +1110,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>421</width>
-             <height>271</height>
+             <width>861</width>
+             <height>131</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_14"/>
@@ -1068,24 +1120,18 @@
         </widget>
        </widget>
       </widget>
-      <widget class="QWidget" name="horizontalLayoutWidget_24">
+      <widget class="QPushButton" name="pushButton_47">
        <property name="geometry">
         <rect>
-         <x>450</x>
-         <y>440</y>
-         <width>421</width>
-         <height>41</height>
+         <x>760</x>
+         <y>460</y>
+         <width>113</width>
+         <height>34</height>
         </rect>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_40">
-        <item>
-         <widget class="QPushButton" name="pushButton_47">
-          <property name="text">
-           <string>완료</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <property name="text">
+        <string>완료</string>
+       </property>
       </widget>
      </widget>
     </widget>
@@ -1592,9 +1638,9 @@
       <widget class="QWidget" name="horizontalLayoutWidget_18">
        <property name="geometry">
         <rect>
-         <x>510</x>
+         <x>630</x>
          <y>440</y>
-         <width>361</width>
+         <width>241</width>
          <height>41</height>
         </rect>
        </property>
@@ -2484,10 +2530,10 @@
       <widget class="QWidget" name="horizontalLayoutWidget_22">
        <property name="geometry">
         <rect>
-         <x>670</x>
+         <x>630</x>
          <y>440</y>
-         <width>195</width>
-         <height>31</height>
+         <width>241</width>
+         <height>36</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_38">
@@ -2588,12 +2634,6 @@
         <string>근무표</string>
        </property>
       </widget>
-      <zorder>scrollArea</zorder>
-      <zorder>horizontalLayoutWidget_22</zorder>
-      <zorder>pushButton_31</zorder>
-      <zorder>horizontalLayoutWidget_14</zorder>
-      <zorder>pushButton_48</zorder>
-      <zorder>pushButton_21</zorder>
      </widget>
      <zorder>groupBox_8</zorder>
      <zorder>horizontalLayoutWidget_4</zorder>
