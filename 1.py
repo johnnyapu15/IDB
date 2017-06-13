@@ -20,17 +20,15 @@ class MyWindow(QMainWindow, form_class):
         self.t6 = QCustomTable()    #DPROD
         self.t7 = QCustomTable()    #EVENT
         self.t8 = QCustomTable()    #ORD
-<<<<<<< HEAD
-        
+        self.t9 = QCustomTable()
+
+
         self.t10 = QCustomTable()   #창고물품
         self.t11 = QCustomTable()   #진열물품
         self.t10.select("WAREPROD")
         self.t11.select("DISPROD")
         self.gridLayout_13.addWidget(self.t10)
         self.gridLayout_14.addWidget(self.t11)
-=======
-        self.t9 = QCustomTable()
->>>>>>> e990108873c2c84205eb11d33353cd4bc2e8195f
      
         self.gridLayout_5.addWidget(self.t5)    #반품물품
         self.t5.select("RPROD")
@@ -87,7 +85,8 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_43.clicked.connect(self.del_DPROD)
         ########################
 
-
+        #######창고 to 진열#######
+        self.t10.doubleClicked.connect(self.wareToDis)
         ########################정주안 작업끝라인####################
         #####재웅 추가####
         self.pushButton_32.clicked.connect(self.call_ADD_SELLPROD)   #상품.ui 판매페이지에서
@@ -108,7 +107,7 @@ class MyWindow(QMainWindow, form_class):
         self.lineEdit.editingFinished.connect(self.set0)
         self.comboBox.currentIndexChanged.connect(self.selected_widget)
         self.stackedWidget.setCurrentIndex(0) #첫화면 띄우도록
-        self.pushButton_23.clicked.connect(self.call_NEW_PROD)
+        #self.pushButton_23.clicked.connect(self.call_NEW_PROD)
         self.pushButton_29.clicked.connect(self.call_DEL_PROD)
         self.pushButton_40.clicked.connect(self.call_settle_account)
 
@@ -198,6 +197,13 @@ class MyWindow(QMainWindow, form_class):
         self.t6.fileExecute('query_0602.txt',{'START_DAY':self.dateEdit_4.text(), 'END_DAY':self.dateEdit_7.text()})
         
     #####폐기 관련끝##############
+    #####창고 to 진열############
+    def wareToDis(self):
+        self.w1 = wareToDis_Count(self)
+        self.w1.show()
+    
+    ###############################
+        
 ###재웅 추가### 
     def call_ADD_SELLPROD(self):
         self.w1 = ADD_SELLPROD()
@@ -237,7 +243,7 @@ class MyWindow(QMainWindow, form_class):
         self.w1.show()
     def call_DEL_PROD(self):
         jjap.bt2(self,self.t2,'query_1301.txt',{'ProdID':self.t2.item(self.t2.currentRow(), 0).text()})
-<<<<<<< HEAD
+
     def call_settle(self):
         dic = {'BRANCHID':jjap.BRAN_ID,'DAT':datetime.date.today()}
         self.t9.fileExecute('query_1401.txt',dic)        
@@ -252,8 +258,6 @@ class MyWindow(QMainWindow, form_class):
            mb.show()
            mb.buttonClicked.connect(self.call_settle)
   
-=======
->>>>>>> 304c45498b327d1b5ffb8c0843910443b2bcf5e8
 
     #버튼이 클릭되었을 때 해당 테이블을 리프레쉬합니다.
     def msgClicked(self, table):
@@ -552,8 +556,30 @@ class ROSTER(QDialog,uic.loadUiType("ui/근무표.ui")[0]):
 class ADD_MEMBERSHIP(QDialog,uic.loadUiType("ui/멤버쉽 가입.ui")[0]):
     def __init__(self):
         super().__init__() 
-        self.setupUi(self)              
+        self.setupUi(self) 
+
 ####재웅 끝#####        
+
+class wareToDis_Count(QDialog,uic.loadUiType("ui/창고to진열 수량 결정.ui")[0]):
+    def __init__(self, parent):
+        super().__init__(parent) 
+        self.setupUi(self) 
+        self.pushButton_20.clicked.connect(self.ok)
+
+    def ok(self):
+        PRODID = self.parent().t10.item(self.t10.currentRow(), 0)
+        MAN_DAT = self.parent().t10.item(self.t10.currentRow(), 2)
+        QUAN = self.parent().t10.item(self.t10.currentRow(), 1)
+        QUAN_ORD = self.lineEdit.text()
+        if QUAN_ORD == '':
+            mb = QMessageBox(self, text = '수량을 입력하세요.')
+            mb.show()
+        else:
+            if QUAN > QUAN_ORD:
+                self.parent().t10.fileExecute('query_1105.txt',
+                {'PROD_ID':str(PRODID),
+                'MANUFACTURE_DAT':str(MAN_DAT)})
+                #self.parent().
 
         
 ####수환 시작####
@@ -571,19 +597,15 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
           if self.lineEdit_6.text() == "" or self.lineEdit_13.text()=="" or self.lineEdit_9.text()=="" or self.lineEdit_10.text()=="" or self.lineEdit_12.text() == "":
               mb = QMessageBox(self, text = '모든 칸을 채워야 합니다!')
               mb.show()
-              return 
-<<<<<<< HEAD
+              return 0
+
           dic = {'PRODNAME':self.lineEdit_6.text(),'MAINCATCODE':self.comboBox.currentText(),'SUBCATCODE':self.comboBox_2.currentText(),'CUSTOMERCOST':int(self.lineEdit_13.text()),
           'SELLPRICE':int(self.lineEdit_9.text()),'DISTRIBPER':int(self.lineEdit_10.text()),'EXCLUSIVE':(1 if self.checkBox.isChecked() else 0),'BUYPRICE':int(self.lineEdit_12.text())}
           if dic['SELLPRICE']<=0 or dic['CUSTOMERCOST']<=0 or dic['BUYPRICE']<=0:
-=======
-          dic = {'prodname':self.lineEdit_6.text(),'maincatcode':self.comboBox.currentText(),'subcatcode':self.comboBox_2.currentText(),'customercost':int(self.lineEdit_13.text()),
-          'sellprice':int(self.lineEdit_9.text()),'distribper':int(self.lineEdit_10.text()),'exclusive':1 if self.checkBox.isChecked() else 0,'buyprice':int(self.lineEdit_12.text())}
-          if dic['sellprice']<=0 or dic['customercost']<=0 or dic['buyprice']<=0:
->>>>>>> 304c45498b327d1b5ffb8c0843910443b2bcf5e8
+
               mb = QMessageBox(self, text = '가격은 0이상이여야 합니다.')
               mb.show()
-              return
+              return 0
           print (dic)
           jjap.bt1(self,self.table,'query_1201.txt',dic)
       def msgClicked(self, table):

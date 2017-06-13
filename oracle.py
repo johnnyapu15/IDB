@@ -179,10 +179,10 @@ class QCustomTable(QTableWidget):
         #컬럼의 사이즈를 텍스트 길이에 fit.
         # self.horizontalHeader().setSectionResizeMode(3)
         self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch) 
-        self.horizontalHeader().setSectionResizeMode(0,QHeaderView.ResizeToContents) 
-        self.horizontalHeader().setSectionResizeMode(1,QHeaderView.ResizeToContents) 
-        self.horizontalHeader().setSectionResizeMode(4,QHeaderView.ResizeToContents) 
-        self.horizontalHeader().setSectionResizeMode(6,QHeaderView.ResizeToContents)  
+#        self.horizontalHeader().setSectionResizeMode(0,QHeaderView.ResizeToContents) 
+#       self.horizontalHeader().setSectionResizeMode(1,QHeaderView.ResizeToContents) 
+#        self.horizontalHeader().setSectionResizeMode(4,QHeaderView.ResizeToContents) 
+#        self.horizontalHeader().setSectionResizeMode(6,QHeaderView.ResizeToContents)  
     def rowLoad(self):
         for item in cursor:
             for c in range(0,self.columnCount()):
