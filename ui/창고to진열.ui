@@ -194,6 +194,11 @@
      <string>검색</string>
     </property>
    </widget>
+   <zorder>horizontalLayoutWidget_10</zorder>
+   <zorder>tabWidget</zorder>
+   <zorder>tabWidget_2</zorder>
+   <zorder>pushButton_7</zorder>
+   <zorder>pushButton_2</zorder>
   </widget>
   <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
