@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 --QUERY_0055
 ____물품ID로 물품에서 검색
 SELECT *
 FROM PROD
 WHERE PROD_ID = :PROD_ID
+=======
+SELECT * FROM EMP WHERE NAME LIKE ('%'||:empname||'%');
+>>>>>>> 76f5597f639e54bba7c5ccc4e45ac0520a285a60
