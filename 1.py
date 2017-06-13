@@ -209,10 +209,12 @@ class MyWindow(QMainWindow, form_class):
             #코드로 검색
             self.t10.fileExecute('query_0053.txt', {'PROD_ID':code})
             self.t11.fileExecute('query_0054.txt', {'PROD_ID':code})
+            self.hide()
         elif name != '':
             #상품명으로 검색
             self.t10.fileExecute('query_0051.txt', {'PROD_NAME':"%" + name + "%"})
             self.t11.fileExecute('query_0052.txt', {'PROD_NAME':"%" + name + "%"})
+            self.hide()
         else:
             mb = QMessageBox(self, text = '상품코드 혹은 상품명을 입력하세요.')
             mb.show()
@@ -486,6 +488,27 @@ class ADD_SELLPROD(QDialog,uic.loadUiType("ui/판매상품.ui")[0]):
     def __init__(self):
         super().__init__() 
         self.setupUi(self)
+        self.pushButton_7.clicked.connect(self.search_PROD)
+        self.t1 = QCustomTable()
+        self.t1.select('PROD')
+        self.gridLayout_8.addWidget(self.t1)
+        self.t1.doubleClicked.connect(self.addItem)
+        
+    def search_PROD(self):
+        code = self.lineEdit_18.text()
+        name = self.lineEdit_19.text()
+        if code != '':
+            #코드로 검색
+            self.t10.fileExecute('query_0055.txt', {'PROD_ID':code})
+        elif name != '':
+            #상품명으로 검색
+            self.t1.fileExecute('query_0050.txt', {'PROD_NAME':"%" + name + "%"})
+        else:
+            mb = QMessageBox(self, text = '상품코드 혹은 상품명을 입력하세요.')
+            mb.show()
+    def addItem(self):
+        print(22)
+        
 class PROD(QDialog,uic.loadUiType("ui/상품.ui")[0]):
 
     def __init__(self):
