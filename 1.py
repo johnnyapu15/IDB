@@ -6,6 +6,7 @@ from oracle import *
 import jjap
 
 form_class = uic.loadUiType("ui/1.ui")[0]
+date =[31,28,31,30,31,30,31,31,30,31,30,31]
 
 class MyWindow(QMainWindow, form_class):
     def __init__(self):
@@ -20,7 +21,7 @@ class MyWindow(QMainWindow, form_class):
         self.t6 = QCustomTable()    #DISPROD
         self.t7 = QCustomTable()    #EVENT
         self.t8 = QCustomTable()    #ORD
-        
+        self.t9 = QCustomTable()
      
         self.gridLayout_5.addWidget(self.t5)    #반품물품
         self.t5.select("RPROD")
@@ -35,7 +36,8 @@ class MyWindow(QMainWindow, form_class):
         self.gridLayout_8.addWidget(self.t8)
         self.t8.select("ORD")
 
-        
+        self.gridLayout_10.addWidget(self.t9)
+        self.t8.select("BUDGET")
 
         ###################정주안 작업####################
 
@@ -96,6 +98,7 @@ class MyWindow(QMainWindow, form_class):
         self.stackedWidget.setCurrentIndex(0) #첫화면 띄우도록
         self.pushButton_23.clicked.connect(self.call_NEW_PROD)
         self.pushButton_29.clicked.connect(self.call_DEL_PROD)
+        self.pushButton_40.clicked.connect(self.call_settle_account)
 
     def timeout(self):
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
@@ -124,6 +127,7 @@ class MyWindow(QMainWindow, form_class):
             if w1.t1.item(i,4).text() == 'None':
                 dic = {'ORD_ID':w1.t1.item(i,2).text(),'PROD_ID':w1.t1.item(i,0).text(),
                 'ORD_RESULT_QUANTITY':w1.t1.item(i,3).text(),'DEPOSIT_DAT':str(datetime.date.today()), 'MANUFACTURE_DAT':str(datetime.date.today())}
+
 
                 w1.t1.fileExecute('query_0301.txt', 
                 {'ORD_ID':dic['ORD_ID'], 'PROD_ID':dic['PROD_ID'], 'ORD_RESULT_QUANTITY':dic['ORD_RESULT_QUANTITY']
@@ -221,6 +225,20 @@ class MyWindow(QMainWindow, form_class):
         self.w1.show()
     def call_DEL_PROD(self):
         jjap.bt2(self,self.t2,'query_1301.txt',{'ProdID':self.t2.item(self.t2.currentRow(), 0).text()})
+    def call_settle(self):
+        dic = {'BRANCHID':jjap.BRAN_ID,'DAT':datetime.date.today()}
+        self.t9.fileExecute('query_1401.txt',dic)        
+    def call_settle_account(self):
+        if date[QDate.currentDate().month()]==QDate.currentDate().day():
+            print ('test')
+        else:
+           mb = QMessageBox(self)
+           mb.setText("선택한 날짜로 결산합니다. 하시겠습니까?")
+           mb.addButton('예', 5)
+           mb.addButton('아니오', 6)
+           mb.show()
+           mb.buttonClicked.connect(self.call_settle)
+  
 
     #버튼이 클릭되었을 때 해당 테이블을 리프레쉬합니다.
     def msgClicked(self, table):
@@ -527,9 +545,9 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
               mb = QMessageBox(self, text = '모든 칸을 채워야 합니다!')
               mb.show()
               return 
-          dic = {'prodname':self.lineEdit_6.text(),'maincatcode':self.comboBox.currentText(),'subcatcode':self.comboBox_2.currentText(),'customercost':int(self.lineEdit_13.text()),
-          'sellprice':int(self.lineEdit_9.text()),'distribper':int(self.lineEdit_10.text()),'exclusive':1 if self.checkBox.isChecked() else 0,'buyprice':int(self.lineEdit_12.text())}
-          if dic['sellprice']<=0 or dic['customercost']<=0 or dic['buyprice']<=0:
+          dic = {'PRODNAME':self.lineEdit_6.text(),'MAINCATCODE':self.comboBox.currentText(),'SUBCATCODE':self.comboBox_2.currentText(),'CUSTOMERCOST':int(self.lineEdit_13.text()),
+          'SELLPRICE':int(self.lineEdit_9.text()),'DISTRIBPER':int(self.lineEdit_10.text()),'EXCLUSIVE':(1 if self.checkBox.isChecked() else 0),'BUYPRICE':int(self.lineEdit_12.text())}
+          if dic['SELLPRICE']<=0 or dic['CUSTOMERCOST']<=0 or dic['BUYPRICE']<=0:
               mb = QMessageBox(self, text = '가격은 0이상이여야 합니다.')
               mb.show()
               return
@@ -538,7 +556,6 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
       def msgClicked(self, table):
          table.refresh()   
 #### 수환 끝 ####
-
         
 
 if __name__ == "__main__":

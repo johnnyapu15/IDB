@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>6</number>
+    <number>10</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="widget" native="true">
@@ -2291,39 +2291,6 @@
        </widget>
       </widget>
      </widget>
-     <widget class="QWidget" name="horizontalLayoutWidget_10">
-      <property name="geometry">
-       <rect>
-        <x>510</x>
-        <y>440</y>
-        <width>361</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_32">
-       <item>
-        <widget class="QPushButton" name="pushButton_40">
-         <property name="text">
-          <string>추가</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_41">
-         <property name="text">
-          <string>삭제</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_46">
-         <property name="text">
-          <string>완료</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="horizontalLayoutWidget_21">
       <property name="geometry">
        <rect>
@@ -2378,6 +2345,24 @@
        <string>검색</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButton_40">
+      <property name="geometry">
+       <rect>
+        <x>296</x>
+        <y>65</y>
+        <width>80</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>결산</string>
+      </property>
+     </widget>
+     <zorder>scrollArea_10</zorder>
+     <zorder>horizontalLayoutWidget_21</zorder>
+     <zorder>pushButton_30</zorder>
+     <zorder>pushButton_40</zorder>
+     <zorder>pushButton_40</zorder>
     </widget>
    </widget>
    <widget class="QWidget" name="page_2">
