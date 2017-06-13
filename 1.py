@@ -220,7 +220,7 @@ class MyWindow(QMainWindow, form_class):
         self.w1.pushButton_21.clicked.connect(self.w1.addNewProduct)
         self.w1.show()
     def call_DEL_PROD(self):
-        jjap.bt2(self,self.t2,'query_1301.txt',{'ProdID':self.t2.item(self.t2.currentRow(), 0).text()})
+        jjap.bt2(self,self.t2,'query_1301.txt',{'PRODID':self.t2.item(self.t2.currentRow(), 0).text()})
 
     #버튼이 클릭되었을 때 해당 테이블을 리프레쉬합니다.
     def msgClicked(self, table):
@@ -527,9 +527,9 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
               mb = QMessageBox(self, text = '모든 칸을 채워야 합니다!')
               mb.show()
               return 
-          dic = {'prodname':self.lineEdit_6.text(),'maincatcode':self.comboBox.currentText(),'subcatcode':self.comboBox_2.currentText(),'customercost':int(self.lineEdit_13.text()),
-          'sellprice':int(self.lineEdit_9.text()),'distribper':int(self.lineEdit_10.text()),'exclusive':1 if self.checkBox.isChecked() else 0,'buyprice':int(self.lineEdit_12.text())}
-          if dic['sellprice']<=0 or dic['customercost']<=0 or dic['buyprice']<=0:
+          dic = {'PRODNAME':self.lineEdit_6.text(),'MAINCATCODE':self.comboBox.currentText(),'SUBCATCODE':self.comboBox_2.currentText(),'CUSTOMERCOST':int(self.lineEdit_13.text()),
+          'SELLPRICE':int(self.lineEdit_9.text()),'DISTRIBPER':int(self.lineEdit_10.text()),'EXCLUSIVE':1 if self.checkBox.isChecked() else 0,'BUYPRICE':int(self.lineEdit_12.text())}
+          if dic['SELLPRICE']<=0 or dic['CUSTOMERCOST']<=0 or dic['BUYPRICE']<=0:
               mb = QMessageBox(self, text = '가격은 0이상이여야 합니다.')
               mb.show()
               return
@@ -538,7 +538,6 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
       def msgClicked(self, table):
          table.refresh()   
 #### 수환 끝 ####
-
         
 
 if __name__ == "__main__":
