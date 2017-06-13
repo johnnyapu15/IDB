@@ -1,1 +1,1 @@
-SELECT * FROM EMP WHERE NAME LIKE ('%'||:empname||'%');
+SELECT * FROM EMP WHERE NAME LIKE ('%'||:empname||'%')

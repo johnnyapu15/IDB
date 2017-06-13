@@ -23,7 +23,11 @@
     </rect>
    </property>
    <property name="currentIndex">
+<<<<<<< HEAD
     <number>0</number>
+=======
+    <number>11</number>
+>>>>>>> ee5611c525c75f6fc35a7f8f21a684ff736459cb
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="widget" native="true">
@@ -2536,10 +2540,10 @@
       <widget class="QWidget" name="horizontalLayoutWidget_22">
        <property name="geometry">
         <rect>
-         <x>630</x>
+         <x>670</x>
          <y>440</y>
-         <width>241</width>
-         <height>41</height>
+         <width>195</width>
+         <height>31</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_38">
@@ -2553,7 +2557,7 @@
         <item>
          <widget class="QPushButton" name="pushButton_22">
           <property name="text">
-           <string>정보 변경</string>
+           <string>해고</string>
           </property>
          </widget>
         </item>
@@ -2640,6 +2644,12 @@
         <string>근무표</string>
        </property>
       </widget>
+      <zorder>scrollArea</zorder>
+      <zorder>horizontalLayoutWidget_22</zorder>
+      <zorder>pushButton_31</zorder>
+      <zorder>horizontalLayoutWidget_14</zorder>
+      <zorder>pushButton_48</zorder>
+      <zorder>pushButton_21</zorder>
      </widget>
      <zorder>groupBox_8</zorder>
      <zorder>horizontalLayoutWidget_4</zorder>
