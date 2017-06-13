@@ -1,0 +1,5 @@
+--QUERY_0103
+--필요물품 추가 / 삭제 / 수정시 주문의 발주액에 증액
+UPDATE ORD
+SET ORD_COST = :ORD_COST
+WHERE ORD_ID = :ORD_ID;

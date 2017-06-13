@@ -29,6 +29,18 @@ def bt2(sf, table, query, dic):
         mb.buttonClicked.connect(lambda: sf.msgClicked(table))
     except:
         print('연결오류')
+def bt3(sf, table, query, dic):
+    #수정 요청
+    mb = QMessageBox(sf)
+    mb.setText("수정하시겠습니까?")
+    mb.addButton('예', 5)
+    mb.addButton('아니오', 6)
+    mb.show()
+    mb.buttonClicked.connect(lambda: execute(mb, table, query, dic))
+    try:
+        mb.buttonClicked.connect(lambda: sf.msgClicked(table))
+    except:
+        print('연결오류')
 def execute(sf, table, query, dic):
     if sf.clickedButton().text() == "예":
         table.fileExecute(query, dic)
