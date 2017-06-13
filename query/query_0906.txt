@@ -1,2 +1,2 @@
-INSERT INTO LPROD
+﻿INSERT INTO LPROD
 VALUES (:ProdID,:LossCode.:Quantity,:Dat,:Round);
