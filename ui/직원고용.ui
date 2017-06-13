@@ -68,7 +68,7 @@
    <widget class="QPushButton" name="pushButton_21">
     <property name="geometry">
      <rect>
-      <x>425</x>
+      <x>300</x>
       <y>340</y>
       <width>115</width>
       <height>34</height>
@@ -149,7 +149,18 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox"/>
+        <widget class="QComboBox" name="comboBox">
+         <item>
+          <property name="text">
+           <string>점장</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>알바</string>
+          </property>
+         </item>
+        </widget>
        </item>
       </layout>
      </item>
@@ -214,7 +225,23 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_2"/>
+        <widget class="QComboBox" name="comboBox_2">
+         <item>
+          <property name="text">
+           <string>연봉</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>월급</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>시급</string>
+          </property>
+         </item>
+        </widget>
        </item>
       </layout>
      </item>
@@ -258,6 +285,19 @@
       </layout>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="pushButton_22">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>340</y>
+      <width>115</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>취소</string>
+    </property>
    </widget>
   </widget>
  </widget>
