@@ -66,7 +66,8 @@ class MyWindow(QMainWindow, form_class):
         #####폐기 관련###########
         
         #폐기 생성 버튼
-        self.pushButton_42.clicked.connect(self.ins_DPROD)
+        #GUI에서 연결함.
+        # self.pushButton_42.clicked.connect(self.ins_DPROD)
         #폐기 검색버튼
         self.pushButton_6.clicked.connect(self.search_DPROD)
         #폐기 삭제 버튼
@@ -108,7 +109,7 @@ class MyWindow(QMainWindow, form_class):
     
     ######발주관련################
     def call_ORDPROD(self):
-        self.w1 = ORD_PROD()
+        self.w1 = ORD_PROD(self)
         self.w1.find_id(self.t8.item(self.t8.currentRow(), 1).text())
         self.w1.show()          
     def ins_ORD(self):
@@ -117,7 +118,7 @@ class MyWindow(QMainWindow, form_class):
         jjap.bt2(self, self.t8, 'query_0401.txt', {'ORD_ID':self.t8.item(self.t8.currentRow(), 1).text()})
     #발주 정상수령 버튼
     def dep_ORD(self):
-        w1 = ORD_PROD()
+        w1 = ORD_PROD(self)
         w1.find_id(self.t8.item(self.t8.currentRow(), 1).text())
         
         for i in range(w1.t1.rowCount()):
@@ -171,11 +172,11 @@ class MyWindow(QMainWindow, form_class):
     #############################
     #####폐기 관련################
     def ins_DPROD(self):
-        self.w1 = DPROD()
+        self.w1 = DPROD(self)
         self.w1.show()
     
     def del_DPROD(self):
-        jjap.bt2(self, self.t6,'query_0603.txt', {'PROD_ID':self.t6.item(self.t6.currentRow(), 0).text(), 'DISPOSE_PROCESS_DAT':self.t6.item(self.t6.currentRow(), 1).text()})
+        jjap.bt2(self, self.t6,'query_0603.txt', {'PROD_ID':self.t6.item(self.t6.currentRow(), 0).text(), 'DISPOSE_PROCESS_DAT':self.t6.item(self.t6.currentRow(), 2).text()})
 
 
     def search_DPROD(self):
@@ -190,7 +191,7 @@ class MyWindow(QMainWindow, form_class):
         self.w1 = PROD()
         self.w1.show()    
     def call_DPROD(self):
-        self.w1 = DPROD()
+        self.w1 = DPROD(self)
         self.w1.show()    
     def call_LPROD(self):
         self.w1 = LPROD()
@@ -220,20 +221,21 @@ class MyWindow(QMainWindow, form_class):
         self.w1.pushButton_21.clicked.connect(self.w1.addNewProduct)
         self.w1.show()
     def call_DEL_PROD(self):
-        jjap.bt2(self,self.t2,'query_1301.txt',{'PRODID':self.t2.item(self.t2.currentRow(), 0).text()})
+        jjap.bt2(self,self.t2,'query_1301.txt',{'ProdID':self.t2.item(self.t2.currentRow(), 0).text()})
 
     #버튼이 클릭되었을 때 해당 테이블을 리프레쉬합니다.
     def msgClicked(self, table):
         table.refresh()
 
 class ORD_PROD(QDialog,uic.loadUiType("ui/필요물품.ui")[0]):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent):
+        super().__init__(parent)
         self.setupUi(self)
         self.t1 = QCustomTable()
         self.t1.select('ORDPROD')
         self.gridLayout_10.addWidget(self.t1)
         self.ord_id = 0
+        self.finished.connect(self.dest)
         #필요물품 추가
         self.pushButton_27.clicked.connect(self.call_ORDPROD_FIND)
         #필요물품 삭제(테이블에서 아이템 선택하고 있어야함)
@@ -248,6 +250,7 @@ class ORD_PROD(QDialog,uic.loadUiType("ui/필요물품.ui")[0]):
         if ord_id != '':
             self.ord_id = int(ord_id)
         self.t1.execute("select * from ordprod where ORD_ID = " + str(self.ord_id))
+        self.t1.fileExecute("query_0103.txt", {'ORD_ID':str(self.ord_id)})
         self.groupBox.setTitle("ORD_ID : " + str(self.ord_id) + " - 필요물품 목록")
     def call_ORDPROD_FIND(self):
         self.w1 = ORDPROD_FIND(self)
@@ -285,6 +288,8 @@ class ORD_PROD(QDialog,uic.loadUiType("ui/필요물품.ui")[0]):
                 mb.show()
                 
         self.find_id('')
+    def dest(self, i):
+        self.parent().t8.refresh()
 
 class ORDPROD_FIND(QDialog,uic.loadUiType("ui/필요물품검색.ui")[0]):
     def __init__(self, parent):
@@ -311,6 +316,7 @@ class ORDPROD_FIND(QDialog,uic.loadUiType("ui/필요물품검색.ui")[0]):
             jjap.bt1(self, self.t1, 'query_0102.txt', 
             {'ORD_ID':str(self.ord_id), 'PROD_ID':self.t1.item(tmpRow, 0).text(), 
             'ORD_REQUEST_QUANTITY':self.lineEdit_17.text(), 'DEPOSIT_DAT':''})
+            
         elif self.lineEdit_17.text() == '':
             mb = QMessageBox(self)
             mb.setText("Error : 수량을 입력해주세요.")
@@ -411,8 +417,8 @@ class ADD_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
         super().__init__() 
         self.setupUi(self)        
 class DPROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
-    def __init__(self):
-        super().__init__() 
+    def __init__(self, parent):
+        super().__init__(parent) 
         self.setupUi(self)
         self.t1 = QCustomTable()
         self.t2 = QCustomTable()
@@ -421,6 +427,7 @@ class DPROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
         self.t1.doubleClicked.connect(self.addItem)
         self.t1.doubleClicked.connect(self.addItem)
         self.pushButton_2.clicked.connect(self.addItem)
+        self.pushButton_6.clicked.connect(self.search)
         self.t1.select("WAREPROD")
         self.t2.select("DISPROD")
         
@@ -470,8 +477,14 @@ class DPROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
             else:
                 table.fileExecute('query_0503.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,3).text(), 'QUANTITY':int(n) - int(self.lineEdit_17.text())})
         self.hide()
-    
-
+    def search(self):
+        #유통기한 기준 검색.
+        if int(self.lineEdit_18.text()) >= 0:
+            self.t1.fileExecute('query_0604.txt', {'EXPIRATION_DAT':self.dateEdit.text(), 'STD_DAT':self.lineEdit_18.text()})
+            self.t2.fileExecute('query_0605.txt', {'EXPIRATION_DAT':self.dateEdit.text(), 'STD_DAT':self.lineEdit_18.text()})
+        else:
+            mb = QMessageBox(self, text = '검색 기준일을 바르게 설정하세요.')
+            mb.show()
 class LPROD(QDialog,uic.loadUiType("ui/재고파악.ui")[0]):
     def __init__(self):
         super().__init__() 
@@ -527,9 +540,9 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
               mb = QMessageBox(self, text = '모든 칸을 채워야 합니다!')
               mb.show()
               return 
-          dic = {'PRODNAME':self.lineEdit_6.text(),'MAINCATCODE':self.comboBox.currentText(),'SUBCATCODE':self.comboBox_2.currentText(),'CUSTOMERCOST':int(self.lineEdit_13.text()),
-          'SELLPRICE':int(self.lineEdit_9.text()),'DISTRIBPER':int(self.lineEdit_10.text()),'EXCLUSIVE':1 if self.checkBox.isChecked() else 0,'BUYPRICE':int(self.lineEdit_12.text())}
-          if dic['SELLPRICE']<=0 or dic['CUSTOMERCOST']<=0 or dic['BUYPRICE']<=0:
+          dic = {'prodname':self.lineEdit_6.text(),'maincatcode':self.comboBox.currentText(),'subcatcode':self.comboBox_2.currentText(),'customercost':int(self.lineEdit_13.text()),
+          'sellprice':int(self.lineEdit_9.text()),'distribper':int(self.lineEdit_10.text()),'exclusive':1 if self.checkBox.isChecked() else 0,'buyprice':int(self.lineEdit_12.text())}
+          if dic['sellprice']<=0 or dic['customercost']<=0 or dic['buyprice']<=0:
               mb = QMessageBox(self, text = '가격은 0이상이여야 합니다.')
               mb.show()
               return
@@ -538,6 +551,7 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
       def msgClicked(self, table):
          table.refresh()   
 #### 수환 끝 ####
+
         
 
 if __name__ == "__main__":
