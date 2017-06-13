@@ -225,7 +225,7 @@ class MyWindow(QMainWindow, form_class):
         
 ###재웅 추가### 
     def call_ADD_SELLPROD(self):
-        self.w1 = ADD_SELLPROD()
+        self.w1 = ADD_SELLPROD(self)
         self.w1.show()  
     def call_PROD(self):
         self.w1 = PROD()
@@ -499,8 +499,8 @@ class RPROD(QDialog,uic.loadUiType("ui/반품추가.ui")[0]):
 
 #####재웅 추가#####
 class ADD_SELLPROD(QDialog,uic.loadUiType("ui/판매상품.ui")[0]):
-    def __init__(self):
-        super().__init__() 
+    def __init__(self, parent):
+        super().__init__(parent) 
         self.setupUi(self)
         self.pushButton_7.clicked.connect(self.search_PROD)
         self.t1 = QCustomTable()
@@ -522,6 +522,7 @@ class ADD_SELLPROD(QDialog,uic.loadUiType("ui/판매상품.ui")[0]):
             mb.show()
     def addItem(self):
         print(22)
+        self.parent.tableWidget_2()
         
 class PROD(QDialog,uic.loadUiType("ui/상품.ui")[0]):
 
