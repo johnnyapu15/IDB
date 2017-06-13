@@ -1,0 +1,5 @@
+--QUERY_0053
+----물품코드을 이용해 창고물품 검색
+SELECT *
+FROM WAREPROD
+WHERE (PROD_ID = :PROD_ID);
