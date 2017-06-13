@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>Dialog</class>
  <widget class="QDialog" name="Dialog">
@@ -23,9 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-
     <number>10</number>
-
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="widget" native="true">
@@ -830,7 +828,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>291</height>
+           <height>301</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2"/>
@@ -1009,7 +1007,7 @@
              <x>0</x>
              <y>0</y>
              <width>421</width>
-             <height>261</height>
+             <height>271</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_13"/>
@@ -1061,7 +1059,7 @@
              <x>0</x>
              <y>0</y>
              <width>421</width>
-             <height>261</height>
+             <height>271</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_14"/>
@@ -1144,7 +1142,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>321</height>
+           <height>331</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_8"/>
@@ -1307,7 +1305,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>321</height>
+           <height>331</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_9"/>
@@ -1427,8 +1425,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>851</width>
-           <height>321</height>
+           <width>861</width>
+           <height>331</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_5"/>
@@ -1584,7 +1582,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>321</height>
+           <height>331</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_12"/>
@@ -1733,7 +1731,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>321</height>
+           <height>331</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_4"/>
@@ -1889,7 +1887,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>291</height>
+           <height>301</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_11"/>
@@ -2055,7 +2053,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>291</height>
+           <height>301</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_15"/>
@@ -2261,7 +2259,7 @@
           <x>0</x>
           <y>0</y>
           <width>861</width>
-          <height>321</height>
+          <height>331</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout_10"/>
@@ -2335,11 +2333,6 @@
        <string>결산</string>
       </property>
      </widget>
-     <zorder>scrollArea_10</zorder>
-     <zorder>horizontalLayoutWidget_21</zorder>
-     <zorder>pushButton_30</zorder>
-     <zorder>pushButton_40</zorder>
-     <zorder>pushButton_40</zorder>
     </widget>
    </widget>
    <widget class="QWidget" name="page_2">
@@ -2481,7 +2474,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>291</height>
+           <height>301</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout"/>
