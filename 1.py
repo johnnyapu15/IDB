@@ -99,7 +99,7 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_4.clicked.connect(self.call_UPDATE_EVENT)   #이벤트수정.ui 이벤트페이지에서
         #결산 페이지에서 월말결산.UI 창 언제 띄워야하지
         self.pushButton_21.clicked.connect(self.call_ADD_EMP)   #직원고용.ui 직원페이지에서
-        self.pushButton_22.clicked.connect(self.call_UPDATE_EMP)   #직원수정.ui 직원페이지에서
+        #self.pushButton_22.clicked.connect(self.call_UPDATE_EMP)   #직원수정.ui 직원페이지에서
         self.pushButton_48.clicked.connect(self.call_ROSTER)   #근무표.ui 직원페이지에서
         self.pushButton_51.clicked.connect(self.call_ADD_MEMBERSHIP)   #멤버쉽 가입.ui 멤버쉽페이지에서
         #####재웅 끝######
@@ -114,6 +114,7 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_40.clicked.connect(self.call_settle_account)
         self.pushButton_31.clicked.connect(self.search_emp)
         self.pushButton_21.clicked.connect(self.call_hire_employee)
+        self.t1.doubleClicked.connect(self.changeEmpInfo)
 
     def timeout(self):
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
@@ -319,6 +320,23 @@ class MyWindow(QMainWindow, form_class):
         self.w1.pushButton_22.clicked.connect(self.w1.close)
         self.w1.pushButton_21.clicked.connect(self.w1.hireEmployee)
         self.w1.show()
+    def changeEmpInfo(self):
+       if self.t1.currentItem()==None:
+            mb = QMessageBox(self)
+            mb.setText("Error : 더블클릭해주세요.")
+            mb.show()
+       else:
+           self.w1 = CHANGEEMPINFO(self.t1)
+           self.w1.lineEdit_6.setText(self.t1.item(self.t1.currentRow(),1).text())
+           self.w1.lineEdit_7.setText(self.t1.item(self.t1.currentRow(),3).text())
+           self.w1.comboBox.setCurrentIndex(int(self.t1.item(self.t1.currentRow(),2).text()))
+           self.w1.lineEdit_9.setText("" if self.t1.item(self.t1.currentRow(),4).text()=='0' else self.t1.item(self.t1.currentRow(),4).text())
+           self.w1.comboBox_2.setCurrentIndex(int(self.t1.item(self.t1.currentRow(),5).text()))
+           self.w1.lineEdit_11.setText("" if self.t1.item(self.t1.currentRow(),6).text()=='0' else self.t1.item(self.t1.currentRow(),6).text())
+           self.w1.pushButton_21.clicked.connect(self.w1.changeInfo)
+           self.w1.pushButton_22.clicked.connect(self.w1.close)
+           self.w1.show()
+
 
             
   ####수환 끝
@@ -699,7 +717,24 @@ class wareToDis_Count(QDialog,uic.loadUiType("ui/창고to진열 수량 결정.ui
 
         
 ####수환 시작####
-class LASTDAY_SETTLE(QDialog,uic.loadUiType("ui/월말결산.ui")[0]):
+class CHANGEEMPINFO(QDialog,uic.loadUiType("ui/직원수정.ui")[0]):
+    def __init__(self,table):
+        super().__init__()
+        self.setupUi(self)
+        self.lineEdit_9.setValidator(QtGui.QIntValidator())
+        self.lineEdit_11.setValidator(QtGui.QIntValidator())
+        self.table=table
+    def changeInfo(self):
+        dic = {'GRADECODE': 0 if self.comboBox.currentText()=='점장' else 1,'NAME':self.lineEdit_7.text(),'CONTACT':self.lineEdit_9.text(),
+        'SALARY_CODE':0 if self.comboBox_2.currentText()=='연봉' else 1 if self.comboBox_2.currentText()=='월급'else 2,'SALARY':int(self.lineEdit_11.text()),'EMPID':self.lineEdit_6.text()}
+        print(dic)
+        jjap.bt3(self,self.table,'query_1801.txt',dic)
+
+    def msgClicked(self, table):
+         table.refresh()
+
+        
+class LASTDAY_SETTLE(QDialog,uic.loadUiType('ui/월말결산.ui')[0]):
     def __init__(self,table,date):
         super().__init__()
         self.setupUi(self)
