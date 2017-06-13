@@ -29,6 +29,7 @@ class MyWindow(QMainWindow, form_class):
         self.t11.select("DISPROD")
         self.gridLayout_13.addWidget(self.t10)
         self.gridLayout_14.addWidget(self.t11)
+        self.gridLayout.addWidget(self.t1)
      
         self.gridLayout_5.addWidget(self.t5)    #반품물품
         self.t5.select("RPROD")
@@ -108,9 +109,10 @@ class MyWindow(QMainWindow, form_class):
         self.lineEdit.editingFinished.connect(self.set0)
         self.comboBox.currentIndexChanged.connect(self.selected_widget)
         self.stackedWidget.setCurrentIndex(0) #첫화면 띄우도록
-        #self.pushButton_23.clicked.connect(self.call_NEW_PROD)
+        self.pushButton_23.clicked.connect(self.call_NEW_PROD)
         self.pushButton_29.clicked.connect(self.call_DEL_PROD)
         self.pushButton_40.clicked.connect(self.call_settle_account)
+        self.pushButton_31.clicked.connect(self.search_emp)
 
     def timeout(self):
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
@@ -251,7 +253,8 @@ class MyWindow(QMainWindow, form_class):
     def call_ADD_MEMBERSHIP(self):
         self.w1 = ADD_MEMBERSHIP()
         self.w1.show()      
-####재웅 끝####    
+####재웅 끝####
+####수환 시작####    
     def call_NEW_PROD(self):
         self.w1=NEW_PROD(self.t2)
         self.w1.pushButton.clicked.connect(self.w1.close)
@@ -294,7 +297,7 @@ class MyWindow(QMainWindow, form_class):
     def call_settle_account(self):
         if date[self.dateEdit_11.date().month()-1]==self.dateEdit_11.date().day():
             mb = QMessageBox(self)
-            mb.setText("월말입니다. 이번달 정산이 모두 완료되었는지 확인하십시요\n이작업은 되돌릴 수 없습니다! 실행하시겠습니까?")
+            mb.setText('월말입니다. 이번달 정산이 모두 완료되었는지 확인하십시요\n이작업은 되돌릴 수 없습니다! 실행하시겠습니까?')
             mb.addButton('예', 5)
             mb.addButton('아니오', 6)
             mb.show()
@@ -302,12 +305,32 @@ class MyWindow(QMainWindow, form_class):
   
         else:
            mb = QMessageBox(self)
-           mb.setText("선택한 날짜로 결산합니다. 하시겠습니까?")
+           mb.setText('선택한 날짜로 결산합니다. 하시겠습니까?')
            mb.addButton('예', 5)
            mb.addButton('아니오', 6)
            mb.show()
            mb.buttonClicked.connect(lambda:self.call_settle(mb))
-  
+    def search_emp(self):
+        empid = self.lineEdit_20.text()
+        empname = self.lineEdit_21.text()
+        if empid !="" and empname !="":
+            self.t1.fileExecute('query_0057.txt',{'empid':empid,'empname':empname})
+            print('57')
+        elif empid!="":
+            self.t1.fileExecute('query_0056.txt',{'empid':empid})
+            print('56')
+        elif empname!="":
+            self.t1.fileExecute('query_0055.txt',{'empname':empname})
+            print('55')
+        else:
+            mb = QMessageBox(self)
+            mb.setText('아이디나 이름을 입력해주세요')
+            mb.addButton('확인', 1)
+            mb.buttonClicked.connect(mb.close)
+            mb.show()
+            
+            
+  ####수환 끝
 
     #버튼이 클릭되었을 때 해당 테이블을 리프레쉬합니다.
     def msgClicked(self, table):
@@ -710,7 +733,7 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
           print (dic)
           jjap.bt1(self,self.table,'query_1201.txt',dic)
       def msgClicked(self, table):
-         table.refresh()   
+         table.refresh()
 #### 수환 끝 ####
 
         
