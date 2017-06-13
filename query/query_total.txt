@@ -37,6 +37,12 @@ SELECT *
 FROM DISPROD
 WHERE (PROD_ID = :PROD_ID);
 
+--QUERY_0055
+____물품ID로 물품에서 검색
+SELECT *
+FROM PROD
+WHERE PROD_ID = :PROD_ID
+
 
 
 -------1.필요물품을 주문한다.
