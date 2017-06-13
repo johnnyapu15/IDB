@@ -113,6 +113,7 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_29.clicked.connect(self.call_DEL_PROD)
         self.pushButton_40.clicked.connect(self.call_settle_account)
         self.pushButton_31.clicked.connect(self.search_emp)
+        self.pushButton_21.clicked.connect(self.call_hire_employee)
 
     def timeout(self):
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
@@ -312,21 +313,23 @@ class MyWindow(QMainWindow, form_class):
         empid = self.lineEdit_20.text()
         empname = self.lineEdit_21.text()
         if empid !="" and empname !="":
-            self.t1.fileExecute('query_0057.txt',{'empid':empid,'empname':empname})
-            print('57')
+            self.t1.fileExecute('query_0000.txt',{'empid':empid,'empname':empname})
         elif empid!="":
-            self.t1.fileExecute('query_0056.txt',{'empid':empid})
-            print('56')
+            self.t1.fileExecute('query_0001.txt',{'empid':empid})
         elif empname!="":
-            self.t1.fileExecute('query_0055.txt',{'empname':empname})
-            print('55')
+            self.t1.fileExecute('query_0002.txt',{'empname':empname})
         else:
             mb = QMessageBox(self)
             mb.setText('아이디나 이름을 입력해주세요')
             mb.addButton('확인', 1)
             mb.buttonClicked.connect(mb.close)
             mb.show()
-            
+    def call_hire_employee(self):
+        self.w1=HIRE_EMP()
+        self.w1.pushButton_22.clicked.connect(self.w1.close)
+        self.w1.pushButton_21.clicked.connect(self.w1.hireEmployee)
+        self.w1.show()
+
             
   ####수환 끝
 
@@ -690,7 +693,7 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
         self.setupUi(self)
         self.lineEdit_13.setValidator(QtGui.QIntValidator())
         self.lineEdit_9.setValidator(QtGui.QIntValidator())
-        self.lineEdit_12.setValidator(QtGui.QIntValidator())
+        self.lineEdit_10.setValidator(QtGui.QIntValidator())
         self.lineEdit_12.setValidator(QtGui.QIntValidator())
         self.table = table
         
@@ -711,7 +714,20 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
           jjap.bt1(self,self.table,'query_1201.txt',dic)
       def msgClicked(self, table):
          table.refresh()
+class HIRE_EMP(QDialog,uic.loadUiType("ui/직원고용.ui")[0]):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.lineEdit_9.setValidator(QtGui.QIntValidator())
+        self.lineEdit_11.setValidator(QtGui.QIntValidator())
+    def hireEmployee(self):
+        if self.lineEdit_7.text()=="":
+            mb = QMessageBox(self, text = '이름은 필수 항목입니다!')
+            mb.show()
+            
+
 #### 수환 끝 ####
+
 
         
 
