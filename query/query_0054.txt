@@ -1,0 +1,5 @@
+--QUERY_0054
+----물품코드을 이용해 진열물품 검색
+SELECT *
+FROM DISPROD
+WHERE (PROD_ID = :PROD_ID);
