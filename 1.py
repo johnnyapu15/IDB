@@ -46,7 +46,7 @@ class MyWindow(QMainWindow, form_class):
         self.t8.select("ORD")
 
         self.gridLayout_10.addWidget(self.t9)
-        self.t8.select("BUDGET")
+        self.t9.select("BUDGET")
 
         ###################정주안 작업####################
 
@@ -244,19 +244,53 @@ class MyWindow(QMainWindow, form_class):
     def call_DEL_PROD(self):
         jjap.bt2(self,self.t2,'query_1301.txt',{'ProdID':self.t2.item(self.t2.currentRow(), 0).text()})
 
-    def call_settle(self):
-        dic = {'BRANCHID':jjap.BRAN_ID,'DAT':datetime.date.today()}
-        self.t9.fileExecute('query_1401.txt',dic)        
+    def call_settle(self,mb):
+        if mb.clickedButton().text() == "예":
+            dic = {'BRANCHID':jjap.BRAN_ID,'DAT':self.dateEdit_11.text()}
+            dic2 = {'DAT':self.dateEdit_11.text()}
+            self.t9.fileExecute('query_1401.txt',dic)
+            self.t9.fileExecute('query_1402.txt',dic2)
+            self.t9.fileExecute('query_1403.txt',dic2)
+            self.t9.fileExecute('query_1404.txt',dic2)
+        else:
+            mb.close()
+    def call_lastday_settle(self,mb):
+        if mb.clickedButton().text() == "예":
+            dic = {'BRANCHID':jjap.BRAN_ID,'DAT':self.dateEdit_11.text()}
+            dic2 = {'DAT':self.dateEdit_11.text()}
+            self.t9.fileExecute('query_1501.txt',dic)
+            self.t9.fileExecute('query_1502.txt',dic2)
+            self.t9.fileExecute('query_1503.txt',dic2)
+            self.t9.fileExecute('query_1504.txt',dic2)
+            self.t9.fileExecute('query_1505.txt',dic2)
+            self.t9.fileExecute('query_1506.txt',dic2)
+            self.t9.fileExecute('query_1507.txt',dic2)
+            self.t9.fileExecute('query_1508.txt',dic2)
+            self.t9.fileExecute('query_1509.txt',dic2)
+            self.t9.fileExecute('query_1510.txt',dic2)
+            self.t9.fileExecute('query_1511.txt',dic2)
+            self.t9.fileExecute('query_1512.txt',dic2)
+            self.t9.fileExecute('query_1513.txt',dic2)
+            self.t9.fileExecute('query_1514.txt',dic2)
+        else:
+            mb.close()
+
     def call_settle_account(self):
-        if date[QDate.currentDate().month()]==QDate.currentDate().day():
-            print ('test')
+        if date[self.dateEdit_11.date().month()-1]==self.dateEdit_11.date().day():
+            mb = QMessageBox(self)
+            mb.setText("월말입니다. 이번달 정산이 모두 완료되었는지 확인하십시요\n이작업은 되돌릴 수 없습니다! 실행하시겠습니까?")
+            mb.addButton('예', 5)
+            mb.addButton('아니오', 6)
+            mb.show()
+            mb.buttonClicked.connect(lambda:self.call_lastday_settle(mb))
+  
         else:
            mb = QMessageBox(self)
            mb.setText("선택한 날짜로 결산합니다. 하시겠습니까?")
            mb.addButton('예', 5)
            mb.addButton('아니오', 6)
            mb.show()
-           mb.buttonClicked.connect(self.call_settle)
+           mb.buttonClicked.connect(lambda:self.call_settle(mb))
   
 
     #버튼이 클릭되었을 때 해당 테이블을 리프레쉬합니다.
