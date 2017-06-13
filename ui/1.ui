@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>Dialog</class>
  <widget class="QDialog" name="Dialog">
@@ -23,7 +23,9 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+
+    <number>10</number>
+
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="widget" native="true">
