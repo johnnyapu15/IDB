@@ -1,0 +1,1 @@
+SELECT * FROM EMP WHERE EMP_ID=:empid AND NAME LIKE ('%'||:empname||'%')

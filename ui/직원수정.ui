@@ -102,9 +102,9 @@
      <widget class="QWidget" name="gridLayoutWidget_8">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>10</x>
         <y>0</y>
-        <width>861</width>
+        <width>851</width>
         <height>141</height>
        </rect>
       </property>
@@ -204,7 +204,7 @@
           <set>Qt::AlignCenter</set>
          </property>
          <property name="readOnly">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
         </widget>
        </item>
