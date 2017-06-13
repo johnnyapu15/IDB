@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>10</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="widget" native="true">
@@ -149,36 +149,18 @@
          </disabled>
         </palette>
        </property>
-       <row>
-        <property name="text">
-         <string>1</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>2</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>3</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>4</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>5</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>6</string>
-        </property>
-       </row>
+       <property name="rowCount">
+        <number>0</number>
+       </property>
+       <property name="columnCount">
+        <number>8</number>
+       </property>
+       <attribute name="horizontalHeaderVisible">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="verticalHeaderVisible">
+        <bool>true</bool>
+       </attribute>
        <column>
         <property name="text">
          <string>상품코드</string>
@@ -214,6 +196,16 @@
        <column>
         <property name="text">
          <string>합계</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>할인단위</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>할인률</string>
         </property>
        </column>
       </widget>
@@ -255,7 +247,7 @@
         <x>0</x>
         <y>350</y>
         <width>941</width>
-        <height>220</height>
+        <height>223</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -284,6 +276,12 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="maximumSize">
+              <size>
+               <width>210</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="palette">
               <palette>
                <active>
@@ -320,6 +318,12 @@
                 </colorrole>
                </disabled>
               </palette>
+             </property>
+             <property name="font">
+              <font>
+               <family>Calibri</family>
+               <pointsize>24</pointsize>
+              </font>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -348,6 +352,12 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="maximumSize">
+              <size>
+               <width>210</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="palette">
               <palette>
                <active>
@@ -384,6 +394,12 @@
                 </colorrole>
                </disabled>
               </palette>
+             </property>
+             <property name="font">
+              <font>
+               <family>Calibri</family>
+               <pointsize>24</pointsize>
+              </font>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -412,6 +428,12 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="maximumSize">
+              <size>
+               <width>210</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="palette">
               <palette>
                <active>
@@ -448,6 +470,12 @@
                 </colorrole>
                </disabled>
               </palette>
+             </property>
+             <property name="font">
+              <font>
+               <family>Calibri</family>
+               <pointsize>24</pointsize>
+              </font>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -483,6 +511,12 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="maximumSize">
+              <size>
+               <width>210</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="palette">
               <palette>
                <active>
@@ -519,6 +553,12 @@
                 </colorrole>
                </disabled>
               </palette>
+             </property>
+             <property name="font">
+              <font>
+               <family>Calibri</family>
+               <pointsize>24</pointsize>
+              </font>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -547,6 +587,12 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="maximumSize">
+              <size>
+               <width>210</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="palette">
               <palette>
                <active>
@@ -583,6 +629,12 @@
                 </colorrole>
                </disabled>
               </palette>
+             </property>
+             <property name="font">
+              <font>
+               <family>Calibri</family>
+               <pointsize>24</pointsize>
+              </font>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

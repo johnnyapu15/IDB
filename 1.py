@@ -25,8 +25,12 @@ class MyWindow(QMainWindow, form_class):
 
         self.t10 = QCustomTable()   #창고물품
         self.t11 = QCustomTable()   #진열물품
+        self.t12 = QCustomTable()   #판매
         self.t10.select("WAREPROD")
         self.t11.select("DISPROD")
+        self.t12.select("SELL")
+        
+        self.gridLayout_9.addWidget(self.t12)
         self.gridLayout_13.addWidget(self.t10)
         self.gridLayout_14.addWidget(self.t11)
         self.gridLayout.addWidget(self.t1)
@@ -89,6 +93,14 @@ class MyWindow(QMainWindow, form_class):
         #######창고 to 진열#######
         self.t10.doubleClicked.connect(self.wareToDis)
         self.pushButton_45.clicked.connect(self.search_WareToDis)
+        ########판매###############
+        self.tableWidget_2.clicked.connect(self.quantity_Gui)
+        self.spinBox_3.valueChanged.connect(self.quantity_Spin)
+        self.pushButton_5.clicked.connect(self.del_SELL_GUI)
+        self.tableWidget_2.itemChanged.connect(self.refresh_SELL)
+        self.pushButton_2.clicked.connect(self.pay)
+        self.pushButton_39.clicked.connect(self.refund)
+        self.pushButton_49.clicked.connect(self.search_SELL)
         ########################정주안 작업끝라인####################
         #####재웅 추가####
         self.pushButton_32.clicked.connect(self.call_ADD_SELLPROD)   #상품.ui 판매페이지에서
@@ -222,7 +234,79 @@ class MyWindow(QMainWindow, form_class):
             mb = QMessageBox(self, text = '상품코드 혹은 상품명을 입력하세요.')
             mb.show()
     ###############################
-        
+    ##########판매
+    def quantity_Gui(self):
+        self.spinBox_3.setValue(int(self.tableWidget_2.item(self.tableWidget_2.currentRow(), 4).text()))
+    def quantity_Spin(self, i):
+        if self.tableWidget_2.currentItem() != None:
+            price = self.tableWidget_2.item(self.tableWidget_2.currentRow(), 2).text()
+            dc_Unit = self.tableWidget_2.item(self.tableWidget_2.currentRow(), 6).text()
+            dc_Ratio = self.tableWidget_2.item(self.tableWidget_2.currentRow(), 7).text()
+            dc = int(price) * ( (i % int(dc_Unit)) + (int((i / int(dc_Unit)))*(1 - float(dc_Ratio))))
+            self.tableWidget_2.setItem(self.tableWidget_2.currentRow(), 5, QTableWidgetItem(str(round(dc))))
+            self.tableWidget_2.setItem(self.tableWidget_2.currentRow(), 4, QTableWidgetItem(str(i)))
+    def del_SELL_GUI(self):
+        if self.tableWidget_2.currentItem() != None:
+            self.tableWidget_2.removeRow(self.tableWidget_2.currentRow())
+
+    def refresh_SELL(self, item):
+        if item.column() == 4:
+            sum_p = 0   #합계
+            sum_fin = 0 #총액
+            for r in range(self.tableWidget_2.rowCount()):
+                price = int(self.tableWidget_2.item(r, 2).text())
+                quan = int(self.tableWidget_2.item(r, 4).text())
+                r_sum = int(self.tableWidget_2.item(r, 5).text())
+                sum_p += price * quan
+                sum_fin += r_sum
+            self.lineEdit_2.setText(str(sum_p))
+            self.lineEdit_3.setText(str(sum_fin - sum_p))
+            self.lineEdit_5.setText(str(sum_fin))
+        #판매 테이블에 현재 tableWidget_2 를 판매물품으로써 추가한다.
+    def pay(self):
+        if self.tableWidget_2.rowCount() > 0:
+            #판매 테이블 추가
+            now = str(datetime.datetime.now())
+            self.t12.fileExecute('query_0701.txt', 
+            {'CUSTOMER_ID':'0','SELL_DAT':str(datetime.date.today()),
+            'SELL_TIME':now})
+            #판매 검색
+            tmpt = QCustomTable()
+            tmpt.tableName = 'SELL'
+            tmpt.execute("select SELL_ID from sell where SELL_DAT = '"
+            + str(datetime.date.today()) + "' and SELL_TIME = '" + now + "'")
+
+            sell_Id = tmpt.item(0,0).text()
+            #판매물품 하나하나 추가
+            for r in range(self.tableWidget_2.rowCount()):
+                self.t12.fileExecute('query_0703.txt', 
+                {'SELL_ID':sell_Id, 'PROD_ID':self.tableWidget_2.item(r, 0).text(),
+                'SELL_COST':self.tableWidget_2.item(r, 5).text(),
+                'QUANTITY':self.tableWidget_2.item(r, 4).text()})
+            #추가된 판매물품의 총액을 넣음
+            self.t12.fileExecute('query_0704.txt', 
+            {'SELL_ID':sell_Id, 'SELL_COST':self.lineEdit_5.text()})
+            self.t12.refresh()
+    def refund(self):
+        #39푸시
+        if self.t12.currentItem() != None:
+            cost = int(self.t12.item(self.t12.currentRow(), 3).text())
+            cost = -cost
+            self.t12.fileExecute('query_0801.txt', 
+            {'SELL_DAT':str(datetime.date.today()),
+                'SELL_TIME':str(datetime.datetime.now()), 'SELL_COST':str(cost)})
+            mb = QMessageBox(self, text = '환불처리되었습니다.')
+            mb.show()
+            self.t12.refresh()
+    def search_SELL(self):
+        if self.lineEdit_14.text() != '':
+            self.t12.fileExecute('query_0705.txt', 
+            {'SELL_ID':self.lineEdit_14.text()})
+            self.t12.refresh()
+        else:
+            mb = QMessageBox(self, text = '판매코드를 입력하세요.')
+            mb.show()
+    #########판매끝
 ###재웅 추가### 
     def call_ADD_SELLPROD(self):
         self.w1 = ADD_SELLPROD(self)
@@ -516,7 +600,8 @@ class ADD_SELLPROD(QDialog,uic.loadUiType("ui/판매상품.ui")[0]):
         self.setupUi(self)
         self.pushButton_7.clicked.connect(self.search_PROD)
         self.t1 = QCustomTable()
-        self.t1.select('PROD')
+        self.t2 = QCustomTable()
+        self.t1.select('DISPROD')
         self.gridLayout_8.addWidget(self.t1)
         self.t1.doubleClicked.connect(self.addItem)
         
@@ -525,16 +610,47 @@ class ADD_SELLPROD(QDialog,uic.loadUiType("ui/판매상품.ui")[0]):
         name = self.lineEdit_19.text()
         if code != '':
             #코드로 검색
-            self.t10.fileExecute('query_0055.txt', {'PROD_ID':code})
+            self.t1.fileExecute('query_0054.txt', {'PROD_ID':code})
+            self.t2.fileExecute('query_0055.txt', {'PROD_ID':code})
+
         elif name != '':
             #상품명으로 검색
-            self.t1.fileExecute('query_0050.txt', {'PROD_NAME':"%" + name + "%"})
+            self.t1.fileExecute('query_0052.txt', {'PROD_NAME':"%" + name + "%"})
+            self.t2.fileExecute('query_0050.txt', {'PROD_NAME':"%" + name + "%"})
+
         else:
             mb = QMessageBox(self, text = '상품코드 혹은 상품명을 입력하세요.')
             mb.show()
+        if self.t1.rowCount() == 0:
+            mb = QMessageBox(self, text = '진열된 해당 상품이 없습니다!')
+            mb.show()
+
     def addItem(self):
-        print(22)
-        self.parent.tableWidget_2()
+        prod_Row = self.t1.currentRow()
+        code = self.t1.item(prod_Row, 0).text()
+        name = self.t1.item(prod_Row, 5).text()
+        event_Id = self.t1.item(prod_Row, 1).text()
+        self.t2.fileExecute('query_0055.txt', {'PROD_ID':code})
+        price = self.t2.item(0, 5).text()
+
+        self.t2.fileExecute('query_0056.txt', {'TODAY':datetime.date.today()})
+        dc_Unit = self.t2.item(0, 0).text()
+        dc_Ratio = self.t2.item(0, 1).text()
+        
+        dc = int(price) * ( (1 % int(dc_Unit)) + (int((1 / int(dc_Unit)))*(1 - float(dc_Ratio))))
+        dc = round(dc)
+        r = self.parent().tableWidget_2.rowCount()
+        self.parent().tableWidget_2.setRowCount(r + 1)
+        self.parent().tableWidget_2.setItem(r, 0, QTableWidgetItem(code))
+        self.parent().tableWidget_2.setItem(r, 1, QTableWidgetItem(name))
+        self.parent().tableWidget_2.setItem(r, 2, QTableWidgetItem(price))
+        self.parent().tableWidget_2.setItem(r, 3, QTableWidgetItem(str(dc)))
+        self.parent().tableWidget_2.setItem(r, 5, QTableWidgetItem(str(dc)))
+        self.parent().tableWidget_2.setItem(r, 6, QTableWidgetItem(str(dc_Unit)))
+        self.parent().tableWidget_2.setItem(r, 7, QTableWidgetItem(str(dc_Ratio)))
+        self.parent().tableWidget_2.setItem(r, 4, QTableWidgetItem('1'))
+        self.hide()
+
         
 class PROD(QDialog,uic.loadUiType("ui/상품.ui")[0]):
 

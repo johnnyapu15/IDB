@@ -1,0 +1,5 @@
+--QUERY_0704
+----판매물품들에 대한 가격을 판매에 넣는다.
+UPDATE SELL
+SET SELL_COST = :SELL_COST
+WHERE SELL_ID = :SELL_ID;
