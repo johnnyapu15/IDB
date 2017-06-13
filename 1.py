@@ -15,12 +15,17 @@ class MyWindow(QMainWindow, form_class):
         self.t1 = QCustomTable()    #EMP
         self.t2 = QCustomTable()    #PROD
         self.t3 = QCustomTable()    #필요물품
-        self.t4 = QCustomTable()    #WAREPROD
         self.t5 = QCustomTable()    #반품물품
-        self.t6 = QCustomTable()    #DISPROD
+        self.t6 = QCustomTable()    #DPROD
         self.t7 = QCustomTable()    #EVENT
         self.t8 = QCustomTable()    #ORD
         
+        self.t10 = QCustomTable()   #창고물품
+        self.t11 = QCustomTable()   #진열물품
+        self.t10.select("WAREPROD")
+        self.t11.select("DISPROD")
+        self.gridLayout_13.addWidget(self.t10)
+        self.gridLayout_14.addWidget(self.t11)
      
         self.gridLayout_5.addWidget(self.t5)    #반품물품
         self.t5.select("RPROD")
@@ -31,6 +36,8 @@ class MyWindow(QMainWindow, form_class):
         self.gridLayout_12.addWidget(self.t6)   #폐기물품
         self.t6.select("DPROD")
        
+        
+
 
         self.gridLayout_8.addWidget(self.t8)
         self.t8.select("ORD")
@@ -479,7 +486,7 @@ class DPROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
         self.hide()
     def search(self):
         #유통기한 기준 검색.
-        if int(self.lineEdit_18.text()) >= 0:
+        if self.lineEdit_18.text() == '':
             self.t1.fileExecute('query_0604.txt', {'EXPIRATION_DAT':self.dateEdit.text(), 'STD_DAT':self.lineEdit_18.text()})
             self.t2.fileExecute('query_0605.txt', {'EXPIRATION_DAT':self.dateEdit.text(), 'STD_DAT':self.lineEdit_18.text()})
         else:

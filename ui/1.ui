@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>6</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QWidget" name="widget" native="true">
@@ -828,7 +828,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>301</height>
+           <height>291</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2"/>
@@ -1007,7 +1007,7 @@
              <x>0</x>
              <y>0</y>
              <width>421</width>
-             <height>271</height>
+             <height>261</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_13"/>
@@ -1059,7 +1059,7 @@
              <x>0</x>
              <y>0</y>
              <width>421</width>
-             <height>271</height>
+             <height>261</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_14"/>
@@ -1078,31 +1078,6 @@
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_40">
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_6">
-          <item>
-           <widget class="QLabel" name="label_17">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>변경 수량</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_8">
-          <item>
-           <widget class="QLineEdit" name="lineEdit_8">
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
         <item>
          <widget class="QPushButton" name="pushButton_47">
           <property name="text">
@@ -1167,7 +1142,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>331</height>
+           <height>321</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_8"/>
@@ -1330,7 +1305,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>331</height>
+           <height>321</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_9"/>
@@ -1450,8 +1425,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>861</width>
-           <height>331</height>
+           <width>851</width>
+           <height>321</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_5"/>
@@ -1607,7 +1582,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>331</height>
+           <height>321</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_12"/>
@@ -1756,7 +1731,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>331</height>
+           <height>321</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_4"/>
@@ -1912,7 +1887,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>301</height>
+           <height>291</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_11"/>
@@ -2078,7 +2053,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>301</height>
+           <height>291</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_15"/>
@@ -2284,7 +2259,7 @@
           <x>0</x>
           <y>0</y>
           <width>861</width>
-          <height>331</height>
+          <height>321</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout_10"/>
@@ -2519,7 +2494,7 @@
            <x>0</x>
            <y>0</y>
            <width>861</width>
-           <height>301</height>
+           <height>291</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout"/>
