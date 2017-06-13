@@ -646,6 +646,21 @@ class wareToDis_Count(QDialog,uic.loadUiType("ui/창고to진열 수량 결정.ui
             mb = QMessageBox(self, text = '수량을 입력하세요.')
             mb.show()
         else:
+            #진열물품에 해당 물품이 존재할 경우
+            self.tmpt = QCustomTable()
+            self.tmpt.tableName = 'DISPROD'
+            self.tmpt.execute('select * from disprod where PROD_ID = ' + 
+                        PRODID + "AND MANUFACTURE_DAT = '" + MAN_DAT + "'")
+            if self.tmpt.rowCount() > 0:
+                self.parent().t10.fileExecute('query_1107.txt',
+                {'PROD_ID':str(PRODID),
+                'MANUFACTURE_DAT':str(MAN_DAT), 'QUANTITY':QUAN_ORD})
+            #진열되어있지 않으면 새로 생성
+            else:
+                self.parent().t10.fileExecute('query_1108.txt',
+                    {'PROD_ID':str(PRODID),
+                    'MANUFACTURE_DAT':str(MAN_DAT), 
+                    'QUANTITY':QUAN_ORD})
             #정상. 실 수량 > 요구 수량 -> 창고 수정
             if int(QUAN) < int(QUAN_ORD):
                 mb = QMessageBox(self, text = '수량이 너무 많습니다.')
@@ -661,20 +676,7 @@ class wareToDis_Count(QDialog,uic.loadUiType("ui/창고to진열 수량 결정.ui
                 {'PROD_ID':str(PRODID),
                 'MANUFACTURE_DAT':str(MAN_DAT)})
 
-            tmpt = QCustomTable()
-            tmpt.execute('select * from disprod where PROD_ID = ' + 
-                        PRODID + 'AND MANUFACTURE_DAT = ' + MAN_DAT)
-            #진열물품에 해당 물품이 존재할 경우
-            if tmpt.rowCount() > 0:
-                self.parent().t10.fileExecute('query_1107.txt',
-                {'PROD_ID':str(PRODID),
-                'MANUFACTURE_DAT':str(MAN_DAT), 'QUANTITY':(QUAN_ORD)})
-            #진열되어있지 않으면 새로 생성
-            else:
-                self.parent().t10.fileExecute('query_1108.txt',
-                    {'PROD_ID':str(PRODID),
-                    'MANUFACTURE_DAT':str(MAN_DAT), 
-                    'QUANTITY':(QUAN_ORD)})
+            
             self.parent().t10.refresh()
             self.parent().t11.refresh()
                 
