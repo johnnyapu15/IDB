@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>Dialog</class>
  <widget class="QDialog" name="Dialog">
@@ -126,7 +126,9 @@
           <x>0</x>
           <y>0</y>
           <width>861</width>
+
           <height>211</height>
+
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout_12"/>
