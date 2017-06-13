@@ -120,7 +120,7 @@
           <x>0</x>
           <y>0</y>
           <width>421</width>
-          <height>131</height>
+          <height>141</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout_12"/>
@@ -172,7 +172,7 @@
           <x>0</x>
           <y>0</y>
           <width>421</width>
-          <height>131</height>
+          <height>141</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout_13"/>
@@ -180,32 +180,6 @@
       </widget>
      </widget>
     </widget>
-   </widget>
-   <widget class="QPushButton" name="pushButton_35">
-    <property name="geometry">
-     <rect>
-      <x>760</x>
-      <y>300</y>
-      <width>112</width>
-      <height>34</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>완료</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>320</y>
-      <width>411</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>근데 수량 입력받는걸 그냥 여기서 하면 안되나?</string>
-    </property>
    </widget>
    <widget class="QPushButton" name="pushButton_7">
     <property name="geometry">
@@ -220,6 +194,48 @@
      <string>검색</string>
     </property>
    </widget>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>320</y>
+     <width>351</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="rightMargin">
+       <number>10</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_22">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>수량</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEdit_18"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="text">
+       <string>완료</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

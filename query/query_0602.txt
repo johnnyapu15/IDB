@@ -1,5 +1,5 @@
 --QUERY_0602
-----³¯Â¥ µÎ°³ »çÀÌ¿¡ ÀÖ´Â Æó±â ¸ñ·ÏÀ» Ãâ·Â
+----ï¿½ï¿½Â¥ ï¿½Î°ï¿½ ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 SELECT *
 FROM DPROD
-WHERE RETURN_DAT BETWEEN :START_DAY AND :END_DAY;
+WHERE DISPOSE_PROCESS_DAT BETWEEN :START_DAY AND :END_DAY;
