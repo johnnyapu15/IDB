@@ -115,6 +115,7 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_31.clicked.connect(self.search_emp)
         self.pushButton_21.clicked.connect(self.call_hire_employee)
         self.t1.doubleClicked.connect(self.changeEmpInfo)
+        self.pushButton_22.clicked.connect(self.call_DEL_EMP)
 
     def timeout(self):
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
@@ -251,6 +252,9 @@ class MyWindow(QMainWindow, form_class):
         self.w1.show()    
     def call_ROSTER(self):
         self.w1 = ROSTER()
+        self.w1.pushButton_6.clicked.connect(self.w1.search_roaster)
+        self.w1.pushButton.clicked.connect(self.w1.startwork)
+        self.w1.pushButton_2.clicked.connect(self.w1.endwork)
         self.w1.show()          
     def call_ADD_MEMBERSHIP(self):
         self.w1 = ADD_MEMBERSHIP()
@@ -263,7 +267,11 @@ class MyWindow(QMainWindow, form_class):
         self.w1.pushButton_21.clicked.connect(self.w1.addNewProduct)
         self.w1.show()
     def call_DEL_PROD(self):
-        jjap.bt2(self,self.t2,'query_1301.txt',{'ProdID':self.t2.item(self.t2.currentRow(), 0).text()})
+        if self.t2.currentItem()!=None:
+            jjap.bt2(self,self.t2,'query_1301.txt',{'ProdID':self.t2.item(self.t2.currentRow(), 0).text()})
+    def call_DEL_EMP(self):
+        if self.t1.currentItem()!=None:
+            jjap.bt2(self,self.t1,'query_1701.txt',{'EMPID':self.t1.item(self.t1.currentRow(),1).text()})
 
     def call_settle(self,mb):
         if mb.clickedButton().text() == "예":
@@ -656,7 +664,32 @@ class UPDATE_EMP(QDialog,uic.loadUiType("ui/직원수정.ui")[0]):
 class ROSTER(QDialog,uic.loadUiType("ui/근무표.ui")[0]):
     def __init__(self):
         super().__init__() 
-        self.setupUi(self) 
+        self.setupUi(self)
+        self.table = QCustomTable()
+        self.gridLayout_11.addWidget(self.table)
+        self.table.select('ROSTER')
+        self.lineEdit_14.setValidator(QtGui.QIntValidator())
+    def search_roaster(self):
+        dic = {'EMPID':self.lineEdit_14.text()}
+        self.table.fileExecute('query_0003.txt',dic)
+    def startwork(self):
+        if(self.lineEdit_14.text()==""):
+            print("바보")
+            return
+        dic = {'EMPID':self.lineEdit_14.text()}
+        self.table.fileExecute('query_1901.txt',dic)
+    def endwork(self):
+        if(self.lineEdit_14.text()==""):
+             print("바보")
+             return
+        dic = {'EMPID':self.lineEdit_14.text()}
+        self.table.fileExecute('query_2001.txt',dic)
+
+    def msgClicked(self, table):
+        table.refresh()
+
+    
+    
 class ADD_MEMBERSHIP(QDialog,uic.loadUiType("ui/멤버쉽 가입.ui")[0]):
     def __init__(self):
         super().__init__() 
