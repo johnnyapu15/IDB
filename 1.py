@@ -330,11 +330,12 @@ class MyWindow(QMainWindow, form_class):
                 'QUANTITY':self.tableWidget_2.item(r, 4).text()})
                 tmpt.execute('select * from disprod where PROD_ID = ' + self.tableWidget_2.item(r,0).text())
                 if tmpt.item(0,0) != None:
+                    
                     n = tmpt.item(0, 2).text()
                     if n == self.tableWidget_2.item(r, 4).text():
-                        self.t12.fileExecute('query_0502.txt', {'PROD_ID':self.tableWidget_2.item(r, 0).text(), 'MANUFACTURE_DAT':tmpt.item(r,3).text()})
+                        self.t12.fileExecute('query_0502.txt', {'PROD_ID':self.tableWidget_2.item(r, 0).text(), 'MANUFACTURE_DAT':tmpt.item(0,3).text()})
                     else:
-                        self.t12.fileExecute('query_0503.txt', {'PROD_ID':self.tableWidget_2.item(r, 0).text(), 'MANUFACTURE_DAT':tmpt.item(r,3).text(), 'DISPLAY_QUANTITY':int(n) - int(self.tableWidget_2.item(r, 4).text())})
+                        self.t12.fileExecute('query_0503.txt', {'PROD_ID':self.tableWidget_2.item(r, 0).text(), 'MANUFACTURE_DAT':tmpt.item(0,3).text(), 'DISPLAY_QUANTITY':int(n) - int(self.tableWidget_2.item(r, 4).text())})
                 else:
                     mb = QMessageBox(self, text = '진열되어있지않습니다.')
                     mb.show()
@@ -1142,14 +1143,29 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
         self.lineEdit_10.setValidator(QtGui.QIntValidator())
         self.lineEdit_12.setValidator(QtGui.QIntValidator())
         self.table = table
-        
+        self.mainCategory = {'식품':'00', '잡화':'01', '문구':'10'}
+        self.sub00 = ['과자', '냉동']
+        self.sub01 = ['의류', '기타']
+        self.sub10 = ['완구', '문구']
+        self.cate('식품')
+        self.comboBox.currentTextChanged.connect(self.cate)
+      def cate(self, i):
+          print(i)
+          if i == '식품':
+              self.sub = self.sub00
+          elif i == '잡화':
+              self.sub = self.sub01
+          elif i == '문구':
+              self.sub = self.sub10
+          for t in range(2):
+            self.comboBox_2.addItem(self.sub[t])
       def addNewProduct(self):
           if self.lineEdit_6.text() == "" or self.lineEdit_13.text()=="" or self.lineEdit_9.text()=="" or self.lineEdit_10.text()=="" or self.lineEdit_12.text() == "":
               mb = QMessageBox(self, text = '모든 칸을 채워야 합니다!')
               mb.show()
               return 0
-
-          dic = {'NAME':self.lineEdit_6.text(),'MAINC':int(self.comboBox.currentText()),'SUBC':int(self.comboBox_2.currentText()),'CUST':int(self.lineEdit_13.text()),
+          mainC = self.mainCategory[self.comboBox.currentText]
+          dic = {'NAME':self.lineEdit_6.text(),'MAINC':mainC,'SUBC':self.sub[self.comboBox_2.currentIndex()],'CUST':int(self.lineEdit_13.text()),
           'SELL':int(self.lineEdit_9.text()),'DIST':int(self.lineEdit_10.text()),'EXCL':('1' if self.checkBox.isChecked() else '0'),'BUYP':int(self.lineEdit_12.text())}
           if dic['SELL']<=0 or dic['CUST']<=0 or dic['BUYP']<=0:
               mb = QMessageBox(self, text = '가격은 0이상이여야 합니다.')
@@ -1197,3 +1213,4 @@ if __name__ == "__main__":
     myWindow.show()
     app.exec_()
     
+
