@@ -72,6 +72,14 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_34.clicked.connect(self.search_ORD) #날짜 검색
         self.dateEdit.setDate(datetime.date.today())
         self.dateEdit_5.setDate(datetime.date.today())
+        self.dateEdit_2.setDate(datetime.date.today())
+        self.dateEdit_6.setDate(datetime.date.today())
+        self.dateEdit_4.setDate(datetime.date.today())
+        self.dateEdit_7.setDate(datetime.date.today())
+        self.dateEdit_8.setDate(datetime.date.today())
+        self.dateEdit_9.setDate(datetime.date.today())
+        self.dateEdit_10.setDate(datetime.date.today())
+
         ########################
 
         #####반품 관련###########
@@ -767,7 +775,8 @@ class DPROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
         self.pushButton_6.clicked.connect(self.search)
         self.t1.select("WAREPROD")
         self.t2.select("DISPROD")
-        
+        self.dateEdit.setDate(datetime.date.today())
+
     def addItem(self):
         #table은 창고 혹은 진열
         #테이블 선택 안했을 때 예외처리
