@@ -31,6 +31,7 @@ class MyWindow(QMainWindow, form_class):
     
 
         self.t13 = QCustomTable()   #CUSTOMER
+        self.t15 = QCustomTable()   #EPROD
 
         self.t10.select("WAREPROD")
         self.t11.select("DISPROD")
@@ -155,6 +156,20 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_52.clicked.connect(self.searchMembership)
         self.pushButton_20.clicked.connect(self.search_event)
         self.pushButton_33.clicked.connect(self.search_PROD)
+        self.t7.doubleClicked.connect(self.showEventProd)
+    def showEventProd(self):
+        if self.t7.currentItem()==None:
+            mb = QMessageBox(self)
+            mb.setText("Error : 더블클릭해주세요.")
+            mb.show()
+            return
+        else:
+           self.t15.fileExecute('query_0009.txt',{'eventid':self.t7.item(self.t7.currentRow(),5).text()})
+           self.t15.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+           self.w1 = SHOW_EVENT_PROD(self.t15,int(self.t7.item(self.t7.currentRow(),5).text()))
+           self.w1.pushButton.clicked.connect(self.w1.addEventProd)
+           self.w1.pushButton_2.clicked.connect(self.w1.close)
+           self.w1.show()
 
     def timeout(self):
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
@@ -1082,11 +1097,44 @@ class wareToDis_Count(QDialog,uic.loadUiType("ui/창고to진열 수량 결정.ui
             
             self.parent().t10.refresh()
             self.parent().t11.refresh()
-            self.hide()    
+            self.hide()
                 
 
         
 ####수환 시작####
+class SHOW_EVENT_PROD(QDialog,uic.loadUiType("ui/이벤트물품.ui")[0]):
+    def __init__(self,table,id):
+        super().__init__()
+        self.setupUi(self)
+        self.table =table
+        self.id =id
+        self.gridLayout.addWidget(self.table)
+    def addEventProd(self):
+        self.w1=ADD_EVENT_PROD(self.table,self.id)
+        self.w1.pushButton_21.clicked.connect(self.w1.addEprod)
+        self.w1.show()
+
+class ADD_EVENT_PROD(QDialog,uic.loadUiType("ui/이벤트물품추가.ui")[0]):
+    def __init__(self,table,id):
+        super().__init__()
+        self.setupUi(self)
+        self.id=id
+        self.table=table
+        self.table.tableName='EPROD'
+        self.lineEdit_8.setValidator(QtGui.QIntValidator())
+    def addEprod(self):
+        if(self.lineEdit_8.text()==''):
+            mb = QMessageBox(self, text = '모든 칸을 채워야 합니다!')
+            mb.show()
+            return 0
+        prodid =self.lineEdit_8.text()
+        dic={'PRD':prodid,'EVD':self.id}
+        jjap.bt1(self,self.table,"query_2202.txt",dic)
+        self.close()
+    def msgClicked(self, table):
+          table.fileExecute('query_0009.txt',{'eventid':self.id})
+          table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
 class CHANGEEMPINFO(QDialog,uic.loadUiType("ui/직원수정.ui")[0]):
     def __init__(self,table):
         super().__init__()
@@ -1188,7 +1236,7 @@ class HIRE_EMP(QDialog,uic.loadUiType("ui/직원고용.ui")[0]):
             mb.show()
             return
         else:
-            dic={'BRANCH_ID':jjap.BRAN_ID,'EMPGRADE': 0 if self.comboBox.currentText()=='점장' else 1,'EMPNAME':self.lineEdit_7.text(),'CONTACT': '0' if self.lineEdit_9.text() == "" else self.lineEdit_9.text(),
+            dic={'BRANCH_ID':jjap.BRAN_ID,'EMPGRADE': 2 if self.comboBox.currentText()=='점장' else 1,'EMPNAME':self.lineEdit_7.text(),'CONTACT': '0' if self.lineEdit_9.text() == "" else self.lineEdit_9.text(),
             'SALARY_CODE':0 if self.comboBox_2.currentText()=='연봉' else 1 if self.comboBox_2.currentText()=='월급' else 2,'SALARY':0 if self.lineEdit_11.text() =="" else int(self.lineEdit_11.text())}
             print(dic)
             jjap.bt1(self, self.table,'query_1601.txt',dic)

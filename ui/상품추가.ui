@@ -244,17 +244,17 @@
          </property>
          <item>
           <property name="text">
-           <string>00</string>
+           <string>식품</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>01</string>
+           <string>잡화</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>10</string>
+           <string>문구</string>
           </property>
          </item>
         </widget>
@@ -332,11 +332,6 @@
          <item>
           <property name="text">
            <string>01</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>10</string>
           </property>
          </item>
         </widget>
