@@ -26,11 +26,17 @@ class MyWindow(QMainWindow, form_class):
         self.t10 = QCustomTable()   #창고물품
         self.t11 = QCustomTable()   #진열물품
         self.t12 = QCustomTable()   #판매
+
+        self.t14 = QCustomTable()   #손실물품
+    
+
         self.t13 = QCustomTable()   #CUSTOMER
+
         self.t10.select("WAREPROD")
         self.t11.select("DISPROD")
         self.t12.select("SELL")
-        
+        self.t14.select("LPROD")
+        self.gridLayout_4.addWidget(self.t14)
         self.gridLayout_9.addWidget(self.t12)
         self.gridLayout_13.addWidget(self.t10)
         self.gridLayout_14.addWidget(self.t11)
@@ -102,6 +108,13 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_2.clicked.connect(self.pay)
         self.pushButton_39.clicked.connect(self.refund)
         self.pushButton_49.clicked.connect(self.search_SELL)
+        #############################
+
+        ##############재고파악(손실)############
+        self.pushButton_7.clicked.connect(self.search_LPROD)
+        self.pushButton_36.clicked.connect(self.del_LPROD)
+
+        #######################################
         ########################정주안 작업끝라인####################
         #####재웅 추가####
         self.pushButton_32.clicked.connect(self.call_ADD_SELLPROD)   #상품.ui 판매페이지에서
@@ -313,6 +326,20 @@ class MyWindow(QMainWindow, form_class):
             mb = QMessageBox(self, text = '판매코드를 입력하세요.')
             mb.show()
     #########판매끝
+    ########################손실물품관련########################
+    def search_LPROD(self):
+        self.t14.fileExecute('query_0901.txt',{'START_DAY':self.dateEdit_4.text(), 'END_DAY':self.dateEdit_7.text()})
+    def del_LPROD(self):
+        if self.t14.currentItem() != None:
+            r = self.t14.currentRow()
+            self.t14.fileExecute('query_0902.txt', 
+            {'PROD_ID':self.t14.item(r,0).text(),
+            'INVEST_DAT':self.t14.item(r,3).text(),
+            'INVEST_NO':self.t14.item(r,4).text(),
+            'LOSS_CAUSE_CODE':self.t14.item(r,2).text()})
+            self.t14.refresh()
+
+    ####################################################
 ###재웅 추가### 
     def call_ADD_SELLPROD(self):
         self.w1 = ADD_SELLPROD(self)
@@ -323,8 +350,9 @@ class MyWindow(QMainWindow, form_class):
     def call_DPROD(self):
         self.w1 = DPROD(self)
         self.w1.show()    
+
     def call_LPROD(self):
-        self.w1 = LPROD()
+        self.w1 = LPROD(self)
         self.w1.show()  
     def call_ADD_EVENT(self):
         self.w1 = ADD_EVENT()
@@ -543,6 +571,8 @@ class ORD_PROD(QDialog,uic.loadUiType("ui/필요물품.ui")[0]):
         self.find_id('')
     def dest(self, i):
         self.parent().t8.refresh()
+        self.parent().t10.refresh()
+        
 
 class ORDPROD_FIND(QDialog,uic.loadUiType("ui/필요물품검색.ui")[0]):
     def __init__(self, parent):
@@ -640,7 +670,7 @@ class RPROD(QDialog,uic.loadUiType("ui/반품추가.ui")[0]):
             if n == self.lineEdit_4.text():
                 table.fileExecute('query_0502.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,3).text()})
             else:
-                table.fileExecute('query_0503.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,3).text(), 'QUANTITY':int(n) - int(self.lineEdit_4.text())})
+                table.fileExecute('query_0503.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,3).text(), 'DISPLAY_QUANTITY':int(n) - int(self.lineEdit_4.text())})
         self.hide()
     def search(self):
         #물품 검색. 물품명 필요
@@ -782,7 +812,7 @@ class DPROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
             if n == self.lineEdit_17.text():
                 table.fileExecute('query_0502.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,3).text()})
             else:
-                table.fileExecute('query_0503.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,3).text(), 'QUANTITY':int(n) - int(self.lineEdit_17.text())})
+                table.fileExecute('query_0503.txt', {'PROD_ID':table.item(r,0).text(), 'MANUFACTURE_DAT':table.item(r,3).text(), 'DISPLAY_QUANTITY':int(n) - int(self.lineEdit_17.text())})
         self.hide()
     def search(self):
         #유통기한 기준 검색.
@@ -793,17 +823,84 @@ class DPROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
             mb = QMessageBox(self, text = '검색 기준일을 바르게 설정하세요.')
             mb.show()
 class LPROD(QDialog,uic.loadUiType("ui/재고파악.ui")[0]):
-    def __init__(self):
-        super().__init__() 
+    def __init__(self, parent):
+        super().__init__(parent) 
         self.setupUi(self)
-        self.pushButton_35.clicked.connect(self.call_ADD_LPROD)   #손실내용수정.ui
-    def call_ADD_LPROD(self):
-        self.w2 = ADD_LPROD()
-        self.w2.show()    
-class ADD_LPROD(QDialog,uic.loadUiType("ui/손실내용수정.ui")[0]):
-    def __init__(self):
-        super().__init__() 
-        self.setupUi(self)
+        self.pushButton_2.clicked.connect(self.addItem)   #손실내용수정.ui
+        self.t1 = QCustomTable()
+        self.t2 = QCustomTable()
+        self.t1.select('WAREPROD')
+        self.t2.select('DISPROD')
+        self.gridLayout_12.addWidget(self.t1)
+        self.gridLayout_15.addWidget(self.t2)
+ 
+    def addItem(self):
+        if self.lineEdit_4.text() == '':
+            mb = QMessageBox(self, text = '수량을 입력하세요.')
+            mb.show()
+            return 0
+        elif self.tabWidget.currentIndex() == 0:
+            if self.t1.currentItem() == None:
+                mb = QMessageBox(self, text = '물품을 선택하세요.')
+                mb.show()
+                return 0
+            else:
+                table = self.t1
+                r =self.t1.currentRow()
+                prodid = self.t1.item(r, 0).text()
+                n = table.item(r,1).text()
+        elif self.tabWidget.currentIndex() == 1:
+            if self.t2.currentItem() == None:
+                mb = QMessageBox(self, text = '물품을 선택하세요.')
+                mb.show()
+                return 0  
+            else:
+                table = self.t2
+                r = self.t2.currentRow()
+                prodid = self.t2.item(r, 0).text()
+                n = table.item(r,2).text()
+        
+        ivdat = datetime.date.today()
+        ivno = self.comboBox_5.currentText()
+        loss = self.comboBox.currentText()
+        quan = self.lineEdit_4.text()
+        
+        if int(quan) > int(n):
+            mb = QMessageBox(self, text = '수량을 적절히 입력하세요.')
+            mb.show()
+            return 0 
+        #손실물품에 추가
+        self.parent().t14.fileExecute('query_0903.txt', 
+        {'PROD_ID':prodid, 'INVEST_DAT':ivdat, 'INVEST_NO':ivno,
+        'LOSS_CAUSE_CODE':loss, 'QUANTITY':quan})
+        #창고물품 / 진열물품에서 제외
+        if self.tabWidget.currentIndex() == 0:
+            if n == quan:
+                table.fileExecute('query_0504.txt', {'PROD_ID':prodid, 'MANUFACTURE_DAT':table.item(r,2).text()})
+            else:
+                print('창고')
+                table.fileExecute('query_0505.txt', {'PROD_ID':prodid, 'MANUFACTURE_DAT':table.item(r,2).text(), 'QUANTITY':int(n) - int(quan)})
+
+        elif self.tabWidget.currentIndex() == 1:
+            if n == quan:
+                table.fileExecute('query_0502.txt', {'PROD_ID':prodid, 'MANUFACTURE_DAT':table.item(r,3).text()})
+            else:
+                print('진열')
+                print(n + quan + table.item(r,3).text())
+                table.fileExecute('query_0503.txt', {'PROD_ID':prodid, 'MANUFACTURE_DAT':table.item(r,3).text(), 'DISPLAY_QUANTITY':str(int(n) - int(quan))})
+        self.hide()
+        self.parent().t14.refresh()
+        
+        
+    def search(self):
+        #물품 검색. 물품명 필요
+        if self.lineEdit_3.text() != '':
+            self.t1.fileExecute('query_0051.txt', {'PROD_NAME':'%' + self.lineEdit_3.text() + '%'})
+            self.t2.fileExecute('query_0052.txt', {'PROD_NAME':'%' + self.lineEdit_3.text() + '%'})
+
+
+        
+        
 class ADD_EVENT(QDialog,uic.loadUiType("ui/이벤트 생성.ui")[0]):
     def __init__(self):
         super().__init__() 
@@ -884,6 +981,7 @@ class wareToDis_Count(QDialog,uic.loadUiType("ui/창고to진열 수량 결정.ui
         MAN_DAT = self.parent().t10.item(self.parent().t10.currentRow(), 2).text()
         QUAN = self.parent().t10.item(self.parent().t10.currentRow(), 1).text()
         QUAN_ORD = self.lineEdit.text()
+        print(MAN_DAT)
         if QUAN_ORD == '':
             mb = QMessageBox(self, text = '수량을 입력하세요.')
             mb.show()
