@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>Dialog</class>
  <widget class="QDialog" name="Dialog">
@@ -93,7 +93,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -126,9 +126,7 @@
           <x>0</x>
           <y>0</y>
           <width>861</width>
-
           <height>211</height>
-
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout_12"/>
@@ -146,7 +144,7 @@
         <x>0</x>
         <y>0</y>
         <width>853</width>
-        <height>138</height>
+        <height>210</height>
        </rect>
       </property>
       <property name="widgetResizable">
@@ -158,7 +156,7 @@
          <x>0</x>
          <y>0</y>
          <width>851</width>
-         <height>136</height>
+         <height>208</height>
         </rect>
        </property>
        <widget class="QWidget" name="gridLayoutWidget_15">
@@ -167,7 +165,7 @@
           <x>0</x>
           <y>0</y>
           <width>861</width>
-          <height>131</height>
+          <height>211</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout_15"/>

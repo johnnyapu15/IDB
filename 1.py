@@ -74,6 +74,14 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_34.clicked.connect(self.search_ORD) #날짜 검색
         self.dateEdit.setDate(datetime.date.today())
         self.dateEdit_5.setDate(datetime.date.today())
+        self.dateEdit_2.setDate(datetime.date.today())
+        self.dateEdit_6.setDate(datetime.date.today())
+        self.dateEdit_4.setDate(datetime.date.today())
+        self.dateEdit_7.setDate(datetime.date.today())
+        self.dateEdit_8.setDate(datetime.date.today())
+        self.dateEdit_9.setDate(datetime.date.today())
+        self.dateEdit_10.setDate(datetime.date.today())
+
         ########################
 
         #####반품 관련###########
@@ -299,15 +307,33 @@ class MyWindow(QMainWindow, form_class):
 
             sell_Id = tmpt.item(0,0).text()
             #판매물품 하나하나 추가
+            tmpt = QCustomTable()
+            tmpt.select('disprod')
             for r in range(self.tableWidget_2.rowCount()):
                 self.t12.fileExecute('query_0703.txt', 
                 {'SELL_ID':sell_Id, 'PROD_ID':self.tableWidget_2.item(r, 0).text(),
                 'SELL_COST':self.tableWidget_2.item(r, 5).text(),
                 'QUANTITY':self.tableWidget_2.item(r, 4).text()})
+                tmpt.execute('select * from disprod where PROD_ID = ' + self.tableWidget_2.item(r,0).text())
+                if tmpt.item(0,0) != None:
+                    n = tmpt.item(0, 2).text()
+                    if n == self.tableWidget_2.item(r, 4).text():
+                        self.t12.fileExecute('query_0502.txt', {'PROD_ID':self.tableWidget_2.item(r, 0).text(), 'MANUFACTURE_DAT':tmpt.item(r,3).text()})
+                    else:
+                        self.t12.fileExecute('query_0503.txt', {'PROD_ID':self.tableWidget_2.item(r, 0).text(), 'MANUFACTURE_DAT':tmpt.item(r,3).text(), 'DISPLAY_QUANTITY':int(n) - int(self.tableWidget_2.item(r, 4).text())})
+                else:
+                    mb = QMessageBox(self, text = '진열되어있지않습니다.')
+                    mb.show()
+                    return 0
             #추가된 판매물품의 총액을 넣음
             self.t12.fileExecute('query_0704.txt', 
             {'SELL_ID':sell_Id, 'SELL_COST':self.lineEdit_5.text()})
+            self.t11.refresh()
             self.t12.refresh()
+            self.tableWidget_2.setRowCount(0)
+            mb = QMessageBox(self, text = '결제되었습니다!')
+            mb.show()
+            
     def refund(self):
         #39푸시
         if self.t12.currentItem() != None:
@@ -323,7 +349,6 @@ class MyWindow(QMainWindow, form_class):
         if self.lineEdit_14.text() != '':
             self.t12.fileExecute('query_0705.txt', 
             {'SELL_ID':self.lineEdit_14.text()})
-            self.t12.refresh()
         else:
             mb = QMessageBox(self, text = '판매코드를 입력하세요.')
             mb.show()
@@ -726,9 +751,13 @@ class ADD_SELLPROD(QDialog,uic.loadUiType("ui/판매상품.ui")[0]):
         self.t2.fileExecute('query_0055.txt', {'PROD_ID':code})
         price = self.t2.item(0, 5).text()
 
-        self.t2.fileExecute('query_0056.txt', {'TODAY':datetime.date.today()})
-        dc_Unit = self.t2.item(0, 0).text()
-        dc_Ratio = self.t2.item(0, 1).text()
+        self.t2.fileExecute('query_0056.txt', {'TODAY':datetime.date.today(), 'EVENT_ID':event_Id})
+        if self.t2.rowCount() == 0:
+            dc_Unit = 1
+            dc_Ratio = 0
+        else:
+            dc_Unit = self.t2.item(0, 0).text()
+            dc_Ratio = self.t2.item(0, 1).text()
         
         dc = int(price) * ( (1 % int(dc_Unit)) + (int((1 / int(dc_Unit)))*(1 - float(dc_Ratio))))
         dc = round(dc)
@@ -773,7 +802,8 @@ class DPROD(QDialog,uic.loadUiType("ui/폐기물품.ui")[0]):
         self.pushButton_6.clicked.connect(self.search)
         self.t1.select("WAREPROD")
         self.t2.select("DISPROD")
-        
+        self.dateEdit.setDate(datetime.date.today())
+
     def addItem(self):
         #table은 창고 혹은 진열
         #테이블 선택 안했을 때 예외처리
@@ -884,15 +914,12 @@ class LPROD(QDialog,uic.loadUiType("ui/재고파악.ui")[0]):
             if n == quan:
                 table.fileExecute('query_0504.txt', {'PROD_ID':prodid, 'MANUFACTURE_DAT':table.item(r,2).text()})
             else:
-                print('창고')
                 table.fileExecute('query_0505.txt', {'PROD_ID':prodid, 'MANUFACTURE_DAT':table.item(r,2).text(), 'QUANTITY':int(n) - int(quan)})
 
         elif self.tabWidget.currentIndex() == 1:
             if n == quan:
                 table.fileExecute('query_0502.txt', {'PROD_ID':prodid, 'MANUFACTURE_DAT':table.item(r,3).text()})
             else:
-                print('진열')
-                print(n + quan + table.item(r,3).text())
                 table.fileExecute('query_0503.txt', {'PROD_ID':prodid, 'MANUFACTURE_DAT':table.item(r,3).text(), 'DISPLAY_QUANTITY':str(int(n) - int(quan))})
         self.hide()
         self.parent().t14.refresh()
@@ -1003,7 +1030,6 @@ class wareToDis_Count(QDialog,uic.loadUiType("ui/창고to진열 수량 결정.ui
         MAN_DAT = self.parent().t10.item(self.parent().t10.currentRow(), 2).text()
         QUAN = self.parent().t10.item(self.parent().t10.currentRow(), 1).text()
         QUAN_ORD = self.lineEdit.text()
-        print(MAN_DAT)
         if QUAN_ORD == '':
             mb = QMessageBox(self, text = '수량을 입력하세요.')
             mb.show()
@@ -1037,11 +1063,11 @@ class wareToDis_Count(QDialog,uic.loadUiType("ui/창고to진열 수량 결정.ui
                 self.parent().t10.fileExecute('query_1105.txt',
                 {'PROD_ID':str(PRODID),
                 'MANUFACTURE_DAT':str(MAN_DAT)})
-
+            
             
             self.parent().t10.refresh()
             self.parent().t11.refresh()
-                
+            self.hide()    
                 
 
         
