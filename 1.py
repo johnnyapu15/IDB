@@ -36,6 +36,8 @@ class MyWindow(QMainWindow, form_class):
         self.t11.select("DISPROD")
         self.t12.select("SELL")
         self.t14.select("LPROD")
+        self.t7.select("EVENT")
+        self.gridLayout_11.addWidget(self.t7)
         self.gridLayout_4.addWidget(self.t14)
         self.gridLayout_9.addWidget(self.t12)
         self.gridLayout_13.addWidget(self.t10)
@@ -355,7 +357,8 @@ class MyWindow(QMainWindow, form_class):
         self.w1 = LPROD(self)
         self.w1.show()  
     def call_ADD_EVENT(self):
-        self.w1 = ADD_EVENT()
+        self.w1 = ADD_EVENT(self.t7)
+        self.w1.pushButton_21.clicked.connect(self.w1.addevent)
         self.w1.show()  
     def call_UPDATE_EVENT(self):
         self.w1 = UPDATE_EVENT()
@@ -398,11 +401,12 @@ class MyWindow(QMainWindow, form_class):
             self.t9.fileExecute('query_1402.txt',dic2)
             self.t9.fileExecute('query_1403.txt',dic2)
             self.t9.fileExecute('query_1404.txt',dic2)
+            self.t9.refresh()
         else:
             mb.close()
     def call_lastday_settle(self,mb):
         if mb.clickedButton().text() == "예":
-            self.w1 = LASTDAY_SETTLE(self.dateEdit_11.date())
+            self.w1 = LASTDAY_SETTLE(self.t9,self.dateEdit_11.date())
             self.w1.pushButton_20.clicked.connect(self.w1.executeSettle)
             self.w1.pushButton_21.clicked.connect(self.w1.close)
             self.w1.show()
@@ -478,11 +482,13 @@ class MyWindow(QMainWindow, form_class):
             mb.buttonClicked.connect(mb.close)
             mb.show()
     def search_event(self):
-        date=self.dateEdit_10.date()
+        date=self.dateEdit_10.text()
         name=self.lineEdit_13.text()
 
         if(name!=''):
-            print('blank')
+            self.t7.fileExecute('query_0007.txt',{'DAT':date,'NAME':name})
+        else:
+            self.t7.fileExecute('query_0008.txt',{'DAT':date})
     def search_PROD(self):
         code = self.lineEdit_18.text()
         name = self.lineEdit_19.text()
@@ -902,9 +908,27 @@ class LPROD(QDialog,uic.loadUiType("ui/재고파악.ui")[0]):
         
         
 class ADD_EVENT(QDialog,uic.loadUiType("ui/이벤트 생성.ui")[0]):
-    def __init__(self):
+    def __init__(self,table):
         super().__init__() 
         self.setupUi(self)
+        self.lineEdit_7.setValidator(QtGui.QIntValidator())
+        self.table = table
+    def addevent(self):
+        name = self.lineEdit_6.text()
+        unit = 0 if self.lineEdit_7.text()=='' else int(self.lineEdit_7.text())
+        ratio = 0.0 if self.lineEdit_8.text()=='' else float(self.lineEdit_8.text())
+        startdat = self.dateEdit.text()
+        enddat = self.dateEdit_2.text()
+        if(name=='' or unit==0 or ratio ==0.0 ):
+            mb = QMessageBox(self, text = '모든 항목을 입력해주셔야 합니다.')
+            mb.show()
+            return
+        dic = {'NAME':name,'UNIT':unit,'RATIO':ratio,'STARTDAT':startdat,'ENDDAT':enddat}
+        jjap.bt1(self,self.table,'query_2201.txt',dic)
+    def msgClicked(self, table):
+        table.refresh()
+
+    
 class UPDATE_EVENT(QDialog,uic.loadUiType("ui/이벤트 수정.ui")[0]):
     def __init__(self):
         super().__init__() 
@@ -930,13 +954,11 @@ class ROSTER(QDialog,uic.loadUiType("ui/근무표.ui")[0]):
         self.table.fileExecute('query_0003.txt',dic)
     def startwork(self):
         if(self.lineEdit_14.text()==""):
-            print("바보")
             return
         dic = {'EMPID':self.lineEdit_14.text()}
         self.table.fileExecute('query_1901.txt',dic)
     def endwork(self):
         if(self.lineEdit_14.text()==""):
-             print("바보")
              return
         dic = {'EMPID':self.lineEdit_14.text()}
         self.table.fileExecute('query_2001.txt',dic)
@@ -1057,9 +1079,12 @@ class LASTDAY_SETTLE(QDialog,uic.loadUiType('ui/월말결산.ui')[0]):
             self.table.fileExecute('query_1502.txt',dic2)
             self.table.fileExecute('query_1503.txt',dic2)
             self.table.fileExecute('query_1504.txt',dic2)
-            self.table.fileExecute('query_1505.txt',dic2)
+            self.table.fileExecute('query_1505.txt',dic3)
             self.table.fileExecute('query_1506.txt',dic2)
-            self.table.fileExecute('query_1507.txt',dic2)
+            self.emptable = QCustomTable()
+            self.emptable.execute('SELECT EMP_ID FROM EMP WHERE SALARY_CODE = 2')
+            
+            dic3 = {}
             self.table.fileExecute('query_1508.txt',dic2)
             self.table.fileExecute('query_1509.txt',dic2)
             self.table.fileExecute('query_1510.txt',dic2)
