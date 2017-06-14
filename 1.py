@@ -130,6 +130,7 @@ class MyWindow(QMainWindow, form_class):
         self.t1.doubleClicked.connect(self.changeEmpInfo)
         self.pushButton_22.clicked.connect(self.call_DEL_EMP)
         self.pushButton_52.clicked.connect(self.searchMembership)
+        self.pushButton_20.clicked.connect(self.search_event)
 
     def timeout(self):
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
@@ -447,8 +448,12 @@ class MyWindow(QMainWindow, form_class):
             mb.addButton('확인', 1)
             mb.buttonClicked.connect(mb.close)
             mb.show()
+    def search_event(self):
+        date=self.dateEdit_10.date()
+        name=self.lineEdit_13.text()
 
-
+        if(name!=''):
+            print('blank')
 
 
             
@@ -964,9 +969,9 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
               mb.show()
               return 0
 
-          dic = {'PRODNAME':self.lineEdit_6.text(),'MAINCATCODE':self.comboBox.currentText(),'SUBCATCODE':self.comboBox_2.currentText(),'CUSTOMERCOST':int(self.lineEdit_13.text()),
-          'SELLPRICE':int(self.lineEdit_9.text()),'DISTRIBPER':int(self.lineEdit_10.text()),'EXCLUSIVE':(1 if self.checkBox.isChecked() else 0),'BUYPRICE':int(self.lineEdit_12.text())}
-          if dic['SELLPRICE']<=0 or dic['CUSTOMERCOST']<=0 or dic['BUYPRICE']<=0:
+          dic = {'NAME':self.lineEdit_6.text(),'MAINC':int(self.comboBox.currentText()),'SUBC':int(self.comboBox_2.currentText()),'CUST':int(self.lineEdit_13.text()),
+          'SELL':int(self.lineEdit_9.text()),'DIST':int(self.lineEdit_10.text()),'EXCL':('1' if self.checkBox.isChecked() else '0'),'BUYP':int(self.lineEdit_12.text())}
+          if dic['SELL']<=0 or dic['CUST']<=0 or dic['BUYP']<=0:
               mb = QMessageBox(self, text = '가격은 0이상이여야 합니다.')
               mb.show()
               return 0

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>272</width>
-    <height>186</height>
+    <width>266</width>
+    <height>196</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,7 +46,7 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>231</width>
+      <width>221</width>
       <height>71</height>
      </rect>
     </property>
@@ -63,7 +63,11 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>지점 유지비용을 입력하세요</string>
+        <string>월말입니다.이번달
+ 지점 유지비용을 입력하세요</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
