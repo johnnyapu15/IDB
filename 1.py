@@ -131,6 +131,7 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_22.clicked.connect(self.call_DEL_EMP)
         self.pushButton_52.clicked.connect(self.searchMembership)
         self.pushButton_20.clicked.connect(self.search_event)
+        self.pushButton_33.clicked.connect(self.search_PROD)
 
     def timeout(self):
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
@@ -454,6 +455,22 @@ class MyWindow(QMainWindow, form_class):
 
         if(name!=''):
             print('blank')
+    def search_PROD(self):
+        code = self.lineEdit_18.text()
+        name = self.lineEdit_19.text()
+        if code != '':
+            #코드로 검색
+            self.t2.fileExecute('query_0055.txt', {'PROD_ID':code})
+        elif name != '':
+            #상품명으로 검
+            self.t2.fileExecute('query_0050.txt', {'PROD_NAME':name })
+        else:
+            mb = QMessageBox(self, text = '상품코드 혹은 상품명을 입력하세요.')
+            mb.show()
+        if self.t1.rowCount() == 0:
+            mb = QMessageBox(self, text = '진열된 해당 상품이 없습니다!')
+            mb.show()
+
 
 
             
@@ -655,8 +672,8 @@ class ADD_SELLPROD(QDialog,uic.loadUiType("ui/판매상품.ui")[0]):
 
         elif name != '':
             #상품명으로 검색
-            self.t1.fileExecute('query_0052.txt', {'PROD_NAME':"%" + name + "%"})
-            self.t2.fileExecute('query_0050.txt', {'PROD_NAME':"%" + name + "%"})
+            self.t1.fileExecute('query_0052.txt', {'PROD_NAME':name })
+            self.t2.fileExecute('query_0050.txt', {'PROD_NAME':name })
 
         else:
             mb = QMessageBox(self, text = '상품코드 혹은 상품명을 입력하세요.')
