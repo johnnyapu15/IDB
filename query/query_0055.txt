@@ -2,4 +2,4 @@
 ----물품ID로 물품에서 검색
 SELECT *
 FROM PROD
-WHERE PROD_ID = :PROD_ID;
+WHERE PROD_ID = :PROD_ID

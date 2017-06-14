@@ -2,4 +2,4 @@
 ----물품명을 이용해 진열물품 검색
 SELECT *
 FROM DISPROD
-WHERE (PROD_NAME LIKE :PROD_NAME);
+WHERE PROD_NAME LIKE ('%'||:PROD_NAME||'%');
