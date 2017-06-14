@@ -275,9 +275,23 @@ class MyWindow(QMainWindow, form_class):
     def del_SELL_GUI(self):
         if self.tableWidget_2.currentItem() != None:
             self.tableWidget_2.removeRow(self.tableWidget_2.currentRow())
-
+            self.refresh_SELL(None)
     def refresh_SELL(self, item):
-        if item.column() == 4:
+        if item != None:
+            if item.column() == 4:
+                sum_p = 0   #합계
+                sum_fin = 0 #총액
+                for r in range(self.tableWidget_2.rowCount()):
+                    price = int(self.tableWidget_2.item(r, 2).text())
+                    quan = int(self.tableWidget_2.item(r, 4).text())
+                    r_sum = int(self.tableWidget_2.item(r, 5).text())
+                    sum_p += price * quan
+                    sum_fin += r_sum
+                self.lineEdit_2.setText(str(sum_p))
+                self.lineEdit_3.setText(str(sum_fin - sum_p))
+                self.lineEdit_5.setText(str(sum_fin))
+            #판매 테이블에 현재 tableWidget_2 를 판매물품으로써 추가한다.
+        elif item == None:
             sum_p = 0   #합계
             sum_fin = 0 #총액
             for r in range(self.tableWidget_2.rowCount()):
@@ -289,7 +303,7 @@ class MyWindow(QMainWindow, form_class):
             self.lineEdit_2.setText(str(sum_p))
             self.lineEdit_3.setText(str(sum_fin - sum_p))
             self.lineEdit_5.setText(str(sum_fin))
-        #판매 테이블에 현재 tableWidget_2 를 판매물품으로써 추가한다.
+            #판매 테이블에 현재 tableWidget_2 를 판매물품으로써 추가한다.
     def pay(self):
         if self.tableWidget_2.rowCount() > 0:
             #판매 테이블 추가
