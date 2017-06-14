@@ -1198,7 +1198,7 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
         self.cate('식품')
         self.comboBox.currentTextChanged.connect(self.cate)
       def cate(self, i):
-          print(i)
+
           if i == '식품':
               self.sub = self.sub00
           elif i == '잡화':
@@ -1206,14 +1206,14 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
           elif i == '문구':
               self.sub = self.sub10
           for t in range(2):
-            self.comboBox_2.addItem(self.sub[t])
+            self.comboBox_2.setItemText(t, self.sub[t])
       def addNewProduct(self):
           if self.lineEdit_6.text() == "" or self.lineEdit_13.text()=="" or self.lineEdit_9.text()=="" or self.lineEdit_10.text()=="" or self.lineEdit_12.text() == "":
               mb = QMessageBox(self, text = '모든 칸을 채워야 합니다!')
               mb.show()
               return 0
-          mainC = self.mainCategory[self.comboBox.currentText]
-          dic = {'NAME':self.lineEdit_6.text(),'MAINC':mainC,'SUBC':self.sub[self.comboBox_2.currentIndex()],'CUST':int(self.lineEdit_13.text()),
+          mainC = self.mainCategory[self.comboBox.currentText()]
+          dic = {'NAME':self.lineEdit_6.text(),'MAINC':mainC,'SUBC':self.comboBox_2.currentIndex(),'CUST':int(self.lineEdit_13.text()),
           'SELL':int(self.lineEdit_9.text()),'DIST':int(self.lineEdit_10.text()),'EXCL':('1' if self.checkBox.isChecked() else '0'),'BUYP':int(self.lineEdit_12.text())}
           if dic['SELL']<=0 or dic['CUST']<=0 or dic['BUYP']<=0:
               mb = QMessageBox(self, text = '가격은 0이상이여야 합니다.')
