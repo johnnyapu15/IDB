@@ -20,19 +20,23 @@ class MyWindow(QMainWindow, form_class):
         self.t6 = QCustomTable()    #DPROD
         self.t7 = QCustomTable()    #EVENT
         self.t8 = QCustomTable()    #ORD
-        self.t9 = QCustomTable()
+        self.t9 = QCustomTable()    #BUDGET
 
 
         self.t10 = QCustomTable()   #창고물품
         self.t11 = QCustomTable()   #진열물품
         self.t12 = QCustomTable()   #판매
-        self.t13 = QCustomTable()   #손실물품
+
+        self.t14 = QCustomTable()   #손실물품
     
+
+        self.t13 = QCustomTable()   #CUSTOMER
+
         self.t10.select("WAREPROD")
         self.t11.select("DISPROD")
         self.t12.select("SELL")
-        self.t13.select("LPROD")
-        self.gridLayout_4.addWidget(self.t13)
+        self.t14.select("LPROD")
+        self.gridLayout_4.addWidget(self.t14)
         self.gridLayout_9.addWidget(self.t12)
         self.gridLayout_13.addWidget(self.t10)
         self.gridLayout_14.addWidget(self.t11)
@@ -47,8 +51,8 @@ class MyWindow(QMainWindow, form_class):
         self.gridLayout_12.addWidget(self.t6)   #폐기물품
         self.t6.select("DPROD")
        
-        
-
+        self.gridLayout_15.addWidget(self.t13)
+        self.t13.select("CUSTOMER")
 
         self.gridLayout_8.addWidget(self.t8)
         self.t8.select("ORD")
@@ -137,6 +141,9 @@ class MyWindow(QMainWindow, form_class):
         self.pushButton_31.clicked.connect(self.search_emp)
         self.pushButton_21.clicked.connect(self.call_hire_employee)
         self.t1.doubleClicked.connect(self.changeEmpInfo)
+        self.pushButton_22.clicked.connect(self.call_DEL_EMP)
+        self.pushButton_52.clicked.connect(self.searchMembership)
+        self.pushButton_20.clicked.connect(self.search_event)
 
     def timeout(self):
         self.dateTimeEdit.setDateTime(QDateTime.currentDateTime())
@@ -320,16 +327,16 @@ class MyWindow(QMainWindow, form_class):
     #########판매끝
     ########################손실물품관련########################
     def search_LPROD(self):
-        self.t13.fileExecute('query_0901.txt',{'START_DAY':self.dateEdit_4.text(), 'END_DAY':self.dateEdit_7.text()})
+        self.t14.fileExecute('query_0901.txt',{'START_DAY':self.dateEdit_4.text(), 'END_DAY':self.dateEdit_7.text()})
     def del_LPROD(self):
-        if self.t13.currentItem() != None:
-            r = self.t13.currentRow()
-            self.t13.fileExecute('query_0902.txt', 
-            {'PROD_ID':self.t13.item(r,0).text(),
-            'INVEST_DAT':self.t13.item(r,3).text(),
-            'INVEST_NO':self.t13.item(r,4).text(),
-            'LOSS_CAUSE_CODE':self.t13.item(r,2).text()})
-            self.t13.refresh()
+        if self.t14.currentItem() != None:
+            r = self.t14.currentRow()
+            self.t14.fileExecute('query_0902.txt', 
+            {'PROD_ID':self.t14.item(r,0).text(),
+            'INVEST_DAT':self.t14.item(r,3).text(),
+            'INVEST_NO':self.t14.item(r,4).text(),
+            'LOSS_CAUSE_CODE':self.t14.item(r,2).text()})
+            self.t14.refresh()
 
     ####################################################
 ###재웅 추가### 
@@ -360,9 +367,13 @@ class MyWindow(QMainWindow, form_class):
         self.w1.show()    
     def call_ROSTER(self):
         self.w1 = ROSTER()
+        self.w1.pushButton_6.clicked.connect(self.w1.search_roaster)
+        self.w1.pushButton.clicked.connect(self.w1.startwork)
+        self.w1.pushButton_2.clicked.connect(self.w1.endwork)
         self.w1.show()          
     def call_ADD_MEMBERSHIP(self):
-        self.w1 = ADD_MEMBERSHIP()
+        self.w1 = ADD_MEMBERSHIP(self.t13)
+        self.w1.pushButton_21.clicked.connect(self.w1.registerMembership)
         self.w1.show()      
 ####재웅 끝####
 ####수환 시작####    
@@ -372,7 +383,11 @@ class MyWindow(QMainWindow, form_class):
         self.w1.pushButton_21.clicked.connect(self.w1.addNewProduct)
         self.w1.show()
     def call_DEL_PROD(self):
-        jjap.bt2(self,self.t2,'query_1301.txt',{'ProdID':self.t2.item(self.t2.currentRow(), 0).text()})
+        if self.t2.currentItem()!=None:
+            jjap.bt2(self,self.t2,'query_1301.txt',{'ProdID':self.t2.item(self.t2.currentRow(), 0).text()})
+    def call_DEL_EMP(self):
+        if self.t1.currentItem()!=None:
+            jjap.bt2(self,self.t1,'query_1701.txt',{'EMPID':self.t1.item(self.t1.currentRow(),1).text()})
 
     def call_settle(self,mb):
         if mb.clickedButton().text() == "예":
@@ -445,6 +460,28 @@ class MyWindow(QMainWindow, form_class):
            self.w1.pushButton_21.clicked.connect(self.w1.changeInfo)
            self.w1.pushButton_22.clicked.connect(self.w1.close)
            self.w1.show()
+    def searchMembership(self):
+        name = self.lineEdit_9.text()
+        id = self.lineEdit_10.text()
+
+        if id !="" and name !="":
+            self.t13.fileExecute('query_0004.txt',{'customerid':id,'customername':name})
+        elif id!="":
+            self.t13.fileExecute('query_0005.txt',{'customerid':id})
+        elif name!="":
+            self.t13.fileExecute('query_0006.txt',{'customername':name})
+        else:
+            mb = QMessageBox(self)
+            mb.setText('아이디나 이름을 입력해주세요')
+            mb.addButton('확인', 1)
+            mb.buttonClicked.connect(mb.close)
+            mb.show()
+    def search_event(self):
+        date=self.dateEdit_10.date()
+        name=self.lineEdit_13.text()
+
+        if(name!=''):
+            print('blank')
 
 
             
@@ -816,7 +853,7 @@ class LPROD(QDialog,uic.loadUiType("ui/재고파악.ui")[0]):
             mb.show()
             return 0 
         #손실물품에 추가
-        self.parent().t13.fileExecute('query_0903.txt', 
+        self.parent().t14.fileExecute('query_0903.txt', 
         {'PROD_ID':prodid, 'INVEST_DAT':ivdat, 'INVEST_NO':ivno,
         'LOSS_CAUSE_CODE':loss, 'QUANTITY':quan})
         #창고물품 / 진열물품에서 제외
@@ -835,7 +872,7 @@ class LPROD(QDialog,uic.loadUiType("ui/재고파악.ui")[0]):
                 print(n + quan + table.item(r,3).text())
                 table.fileExecute('query_0503.txt', {'PROD_ID':prodid, 'MANUFACTURE_DAT':table.item(r,3).text(), 'DISPLAY_QUANTITY':str(int(n) - int(quan))})
         self.hide()
-        self.parent().t13.refresh()
+        self.parent().t14.refresh()
         
         
     def search(self):
@@ -866,11 +903,53 @@ class UPDATE_EMP(QDialog,uic.loadUiType("ui/직원수정.ui")[0]):
 class ROSTER(QDialog,uic.loadUiType("ui/근무표.ui")[0]):
     def __init__(self):
         super().__init__() 
-        self.setupUi(self) 
+        self.setupUi(self)
+        self.table = QCustomTable()
+        self.gridLayout_11.addWidget(self.table)
+        self.table.select('ROSTER')
+        self.lineEdit_14.setValidator(QtGui.QIntValidator())
+    def search_roaster(self):
+        dic = {'EMPID':self.lineEdit_14.text()}
+        self.table.fileExecute('query_0003.txt',dic)
+    def startwork(self):
+        if(self.lineEdit_14.text()==""):
+            print("바보")
+            return
+        dic = {'EMPID':self.lineEdit_14.text()}
+        self.table.fileExecute('query_1901.txt',dic)
+    def endwork(self):
+        if(self.lineEdit_14.text()==""):
+             print("바보")
+             return
+        dic = {'EMPID':self.lineEdit_14.text()}
+        self.table.fileExecute('query_2001.txt',dic)
+
+    def msgClicked(self, table):
+        table.refresh()
+
+    
+    
 class ADD_MEMBERSHIP(QDialog,uic.loadUiType("ui/멤버쉽 가입.ui")[0]):
-    def __init__(self):
+    def __init__(self,table):
         super().__init__() 
-        self.setupUi(self) 
+        self.setupUi(self)
+        self.lineEdit_13.setValidator(QtGui.QIntValidator())
+        self.table =table
+    def registerMembership(self):
+        name = self.lineEdit_6.text()
+        gender = 0 if self.comboBox.currentText()=='남자' else 1
+        age = int(0 if self.lineEdit_13.text()=='' else self.lineEdit_13.text())
+        if(name=='' or age ==0):
+            mb = QMessageBox(self, text = '이름과 나이를 입력해주세요')
+            mb.show()
+            return
+        dic = {'customername':name,'gender':gender,'age':age}
+        jjap.bt1(self,self.table,'query_2101.txt',dic)
+    def msgClicked(self, table):
+         table.refresh()
+
+
+
 
 ####재웅 끝#####        
 
@@ -988,10 +1067,9 @@ class NEW_PROD(QDialog,uic.loadUiType("ui/상품추가.ui")[0]):
               mb.show()
               return 0
 
-          dic = {'PRODNAME':self.lineEdit_6.text(),'MAINCATCODE':self.comboBox.currentText(),'SUBCATCODE':self.comboBox_2.currentText(),'CUSTOMERCOST':int(self.lineEdit_13.text()),
-          'SELLPRICE':int(self.lineEdit_9.text()),'DISTRIBPER':int(self.lineEdit_10.text()),'EXCLUSIVE':(1 if self.checkBox.isChecked() else 0),'BUYPRICE':int(self.lineEdit_12.text())}
-          if dic['SELLPRICE']<=0 or dic['CUSTOMERCOST']<=0 or dic['BUYPRICE']<=0:
-
+          dic = {'NAME':self.lineEdit_6.text(),'MAINC':int(self.comboBox.currentText()),'SUBC':int(self.comboBox_2.currentText()),'CUST':int(self.lineEdit_13.text()),
+          'SELL':int(self.lineEdit_9.text()),'DIST':int(self.lineEdit_10.text()),'EXCL':('1' if self.checkBox.isChecked() else '0'),'BUYP':int(self.lineEdit_12.text())}
+          if dic['SELL']<=0 or dic['CUST']<=0 or dic['BUYP']<=0:
               mb = QMessageBox(self, text = '가격은 0이상이여야 합니다.')
               mb.show()
               return 0
