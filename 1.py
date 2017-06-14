@@ -332,9 +332,9 @@ class MyWindow(QMainWindow, form_class):
                 if tmpt.item(0,0) != None:
                     n = tmpt.item(0, 2).text()
                     if n == self.tableWidget_2.item(r, 4).text():
-                        self.t12.fileExecute('query_0502.txt', {'PROD_ID':self.tableWidget_2.item(r, 0).text(), 'MANUFACTURE_DAT':tmpt.item(r,3).text()})
+                        self.t12.fileExecute('query_0502.txt', {'PROD_ID':self.tableWidget_2.item(r, 0).text(), 'MANUFACTURE_DAT':tmpt.item(0,3).text()})
                     else:
-                        self.t12.fileExecute('query_0503.txt', {'PROD_ID':self.tableWidget_2.item(r, 0).text(), 'MANUFACTURE_DAT':tmpt.item(r,3).text(), 'DISPLAY_QUANTITY':int(n) - int(self.tableWidget_2.item(r, 4).text())})
+                        self.t12.fileExecute('query_0503.txt', {'PROD_ID':self.tableWidget_2.item(r, 0).text(), 'MANUFACTURE_DAT':tmpt.item(0,3).text(), 'DISPLAY_QUANTITY':int(n) - int(self.tableWidget_2.item(r, 4).text())})
                 else:
                     mb = QMessageBox(self, text = '진열되어있지않습니다.')
                     mb.show()
@@ -1172,7 +1172,7 @@ class HIRE_EMP(QDialog,uic.loadUiType("ui/직원고용.ui")[0]):
             mb.show()
             return
         else:
-            dic={'BRANCH_ID':jjap.BRAN_ID,'EMPGRADE': 0 if self.comboBox.currentText()=='점장' else 1,'EMPNAME':self.lineEdit_7.text(),'CONTACT': '0' if self.lineEdit_9.text() == "" else self.lineEdit_9.text(),
+            dic={'BRANCH_ID':jjap.BRAN_ID,'EMPGRADE': 2 if self.comboBox.currentText()=='점장' else 1,'EMPNAME':self.lineEdit_7.text(),'CONTACT': '0' if self.lineEdit_9.text() == "" else self.lineEdit_9.text(),
             'SALARY_CODE':0 if self.comboBox_2.currentText()=='연봉' else 1 if self.comboBox_2.currentText()=='월급' else 2,'SALARY':0 if self.lineEdit_11.text() =="" else int(self.lineEdit_11.text())}
             print(dic)
             jjap.bt1(self, self.table,'query_1601.txt',dic)
