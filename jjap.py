@@ -14,7 +14,6 @@ def bt1(sf, table, query, dic):
     mb.show()
     try:
         mb.buttonClicked.connect(lambda: sf.msgClicked(table))
-        #mb.destroy()
     except:
         print('연결오류')
 def bt2(sf, table, query, dic):
