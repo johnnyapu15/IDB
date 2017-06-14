@@ -190,6 +190,8 @@ class QCustomTable(QTableWidget):
                 #만약 타입이 시간일 경우 10자리로 끊는다.
                 if str(cursor.description[c][1]) == "<class 'cx_Oracle.DATETIME'>":
                     text = (str(text))[0:10]
+                if str(cursor.description[c][1]) == "<class 'cx_Oracle.TIMESTAMP'>":
+                    text = (str(text))[0:19]
                 self.setItem( cursor.rowcount - 1, c, QCustomTableWidgetItem(text))
                 self.item( cursor.rowcount - 1, c).setTextAlignment(Qt.AlignHCenter)
             #만약 셀렉트한 테이블의 튜플이 INIT_ROW 보다 많으면, 자동으로 적재할 테이블을 늘린다.
