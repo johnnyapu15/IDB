@@ -305,15 +305,33 @@ class MyWindow(QMainWindow, form_class):
 
             sell_Id = tmpt.item(0,0).text()
             #판매물품 하나하나 추가
+            tmpt = QCustomTable()
+            tmpt.select('disprod')
             for r in range(self.tableWidget_2.rowCount()):
                 self.t12.fileExecute('query_0703.txt', 
                 {'SELL_ID':sell_Id, 'PROD_ID':self.tableWidget_2.item(r, 0).text(),
                 'SELL_COST':self.tableWidget_2.item(r, 5).text(),
                 'QUANTITY':self.tableWidget_2.item(r, 4).text()})
+                tmpt.execute('select * from disprod where PROD_ID = ' + self.tableWidget_2.item(r,0).text())
+                if tmpt.item(0,0) != None:
+                    n = tmpt.item(0, 2).text()
+                    if n == self.tableWidget_2.item(r, 4).text():
+                        self.t12.fileExecute('query_0502.txt', {'PROD_ID':self.tableWidget_2.item(r, 0).text(), 'MANUFACTURE_DAT':tmpt.item(r,3).text()})
+                    else:
+                        self.t12.fileExecute('query_0503.txt', {'PROD_ID':self.tableWidget_2.item(r, 0).text(), 'MANUFACTURE_DAT':tmpt.item(r,3).text(), 'DISPLAY_QUANTITY':int(n) - int(self.tableWidget_2.item(r, 4).text())})
+                else:
+                    mb = QMessageBox(self, text = '진열되어있지않습니다.')
+                    mb.show()
+                    return 0
             #추가된 판매물품의 총액을 넣음
             self.t12.fileExecute('query_0704.txt', 
             {'SELL_ID':sell_Id, 'SELL_COST':self.lineEdit_5.text()})
+            self.t11.refresh()
             self.t12.refresh()
+            self.tableWidget_2.setRowCount(0)
+            mb = QMessageBox(self, text = '결제되었습니다!')
+            mb.show()
+            
     def refund(self):
         #39푸시
         if self.t12.currentItem() != None:
